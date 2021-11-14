@@ -27,16 +27,16 @@ int main(int argc, char** argv) {
     tcod::print(console, {0, 0}, "Hello World", TCOD_white, std::nullopt);
     context->present(console);
 
-    //   // Handle input.
-    //   SDL_Event event;
-    //   SDL_WaitEvent(nullptr);
-    //   while (SDL_PollEvent(&event)) {
-    //     switch (event.type) {
-    //       case SDL_QUIT:
-    //         std::exit(EXIT_SUCCESS);
-    //         break;
-    //     }
-    //   }
+    // Handle input.
+    SDL_Event event;
+    SDL_WaitEvent(nullptr);
+    while (SDL_PollEvent(&event)) {
+      switch (event.type) {
+        case SDL_QUIT:
+          std::exit(EXIT_SUCCESS);
+          break;
+      }
+    }
   }
   return 0;
 }
