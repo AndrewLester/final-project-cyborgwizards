@@ -26,5 +26,8 @@
   },
   "terminal.integrated.env.linux": {
     "VCPKG_ROOT": "${workspaceFolder}/vcpkg",
+  },
+  "files.associations": {
+    "memory": "cpp"
   }
 }
