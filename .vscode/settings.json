@@ -28,6 +28,8 @@
     "VCPKG_ROOT": "${workspaceFolder}/vcpkg",
   },
   "files.associations": {
-    "memory": "cpp"
+    "memory": "cpp",
+    "cmath": "cpp",
+    "xstring": "cpp"
   }
 }
