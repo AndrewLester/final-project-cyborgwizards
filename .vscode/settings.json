@@ -28,6 +28,7 @@
     "VCPKG_ROOT": "${workspaceFolder}/vcpkg",
   },
   "files.associations": {
+    "*.js": "javascriptreact",
     "memory": "cpp",
     "cmath": "cpp",
     "xstring": "cpp",
