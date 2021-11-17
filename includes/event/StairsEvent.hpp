@@ -6,6 +6,9 @@
 class StairsEvent : public Event {
  public:
   StairsEvent(Entity* entity);
+  std::string GetType() {
+    return "StairsEvent";
+  }
 };
 
 #endif

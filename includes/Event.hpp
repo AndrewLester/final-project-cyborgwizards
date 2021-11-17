@@ -10,10 +10,13 @@ class Entity;
 class Event {
  public: 
   Entity* emitter;
-  const std::string kType = "BaseEvent";
 
  public:
   Event(Entity* emitter): emitter(emitter) {}
+
+  virtual std::string GetType() {
+    return "BaseEvent";
+  }
 };
 
 #endif

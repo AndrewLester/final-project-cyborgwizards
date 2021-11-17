@@ -22,6 +22,9 @@ class SoundEvent : public Event {
 
  public:
   SoundEvent(Entity* emitter, Coord source, int intensity);
+  std::string GetType() {
+    return "SoundEvent";
+  }
   
   int RelativeIntensity(Coord position);
   Direction RelativeDirection(Coord position);

@@ -14,17 +14,23 @@
 #include "event/SoundEvent.hpp"
 #include "event/StairsEvent.hpp"
 
-
-class Entity;
+class Entity {
+ public:
+  virtual void OnNotify(Event event);
+};
 
 class EventListener {
  private:
-  static EventListener* instance_;
   std::map<Entity*, std::set<std::string>> listeners_;
 
  public:
   EventListener();
   ~EventListener();
+
+  static EventListener& Instance() {
+    static EventListener* instance = new EventListener();
+    return *instance;
+  }
   
   void HandleInput(SDL_Event event);
 

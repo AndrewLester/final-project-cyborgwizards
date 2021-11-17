@@ -30,6 +30,7 @@
   "files.associations": {
     "memory": "cpp",
     "cmath": "cpp",
-    "xstring": "cpp"
+    "xstring": "cpp",
+    "xtree": "cpp"
   }
 }

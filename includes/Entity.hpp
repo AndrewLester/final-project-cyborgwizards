@@ -15,7 +15,7 @@ class Entity {
 
   void ReportEvent(Event event);
   void RegisterListen(std::string event_type);
-  virtual void OnNotify() = 0;
+  virtual void OnNotify(Event event) = 0;
 
   Coord GetPosition();
   
