@@ -41,7 +41,11 @@ add_subdirectory("libtcod")  # This will error if you haven't initialized libtco
 find_package(SDL2 CONFIG REQUIRED)
 target_link_libraries(${PROJECT_NAME} PRIVATE SDL2::SDL2 SDL2::SDL2main libtcod::libtcod)
 
-include_directories("${CMAKE_CURRENT_SOURCE_DIR}/") # testing, TBD
+include_directories("${CMAKE_CURRENT_SOURCE_DIR}/includes"
+                    "${CMAKE_CURRENT_SOURCE_DIR}/includes/event"
+                    "${CMAKE_CURRENT_SOURCE_DIR}/includes/item"
+                    "${CMAKE_CURRENT_SOURCE_DIR}/includes/map"
+)
 
 Include(FetchContent)
 
