@@ -25,9 +25,9 @@ class UI {
   static UI* Instance();
   void RenderAll();
   
-  void GetPlayer();
-  void GetMap();
-  void GetMonster();
+  Player* GetPlayer();
+  Map* GetMap();
+  Monster* GetMonster();
 };
 
 #endif
