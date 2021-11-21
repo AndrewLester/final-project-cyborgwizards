@@ -9,13 +9,13 @@ class Entity;
 
 class Event {
  public:
-  Entity* emitter;
+  Entity* emitter_;
 
  protected:
   const std::string type_;
 
  public:
-  Event(std::string type, Entity* emitter) : type_(type), emitter(emitter) {}
+  Event(std::string type, Entity* emitter) : emitter_(emitter), type_(type) {}
 
   std::string GetType() { return this->type_; }
 };

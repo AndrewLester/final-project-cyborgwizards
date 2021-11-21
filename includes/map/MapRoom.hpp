@@ -5,7 +5,7 @@
 
 class MapRoom : public MapShape {
  public:
-  void Draw();
+  void Draw(Coord center) override;
 };
 
 #endif

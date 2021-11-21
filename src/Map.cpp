@@ -4,11 +4,11 @@ Map::Map() : shapes_(std::vector<MapShape*>()), items_(std::vector<Item*>()) {}
 
 void Map::Render(Coord center) {
   for (MapShape* shape : shapes_) {
-    shape->Draw();
+    shape->Draw(center);
   }
 
   for (Item* item : items_) {
-    item->Draw();
+    item->Draw(center);
   }
 }
 
