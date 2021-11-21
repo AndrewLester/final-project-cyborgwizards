@@ -4,9 +4,9 @@ EventListener::EventListener() {}
 
 EventListener::~EventListener() {}
 
-// void EventListener::HandleInput(SDL_Event event) {
-//   // TODO: Add handling different input types
-// }
+void EventListener::HandleInput(SDL_Event event) {
+  
+}
 
 void EventListener::BroadcastEvent(Event event) {
   std::string event_type = event.GetType();
