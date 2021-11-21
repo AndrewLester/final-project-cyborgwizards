@@ -12,7 +12,7 @@ class Monster : public Entity {
   MonsterState state_ = MonsterState::Roam;
   int roam_speed_ = 5;
   int chase_speed_ = 3;
-  std::queue<Coord> path_;
+  std::queue<LevelPos> path_;
 
  private:
   int timer_ = 0;

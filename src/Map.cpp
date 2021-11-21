@@ -2,17 +2,17 @@
 
 Map::Map() : shapes_(std::vector<MapShape*>()), items_(std::vector<Item*>()) {}
 
-void Map::Render(Coord center) {
-  for (MapShape* shape : shapes_) {
-    shape->Draw(center);
-  }
+void Map::Render(LevelPos center) {
+  // for (MapShape* shape : shapes_) {
+  //   shape->Draw(center);
+  // }
 
-  for (Item* item : items_) {
-    item->Draw(center);
-  }
+  // for (Item* item : items_) {
+  //   item->Draw(center);
+  // }
 }
 
-Item* Map::GetItem(Coord position) {
+Item* Map::GetItem(LevelPos position) {
   for (Item* item : items_) {
     if (item->GetPosition() == position) {
       return item;
@@ -21,9 +21,9 @@ Item* Map::GetItem(Coord position) {
   return nullptr;
 }
 
-MapShape* Map::GetMapShape(Coord position) {
+MapShape* Map::GetMapShape(LevelPos position) {
   for (MapShape* shape : shapes_) {
-    if (shape->ContainsCoord(position)) {
+    if (shape->ContainsLevelPos(position)) {
       return shape;
     }
   }

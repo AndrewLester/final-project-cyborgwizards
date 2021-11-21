@@ -1,25 +1,26 @@
 #ifndef ENTITY_HPP
 #define ENTITY_HPP
 
-#include "Coord.hpp"
+#include "LevelPos.hpp"
+#include "ScreenPos.hpp"
 #include "Event.hpp"
 #include "EventListener.hpp"
 
 class Entity {
  protected:
-  Coord position_;
+  LevelPos position_; // top_left
 
  public:
-  Entity(Coord init_pos);
+  Entity(LevelPos init_pos);
   virtual ~Entity();
 
   void UploadEvent(Event event);
   void RegisterListen(std::string event_type);
   virtual void OnNotify(Event event) = 0;
 
-  Coord GetPosition();
+  LevelPos GetPosition();
 
-  virtual void Draw(Coord center) = 0;
+  virtual void Draw(ScreenPos top_left) = 0;
 };
 
 #endif
