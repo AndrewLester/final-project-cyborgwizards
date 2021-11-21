@@ -1,8 +1,14 @@
 #include <catch2/catch_all.hpp>
 
+/////////////////////// Library Includes ///////////////////////
+
 #include <iostream>
 
+/////////////////////// Project Includes ///////////////////////
+
 #include "Entity.hpp"
+
+/////////////////////// EventListener ///////////////////////
 
 TEST_CASE("EventListener", "[event-listener]") {
   class DerivedEntity : public Entity {
@@ -35,6 +41,23 @@ TEST_CASE("EventListener", "[event-listener]") {
   EventListener::Instance().RegisterListener(e2, "DerivedEvent");
   REQUIRE_THROWS_WITH(e1->UploadEvent(devent), "e2, DerivedEvent");
   
-  
   delete e1; delete e2;
 }
+
+/////////////////////// Player ///////////////////////
+
+// Write tests here
+
+/////////////////////// Monster ///////////////////////
+
+// Write tests here
+
+/////////////////////// UI ///////////////////////
+
+// Write tests here
+
+/////////////////////// Items ///////////////////////
+
+// Write tests here
+
+/////////////////////// Add section below ///////////////////////

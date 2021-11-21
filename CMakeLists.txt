@@ -41,6 +41,8 @@ add_subdirectory("libtcod")  # This will error if you haven't initialized libtco
 find_package(SDL2 CONFIG REQUIRED)
 target_link_libraries(${PROJECT_NAME} PRIVATE SDL2::SDL2 SDL2::SDL2main libtcod::libtcod)
 
+# Catch2
+
 Include(FetchContent)
 
 FetchContent_Declare(
@@ -57,6 +59,14 @@ list(REMOVE_ITEM testing_sources ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp)
 add_executable(tests tests/test.cpp ${testing_sources})
 target_compile_features(tests PRIVATE cxx_std_17)
 target_link_libraries(tests PRIVATE Catch2::Catch2WithMain)
+
+# Failed attempt of autodetecting test files - will break #include
+# list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/build/_deps/catch2-src/extras)
+# include(CTest)
+# include(Catch)
+# catch_discover_tests(tests)
+
+# Include Directories
 
 include_directories(
     "${CMAKE_CURRENT_SOURCE_DIR}/includes"
