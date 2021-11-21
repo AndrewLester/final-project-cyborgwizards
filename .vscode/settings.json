@@ -28,6 +28,7 @@
     "VCPKG_ROOT": "${workspaceFolder}/vcpkg",
   },
   "files.associations": {
+    "*.js": "javascriptreact",
     "memory": "cpp",
     "cmath": "cpp",
     "xstring": "cpp",
@@ -108,5 +109,6 @@
     "xstddef": "cpp",
     "xtr1common": "cpp",
     "xutility": "cpp"
-  }
+  },
+  "C_Cpp.errorSquiggles": "Enabled",
 }
