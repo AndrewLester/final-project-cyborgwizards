@@ -8,16 +8,12 @@
 #include <SDL_events.h>
 
 #include "Event.hpp"
+#include "Entity.hpp"
 
-#include "event/HideEvent.hpp"
-#include "event/KeyboardEvent.hpp"
-#include "event/SoundEvent.hpp"
-#include "event/StairsEvent.hpp"
-
-class Entity {
- public:
-  virtual void OnNotify(Event event);
-};
+#include "HideEvent.hpp"
+#include "KeyboardEvent.hpp"
+#include "SoundEvent.hpp"
+#include "StairsEvent.hpp"
 
 class EventListener {
  private:

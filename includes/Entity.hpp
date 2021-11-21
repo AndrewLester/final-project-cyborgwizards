@@ -13,13 +13,13 @@ class Entity {
   Entity(Coord init_pos);
   virtual ~Entity();
 
-  void ReportEvent(Event event);
+  void UploadEvent(Event event);
   void RegisterListen(std::string event_type);
   virtual void OnNotify(Event event) = 0;
 
   Coord GetPosition();
   
-  virtual void Draw() = 0;
+  virtual void Draw(Coord center) = 0;
 };
 
 #endif

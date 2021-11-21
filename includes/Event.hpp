@@ -11,11 +11,14 @@ class Event {
  public: 
   Entity* emitter;
 
- public:
-  Event(Entity* emitter): emitter(emitter) {}
+ protected:
+  const std::string type_;
 
-  virtual std::string GetType() {
-    return "BaseEvent";
+ public:
+  Event(std::string type, Entity* emitter): type_(type), emitter(emitter) {}
+
+  std::string GetType() {
+    return this->type_;
   }
 };
 

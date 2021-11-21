@@ -2,7 +2,9 @@
 
 Entity::Entity(Coord init_pos): position_(init_pos) {}
 
-void Entity::ReportEvent(Event event) {
+Entity::~Entity() {}
+
+void Entity::UploadEvent(Event event) {
   EventListener::Instance().BroadcastEvent(event);
 }
 

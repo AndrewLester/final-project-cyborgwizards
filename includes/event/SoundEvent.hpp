@@ -5,14 +5,10 @@
 #include "Coord.hpp"
 
 enum Direction {
-  N,
-  S,
-  E,
-  W,
-  NW,
-  NE,
-  SW,
-  SE
+  North,
+  South,
+  East,
+  West
 };
 
 class SoundEvent : public Event {
@@ -22,9 +18,6 @@ class SoundEvent : public Event {
 
  public:
   SoundEvent(Entity* emitter, Coord source, int intensity);
-  std::string GetType() {
-    return "SoundEvent";
-  }
   
   int RelativeIntensity(Coord position);
   Direction RelativeDirection(Coord position);

@@ -15,9 +15,6 @@ class KeyboardEvent : public Event {
 
  public:
   KeyboardEvent(SDL_KeyboardEvent keyboard_event);
-  std::string GetType() {
-    return "KeyboardEvent";
-  }
 };
 
 #endif

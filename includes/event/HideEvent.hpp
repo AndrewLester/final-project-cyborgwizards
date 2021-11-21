@@ -15,10 +15,6 @@ class HideEvent : public Event {
  
  public:
   HideEvent(Entity* emitter, Entity* hide_entity, HideAction action);
-
-  std::string GetType() {
-    return "HideEvent";
-  }
 };
 
 #endif

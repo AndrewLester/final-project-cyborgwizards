@@ -41,21 +41,28 @@ add_subdirectory("libtcod")  # This will error if you haven't initialized libtco
 find_package(SDL2 CONFIG REQUIRED)
 target_link_libraries(${PROJECT_NAME} PRIVATE SDL2::SDL2 SDL2::SDL2main libtcod::libtcod)
 
-include_directories("${CMAKE_CURRENT_SOURCE_DIR}/includes"
-                    "${CMAKE_CURRENT_SOURCE_DIR}/includes/event"
-                    "${CMAKE_CURRENT_SOURCE_DIR}/includes/item"
-                    "${CMAKE_CURRENT_SOURCE_DIR}/includes/map"
-)
-
 Include(FetchContent)
 
 FetchContent_Declare(
-  Catch2
-  GIT_REPOSITORY https://github.com/catchorg/Catch2.git
-  GIT_TAG        v3.0.0-preview3
+    Catch2
+    GIT_REPOSITORY https://github.com/catchorg/Catch2.git
+    GIT_TAG        v3.0.0-preview3
 )
 
 FetchContent_MakeAvailable(Catch2)
 
-add_executable(tests tests/test.cpp)
+set(testing_sources ${SOURCE_FILES})
+list(REMOVE_ITEM testing_sources ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp)
+
+add_executable(tests tests/test.cpp ${testing_sources})
+target_compile_features(tests PRIVATE cxx_std_17)
 target_link_libraries(tests PRIVATE Catch2::Catch2WithMain)
+
+include_directories(
+    "${CMAKE_CURRENT_SOURCE_DIR}/includes"
+    "${CMAKE_CURRENT_SOURCE_DIR}/includes/event"
+    "${CMAKE_CURRENT_SOURCE_DIR}/includes/item"
+    "${CMAKE_CURRENT_SOURCE_DIR}/includes/map"
+    "${CMAKE_CURRENT_SOURCE_DIR}/build/vcpkg_installed/x64-windows/include/SDL2"
+    "${CMAKE_CURRENT_SOURCE_DIR}/libtcod/src"
+)
