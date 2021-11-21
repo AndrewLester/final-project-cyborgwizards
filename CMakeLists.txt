@@ -76,6 +76,7 @@ include_directories(
     "${CMAKE_CURRENT_SOURCE_DIR}/build/vcpkg_installed/x64-windows/include/SDL2"
     "${CMAKE_CURRENT_SOURCE_DIR}/build/vcpkg_installed/arm64-osx/include/SDL2"
     "${CMAKE_CURRENT_SOURCE_DIR}/build/vcpkg_installed/x64-osx/include/SDL2"
+    "${CMAKE_CURRENT_SOURCE_DIR}/build/vcpkg_installed/x64-linux/include/SDL2"
     "${CMAKE_CURRENT_SOURCE_DIR}/build/vcpkg_installed/**"
     "${CMAKE_CURRENT_SOURCE_DIR}/libtcod/src"
 )
