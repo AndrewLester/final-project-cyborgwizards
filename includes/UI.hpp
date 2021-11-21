@@ -14,8 +14,8 @@ class UI {
   Monster* monster_;
   GameState state_;
 
-  UI();
-  ~UI();
+  UI(){};
+  ~UI(){};
 
  public:
   void RenderAll();
@@ -24,10 +24,7 @@ class UI {
   void GetMap();
   void GetMonster();
 
-  static UI* Instance() {
-    static UI* instance = new UI();
-    return instance;
-  }
+  static UI* Instance();
 };
 
 #endif
