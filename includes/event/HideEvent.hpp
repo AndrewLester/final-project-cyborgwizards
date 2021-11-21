@@ -3,16 +3,13 @@
 
 #include "Event.hpp"
 
-enum HideAction {
-  Hide,
-  Leave
-};
+enum class HideAction { Hide, Leave };
 
 class HideEvent : public Event {
  public:
   Entity* hide_entity;
   HideAction action;
- 
+
  public:
   HideEvent(Entity* emitter, Entity* hide_entity, HideAction action);
 };

@@ -8,7 +8,7 @@
 class Entity {
  protected:
   Coord position_;
- 
+
  public:
   Entity(Coord init_pos);
   virtual ~Entity();
@@ -18,7 +18,7 @@ class Entity {
   virtual void OnNotify(Event event) = 0;
 
   Coord GetPosition();
-  
+
   virtual void Draw(Coord center) = 0;
 };
 

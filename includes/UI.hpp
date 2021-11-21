@@ -14,18 +14,19 @@ class UI {
   Monster* monster_;
   GameState state_;
 
- public:
   UI();
   ~UI();
+
+ public:
   void RenderAll();
 
   void GetPlayer();
   void GetMap();
   void GetMonster();
 
-  static UI& Instance() {
+  static UI* Instance() {
     static UI* instance = new UI();
-    return *instance;
+    return instance;
   }
 };
 

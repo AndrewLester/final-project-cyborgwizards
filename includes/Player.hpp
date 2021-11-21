@@ -3,12 +3,7 @@
 
 #include "Entity.hpp"
 
-enum PlayerState {
-  Walk,
-  Run,
-  Hide,
-  Stop
-}
+enum class PlayerState { Walk, Run, Hide, Stop };
 
 class Player : public Entity {
  private:
