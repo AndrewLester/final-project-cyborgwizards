@@ -3,9 +3,8 @@
 
 #include <vector>
 
-#include "MapShape.hpp"
-#include "MapInteractive.hpp"
 #include "Item.hpp"
+#include "MapShape.hpp"
 
 class Map {
  private:
@@ -16,10 +15,10 @@ class Map {
   Map();
   ~Map();
 
-  void Render(Coord center);
-  bool IsReachable(Coord position);
-  Item* GetItem(Coord position);
-  MapInteractive* GetMapInteractive(Coord position);
-}
+  void Render(LevelPos center);
+  bool IsReachable(LevelPos position);
+  Item* GetItem(LevelPos position);
+  MapShape* GetMapShape(LevelPos position);
+};
 
 #endif
