@@ -17,10 +17,9 @@ class Player : public Entity {
   int timer_ = 0;
   PlayerState state_ = PlayerState::Stop;
   int hp_ = 100;
-
  public:
   Player(Coord init_pos);
-
+  bool IsReachable(Coord pos);
   void Draw(Coord center);
   void OnNotify(Event event);
   void Update();

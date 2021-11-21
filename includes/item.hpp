@@ -5,6 +5,7 @@
 
 class Item : public Entity {
  private:
+  Coord* CheckNearestOpenPos();
   int inventory_idx_ = -1;
  
  public:
