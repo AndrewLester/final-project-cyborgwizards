@@ -5,14 +5,10 @@
 #include "Coord.hpp"
 
 enum Direction {
-  N,
-  S,
-  E,
-  W,
-  NW,
-  NE,
-  SW,
-  SE
+  North,
+  South,
+  East,
+  West
 };
 
 class SoundEvent : public Event {

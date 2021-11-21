@@ -10,10 +10,16 @@ class Entity;
 class Event {
  public: 
   Entity* emitter;
-  const std::string kType = "BaseEvent";
+
+ protected:
+  const std::string type_;
 
  public:
-  Event(Entity* emitter): emitter(emitter) {}
+  Event(std::string type, Entity* emitter): type_(type), emitter(emitter) {}
+
+  std::string GetType() {
+    return this->type_;
+  }
 };
 
 #endif
