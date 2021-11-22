@@ -24,7 +24,10 @@ class UI {
   void GetMap();
   void GetMonster();
 
-  static UI* Instance();
+  static UI& Instance() {
+    static UI* instance = new UI();
+    return *instance;
+  }
 };
 
 #endif
