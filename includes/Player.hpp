@@ -3,12 +3,7 @@
 
 #include "Entity.hpp"
 
-enum PlayerState {
-  Walk,
-  Run,
-  Hide,
-  Stop
-}
+enum class PlayerState { Walk, Run, Hide, Stop };
 
 class Player : public Entity {
  private:
@@ -19,9 +14,9 @@ class Player : public Entity {
   int hp_ = 100;
 
  public:
-  Player(Coord init_pos);
+  Player(LevelPos init_pos);
 
-  void Draw(Coord center);
+  void Draw(ScreenPos top_left);
   void OnNotify(Event event);
   void Update();
 };

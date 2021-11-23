@@ -2,32 +2,32 @@
 #define UI_HPP
 
 #include "Map.hpp"
-#include "Player.hpp"
 #include "Monster.hpp"
+#include "Player.hpp"
 
-enum GameState {
-  InProgress,
-  Win,
-  Loss
-};
+enum GameState { InProgress, Win, Loss };
 
 class UI {
  private:
-  static UI* instance_;
   Map* map_;
   Player* player_;
   Monster* monster_;
   GameState state_;
 
+  UI(){};
+  ~UI(){};
+
  public:
-  UI();
-  ~UI();
-  static UI* Instance();
   void RenderAll();
   
   Player* GetPlayer();
   Map* GetMap();
   Monster* GetMonster();
+
+  static UI& Instance() {
+    static UI* instance = new UI();
+    return *instance;
+  }
 };
 
 #endif

@@ -1,31 +1,32 @@
 #ifndef EVENT_LISTENER_HPP
 #define EVENT_LISTENER_HPP
 
-#include <map>
-#include <string>
-#include <set>
-
 #include <SDL_events.h>
 
+#include <map>
+#include <set>
+#include <string>
+
+#include "Entity.hpp"
 #include "Event.hpp"
-
-#include "event/HideEvent.hpp"
-#include "event/KeyboardEvent.hpp"
-#include "event/SoundEvent.hpp"
-#include "event/StairsEvent.hpp"
-
-
-class Entity;
+#include "HideEvent.hpp"
+#include "KeyboardEvent.hpp"
+#include "SoundEvent.hpp"
+#include "StairsEvent.hpp"
 
 class EventListener {
  private:
-  static EventListener* instance_;
   std::map<Entity*, std::set<std::string>> listeners_;
 
  public:
   EventListener();
   ~EventListener();
-  
+
+  static EventListener& Instance() {
+    static EventListener* instance = new EventListener();
+    return *instance;
+  }
+
   void HandleInput(SDL_Event event);
 
   void BroadcastEvent(Event event);

@@ -7,6 +7,6 @@ class MapInteractive : public MapShape {
  public:
   virtual void Draw() = 0;
   virtual void OnNotify(Event event) = 0;
-}
+};
 
 #endif
