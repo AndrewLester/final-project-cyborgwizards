@@ -6,8 +6,8 @@ void Item::Drop() {
     if(UI::Instance().GetMap().GetItem(UI::Instance().GetPlayer().GetPosition()) == nullptr) {
         player_->GetInventory()->RemoveItem(this);
     } else {
-        LevelPos* removed_coord = CheckNearestOpenPos();
-        if(removed_coord == nullptr) {
+        LevelPos removed_coord = CheckNearestOpenPos();
+        if(removed_coord.x == -1000 && removed_coord.y == -1000) {
             //handle case
         }
     }
@@ -27,22 +27,21 @@ void Item::Pick(Player* player) {
 }
 
 
-LevelPos* Item::CheckNearestOpenPos() {
+LevelPos Item::CheckNearestOpenPos() {
     LevelPos curr_pos = UI::Instance().GetPlayer().GetPosition();
-    LevelPos* remove_cord;
-    std::vector<LevelPos*> neighbors;
+    std::vector<LevelPos> neighbors;
     for(int i = 0; i < 3; i++) {
-        neighbors.push_back(new LevelPos(curr_pos.x + i, curr_pos.GetY() + i));
-        neighbors.push_back(new LevelPos(curr_pos.GetX() + i, curr_pos.GetY()));
-        neighbors.push_back(new LevelPos(curr_pos.GetX() + i, curr_pos.GetY() - i));
-        neighbors.push_back(new LevelPos(curr_pos.GetX(), curr_pos.GetY() + i));
-        neighbors.push_back(new LevelPos(curr_pos.GetX(), curr_pos.GetY() - i));
-        neighbors.push_back(new LevelPos(curr_pos.GetX() - i, curr_pos.GetY() + i));
-        neighbors.push_back(new LevelPos(curr_pos.GetX() - i, curr_pos.GetY()));
-        neighbors.push_back(new LevelPos(curr_pos.GetX() - i, curr_pos.GetY() - i));
+        neighbors.push_back(LevelPos(curr_pos.x + i, curr_pos.y + i));
+        neighbors.push_back(LevelPos(curr_pos.x + i, curr_pos.y));
+        neighbors.push_back(LevelPos(curr_pos.x + i, curr_pos.y - i));
+        neighbors.push_back(LevelPos(curr_pos.x, curr_pos.y + i));
+        neighbors.push_back(LevelPos(curr_pos.x, curr_pos.y - i));
+        neighbors.push_back(LevelPos(curr_pos.x - i, curr_pos.y + i));
+        neighbors.push_back(LevelPos(curr_pos.x - i, curr_pos.y));
+        neighbors.push_back(LevelPos(curr_pos.x - i, curr_pos.y - i));
 
         for(size_t j = 0; j < neighbors.size(); j++) {
-            if(neighbors.at(i).GetX() != -1 && neighbors.at(i).GetY() != -1) {
+            if(neighbors.at(i).x != -1 && neighbors.at(i).y != -1) {
                 if(UI::Instance().GetMap().GetItem(neighbors.at(i)) == nullptr) {
                     player_->GetInventory()->RemoveItem(this);
                     return neighbors.at(i);
@@ -50,5 +49,5 @@ LevelPos* Item::CheckNearestOpenPos() {
             }
         }
     }
-    return nullptr;
+    return LevelPos(-1000,-1000);
 }

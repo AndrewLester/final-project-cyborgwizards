@@ -4,9 +4,10 @@
 #include "LevelPos.hpp"
 #include "Entity.hpp"
 #include "UI.hpp"
+
 class Item : public Entity {
  private:
-  LevelPos* CheckNearestOpenPos();
+  LevelPos CheckNearestOpenPos();
   Player* player_ = nullptr;
  public:
   virtual void Draw(ScreenPos top_left) = 0;
