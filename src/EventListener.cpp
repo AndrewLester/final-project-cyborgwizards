@@ -5,7 +5,11 @@ EventListener::EventListener() {}
 EventListener::~EventListener() {}
 
 void EventListener::HandleInput(SDL_Event event) {
-  
+  switch (event.type) {
+    case SDL_KEYDOWN:
+      KeyboardEvent ke(event.key);
+      this->BroadcastEvent(ke);
+  }
 }
 
 void EventListener::BroadcastEvent(Event event) {

@@ -5,6 +5,8 @@
 #include <cstdlib>
 #include <iostream>
 
+#include "EventListener.hpp"
+
 int main(int argc, char** argv) {
   // std::cout << "HI" << std::endl;
   auto params = TCOD_ContextParams{};
@@ -35,6 +37,8 @@ int main(int argc, char** argv) {
         case SDL_QUIT:
           std::exit(EXIT_SUCCESS);
           break;
+        default:
+          EventListener::Instance().HandleInput(event);
       }
     }
   }
