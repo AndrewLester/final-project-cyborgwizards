@@ -10,17 +10,26 @@ Map::~Map() {
   }
 }
 
-void Map::Render(Coord center) {
+void Map::Render(LevelPos center) {
+  ScreenPos screen_center = {60, 60}; // TODO: relate this to UI initialization
   for (MapShape* shape : shapes_) {
-    shape->Draw(center);
+    LevelPos shape_pos = shape->GetPosition();
+    if (shape_pos.level == center.level) {
+      LevelPos relative_pos = shape_pos - center;
+      shape->Draw({screen_center.x + relative_pos.x, screen_center.y + relative_pos.y});
+    }
   }
 
   for (Item* item : items_) {
-    item->Draw(center);
+    LevelPos item_pos = item->GetPosition();
+    if (item_pos.level == center.level) {
+      LevelPos relative_pos = item_pos - center;
+      item->Draw({screen_center.x + relative_pos.x, screen_center.y + relative_pos.y});
+    }
   }
 }
 
-Item* Map::GetItem(Coord position) {
+Item* Map::GetItem(LevelPos position) {
   for (Item* item : items_) {
     if (item->GetPosition() == position) {
       return item;
@@ -29,9 +38,9 @@ Item* Map::GetItem(Coord position) {
   return nullptr;
 }
 
-MapShape* Map::GetMapShape(Coord position) {
+MapShape* Map::GetMapShape(LevelPos position) {
   for (MapShape* shape : shapes_) {
-    if (shape->ContainsCoord(position)) {
+    if (shape->ContainsLevelPos(position)) {
       return shape;
     }
   }

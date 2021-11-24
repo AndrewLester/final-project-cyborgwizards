@@ -14,9 +14,9 @@ class Player : public Entity {
   int hp_ = 100;
 
  public:
-  Player(Coord init_pos);
+  Player(LevelPos init_pos);
 
-  void Draw(Coord center);
+  void Draw(ScreenPos top_left);
   void OnNotify(Event event);
   void Update();
 };
