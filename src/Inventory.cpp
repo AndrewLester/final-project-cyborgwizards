@@ -4,16 +4,16 @@ static Inventory* Inventory::Instance() {
     return *this;
 }
 
-static void Inventory::AddItem(Item* item) {
+void Inventory::AddItem(Item* item) {
     inventory.push_back(item);
 }
-static size_t GetSize() {
+size_t GetSize() {
     return inventory.size();
 }
-static size_t GetMaxSize() {
+size_t GetMaxSize() {
     return max_size_;
 }
-static Item* GetItemAt(size_t idx) {
+Item* GetItemAt(size_t idx) {
     if(idx < 0 || idx >= inventory.size()) {
         throw std::out_of_range("invalid index");
     }
