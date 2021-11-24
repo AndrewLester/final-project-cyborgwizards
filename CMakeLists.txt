@@ -39,7 +39,10 @@ set(BUILD_SHARED_LIBS ON)  # Builds libtcod has a shared library.
 add_subdirectory("libtcod")  # This will error if you haven't initialized libtcod the submodule!
 
 find_package(SDL2 CONFIG REQUIRED)
-target_link_libraries(${PROJECT_NAME} PRIVATE SDL2::SDL2 SDL2::SDL2main libtcod::libtcod)
+
+# file(GLOB LIBRARIES "build/bin/libEGL.dylib" "build/bin/libGLESv2.dylib")
+# message("LIBRARIES = ${LIBRARIES}")
+# target_link_libraries(${PROJECT_NAME} PRIVATE SDL2::SDL2 SDL2::SDL2main libtcod::libtcod PUBLIC "${LIBRARIES}")
 
 # Catch2
 
