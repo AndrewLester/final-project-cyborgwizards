@@ -1,5 +1,4 @@
 #include <SDL.h>
-#include <dlfcn.h>
 #include <libtcod.hpp>
 
 #include <cstdlib>
@@ -8,11 +7,6 @@
 #include "MapGenerator.hpp"
 
 int main(int argc, char** argv) {
-#if defined(__APPLE__)
-  dlopen("./libEGL.dylib", RTLD_FIRST | RTLD_GLOBAL);
-  dlopen("./libGLESv2.dylib", RTLD_FIRST | RTLD_GLOBAL);
-#endif
-
   // std::cout << "HI" << std::endl;
   auto params = TCOD_ContextParams{};
   params.tcod_version = TCOD_COMPILEDVERSION;
