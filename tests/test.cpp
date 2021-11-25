@@ -15,7 +15,7 @@ TEST_CASE("EventListener", "[event-listener]") {
    private:
     std::string indicator_;
    public:
-    DerivedEntity(std::string indicator): Entity({0, 0}), indicator_(indicator) {}
+    DerivedEntity(std::string indicator): Entity({0, 0, 1}, 1, 1), indicator_(indicator) {}
     void OnNotify(Event event) override {
       std::string msg = this->indicator_ + ", " + event.GetType();
       throw std::runtime_error(msg);
@@ -40,7 +40,7 @@ TEST_CASE("EventListener", "[event-listener]") {
   REQUIRE_NOTHROW(e2->UploadEvent(devent));
   EventListener::Instance().RegisterListener(e2, "DerivedEvent");
   REQUIRE_THROWS_WITH(e1->UploadEvent(devent), "e2, DerivedEvent");
-  
+
   delete e1; delete e2;
 }
 
