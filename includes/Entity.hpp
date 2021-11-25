@@ -9,9 +9,11 @@
 class Entity {
  protected:
   LevelPos position_; // top_left
+  int width_;
+  int height_;
 
  public:
-  Entity(LevelPos init_pos);
+  Entity(LevelPos init_pos, int width, int height);
   virtual ~Entity();
 
   void UploadEvent(Event event);
@@ -19,6 +21,7 @@ class Entity {
   virtual void OnNotify(Event event) = 0;
 
   LevelPos GetPosition();
+  LevelPos GetCenterPosition();
 
   virtual void Draw(ScreenPos top_left) = 0;
 };

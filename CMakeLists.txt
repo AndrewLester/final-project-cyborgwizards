@@ -43,6 +43,7 @@ find_package(SDL2 CONFIG REQUIRED)
 # file(GLOB LIBRARIES "build/bin/libEGL.dylib" "build/bin/libGLESv2.dylib")
 # message("LIBRARIES = ${LIBRARIES}")
 # target_link_libraries(${PROJECT_NAME} PRIVATE SDL2::SDL2 SDL2::SDL2main libtcod::libtcod PUBLIC "${LIBRARIES}")
+target_link_libraries(${PROJECT_NAME} PRIVATE SDL2::SDL2 SDL2::SDL2main libtcod::libtcod)
 
 # Catch2
 

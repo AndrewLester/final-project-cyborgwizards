@@ -1,21 +1,21 @@
-#include "MapRoom.hpp"
+#include "MapCorridor.hpp"
 #include <libtcod.h>
 #include <iostream>
 
-void MapRoom::Draw(ScreenPos top_left) {
+void MapCorridor::Draw(ScreenPos top_left) {
   for (int row = top_left.x; row < width_; row++) {
     for (int col = top_left.y; col < height_; col++) {
-      // TCODConsole::root->putCharEx(row, col, '#', TCODColor::grey, TCODColor::grey);
+      // TCODConsole::root->putChar(row, col, ' ');
     }
   }
 }
 
-void MapRoom::OnNotify(Event event) {
+void MapCorridor::OnNotify(Event event) {
   std::cout << event.GetType() << std::endl;
   return;
 }
 
-std::vector<LevelPos> MapRoom::GetPositions() {
+std::vector<LevelPos> MapCorridor::GetPositions() {
   std::vector<LevelPos> positions;
 
   for (int row = position_.x; row < width_; row++) {

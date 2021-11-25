@@ -1,6 +1,6 @@
 #include "Map.hpp"
 
-Map::Map(int width, int height, std::vector<MapShape*> shapes) : shapes_(shapes), items_(std::vector<Item*>()) {
+Map::Map(int width, int height) : items_(std::vector<Item*>()) {
   map_ = std::make_unique<TCODMap>(TCODMap(width, height));
 }
 
@@ -8,6 +8,12 @@ Map::~Map() {
   for (MapShape* shape : shapes_) {
     delete shape;
   }
+}
+
+std::unique_ptr<TCODMap>& Map::GetMap() { return map_; }
+
+void Map::SetShapes(std::vector<MapShape*> shapes) {
+  shapes_ = shapes;
 }
 
 void Map::Render(LevelPos center) {

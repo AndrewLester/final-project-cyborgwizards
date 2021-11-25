@@ -5,6 +5,8 @@
 #include <cstdlib>
 #include <iostream>
 
+#include "MapGenerator.hpp"
+
 int main(int argc, char** argv) {
 #if defined(__APPLE__)
   dlopen("./libEGL.dylib", RTLD_FIRST | RTLD_GLOBAL);
@@ -25,6 +27,8 @@ int main(int argc, char** argv) {
   params.console = console.get();
 
   auto context = tcod::new_context(params);
+  MapGenerator generator;
+  Map* map = generator.Generate(100, 100, 1);
 
   // Game loop.
   while (true) {
@@ -44,5 +48,7 @@ int main(int argc, char** argv) {
       }
     }
   }
+
+  delete map;
   return 0;
 }

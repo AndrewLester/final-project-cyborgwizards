@@ -3,9 +3,11 @@
 
 #include "Entity.hpp"
 
+enum class ShapeType { ROOM, CORRIDOR };
+
 class MapShape : public Entity {
  public:
-  MapShape(int x_span, int y_span, LevelPos top_left);
+  MapShape(LevelPos position, int width, int height);
 
  protected:
   /**
@@ -24,6 +26,7 @@ class MapShape : public Entity {
 
  public:
   virtual void Draw(ScreenPos top_left) = 0;
+  virtual std::vector<LevelPos> GetPositions() = 0;
   bool IsReachable();
   bool ContainsLevelPos(LevelPos position);
 };
