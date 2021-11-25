@@ -5,14 +5,13 @@
 
 #include "Item.hpp"
 #include "MapShape.hpp"
-#include <memory>
-#include <libtcod.h>
+#include <libtcod.hpp>
 
 class Map {
  private:
   std::vector<MapShape*> shapes_;
   std::vector<Item*> items_;
-  std::unique_ptr<TCODMap> map_;
+  TCODMap* map_;
 
  public:
   Map(int width, int height);
@@ -24,7 +23,7 @@ class Map {
   void SetShapes(std::vector<MapShape*> shapes_);
   Item* GetItem(LevelPos position);
   MapShape* GetMapShape(LevelPos position);
-  std::unique_ptr<TCODMap>& GetMap();
+  TCODMap* GetMap();
 };
 
 #endif

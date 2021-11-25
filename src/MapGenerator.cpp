@@ -41,7 +41,7 @@ void MapGenerator::RunBspSplit(int width, int height, int level, std::vector<Map
 Map* MapGenerator::Generate(int width, int height, int level) {
   std::vector<MapShape*> shapes;
   Map* map = new Map(width, height);
-  auto& tcod_map = map->GetMap();
+  TCODMap* tcod_map = map->GetMap();
 
   for (int row = 0; row < width; row++) {
     for (int col = 0; col < height; col++) {

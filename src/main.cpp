@@ -1,6 +1,6 @@
 #include <SDL.h>
 #include <dlfcn.h>
-#include <libtcod.h>
+#include <libtcod.hpp>
 
 #include <cstdlib>
 #include <iostream>

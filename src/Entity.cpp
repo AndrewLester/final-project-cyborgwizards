@@ -17,5 +17,5 @@ LevelPos Entity::GetPosition() {
 }
 
 LevelPos Entity::GetCenterPosition() {
-  return { (position_.x + width_) / 2, (position_.y + height_) / 2 };
+  return { (position_.x + width_) / 2, (position_.y + height_) / 2, position_.level };
 }
