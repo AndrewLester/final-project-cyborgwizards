@@ -1,6 +1,6 @@
 #include "MapShape.hpp"
 
-MapShape::MapShape(int width, int height, LevelPos top_left) : Entity(top_left), width_(width), height_(height) {}
+MapShape::MapShape(LevelPos position, int width, int height) : Entity(position, width, height) {}
 
 bool MapShape::IsReachable() { return reachable_; }
 
