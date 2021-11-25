@@ -5,7 +5,7 @@
 
 #include "Item.hpp"
 #include "MapShape.hpp"
-#include <libtcod.hpp>
+#include <libtcod.h>
 
 class Map {
  private:

@@ -1,6 +1,6 @@
 #include "Map.hpp"
 #include <memory>
-#include <libtcod.hpp>
+#include <libtcod.h>
 
 class MapGenerator {
 private:
