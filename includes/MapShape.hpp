@@ -2,6 +2,8 @@
 #define MAP_SHAPE_HPP
 
 #include "Entity.hpp"
+#include "LevelPos.hpp"
+#include <vector>
 
 enum class ShapeType { ROOM, CORRIDOR };
 
