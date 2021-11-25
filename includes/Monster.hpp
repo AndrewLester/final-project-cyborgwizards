@@ -3,7 +3,8 @@
 
 #include <queue>
 
-#include "map/MapRoom.hpp"
+#include "Entity.hpp"
+#include "MapRoom.hpp"
 
 enum MonsterState { Roam, Chase, Search };
 
