@@ -34,7 +34,7 @@ int main(int argc, char** argv) {
   while (true) {
     //   // Rendering.
     console.clear();
-    // tcod::print(console, {0, 0}, "Hello World", TCOD_white, std::nullopt);
+    tcod::print(console, {0, 0}, "Hello World", TCOD_white, std::nullopt);
     context->present(console);
 
     // Handle input.
