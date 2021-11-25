@@ -5,7 +5,7 @@
 void MapCorridor::Draw(ScreenPos top_left) {
   for (int row = top_left.x; row < width_; row++) {
     for (int col = top_left.y; col < height_; col++) {
-      // TCODConsole::root->putChar(row, col, ' ');
+      // TCODConsole::root->setChar(row, col, ' ');
     }
   }
 }

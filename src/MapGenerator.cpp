@@ -2,14 +2,12 @@
 #include "MapRoom.hpp"
 #include "MapCorridor.hpp"
 
-MapGenerator::MapGenerator(): default_random_(true) {
+MapGenerator::MapGenerator() {
   TCODRandom copy = *TCODRandom::getInstance();
   random_ = std::make_unique<TCODRandom>(copy);
 }
 
-MapGenerator::MapGenerator(std::unique_ptr<TCODRandom> random): default_random_(false) {
-  random_ = std::move(random);
-}
+MapGenerator::MapGenerator(std::unique_ptr<TCODRandom> random): random_(std::move(random)) {}
 
 bool MapGenerator::BspListener::visitNode(TCODBsp* node, void* user_data) {
   std::vector<MapShape*>* shapes = static_cast<std::vector<MapShape*>*>(user_data);
@@ -48,6 +46,7 @@ Map* MapGenerator::Generate(int width, int height, int level) {
   for (int row = 0; row < width; row++) {
     for (int col = 0; col < height; col++) {
       tcod_map->setProperties(row, col, false, false);
+      // TCODConsole::root->setChar(row, col, '#');
     }
   }
 
@@ -76,7 +75,6 @@ MapShape* MapGenerator::CreateShape(int x1, int y1, int x2, int y2, int level, S
        y1=tmp;
    }
 
-  MapShape* shape;
   switch (type) {
     case ShapeType::ROOM:
       return new MapRoom({ x1, y1, level }, x2 - x1, y2 - y1);

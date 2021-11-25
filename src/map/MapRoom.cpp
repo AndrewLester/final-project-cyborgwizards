@@ -5,7 +5,7 @@
 void MapRoom::Draw(ScreenPos top_left) {
   for (int row = top_left.x; row < width_; row++) {
     for (int col = top_left.y; col < height_; col++) {
-      // TCODConsole::root->putCharEx(row, col, '#', TCODColor::grey, TCODColor::grey);
+      // TCODConsole::root->setChar(row, col, ' ');
     }
   }
 }
