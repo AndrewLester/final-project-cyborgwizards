@@ -5,7 +5,7 @@
 
 #include "Item.hpp"
 #include "MapShape.hpp"
-#include <libtcod.h>
+#include <libtcod/fov.hpp>
 
 class Map {
  private:

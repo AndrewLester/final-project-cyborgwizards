@@ -1,5 +1,4 @@
 #include "MapRoom.hpp"
-#include <libtcod.h>
 #include <iostream>
 
 void MapRoom::Draw(ScreenPos top_left) {

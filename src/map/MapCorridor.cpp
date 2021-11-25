@@ -1,5 +1,4 @@
 #include "MapCorridor.hpp"
-#include <libtcod.h>
 #include <iostream>
 
 void MapCorridor::Draw(ScreenPos top_left) {
