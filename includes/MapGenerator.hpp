@@ -6,7 +6,6 @@ class MapGenerator {
 private:
   static const int ROOM_MAX_SIZE = 12;
   static const int ROOM_MIN_SIZE = 6;
-  std::unique_ptr<TCODRandom> random_;
 
   MapShape* CreateShape(int x1, int y1, int x2, int y2, int level, ShapeType type);
   void RunBspSplit(int width, int height, int level, std::vector<MapShape*>* shapes);
@@ -23,8 +22,5 @@ private:
     bool visitNode(TCODBsp *node, void *userData);
   };
 public:
-  MapGenerator();
-  MapGenerator(std::unique_ptr<TCODRandom> random);
   Map* Generate(int width, int height, int level);
-  const std::unique_ptr<TCODRandom>& GetRandom() const;
 };

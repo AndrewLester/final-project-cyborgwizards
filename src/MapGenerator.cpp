@@ -2,18 +2,11 @@
 #include "MapRoom.hpp"
 #include "MapCorridor.hpp"
 
-MapGenerator::MapGenerator() {
-  TCODRandom copy = *TCODRandom::getInstance();
-  random_ = std::make_unique<TCODRandom>(copy);
-}
-
-MapGenerator::MapGenerator(std::unique_ptr<TCODRandom> random): random_(std::move(random)) {}
-
 bool MapGenerator::BspListener::visitNode(TCODBsp* node, void* user_data) {
   std::vector<MapShape*>* shapes = static_cast<std::vector<MapShape*>*>(user_data);
   if (node->isLeaf()) {
     int x, y, w, h;
-    auto& random = generator_->GetRandom();
+    TCODRandom* random = TCODRandom::getInstance();
     w = random->getInt(ROOM_MIN_SIZE, node->w-2);
     h = random->getInt(ROOM_MIN_SIZE, node->h-2);
     x = random->getInt(node->x+1, node->x+node->w-w-1);
@@ -83,8 +76,4 @@ MapShape* MapGenerator::CreateShape(int x1, int y1, int x2, int y2, int level, S
     default:
       return nullptr;
   }
-}
-
-const std::unique_ptr<TCODRandom>& MapGenerator::GetRandom() const {
-  return random_;
 }
