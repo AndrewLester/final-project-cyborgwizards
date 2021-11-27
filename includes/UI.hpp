@@ -4,8 +4,7 @@
 #include "Map.hpp"
 #include "Monster.hpp"
 #include "Player.hpp"
-#include "libtcod.hpp"
-#include <string>
+#include "RenderEngine.hpp"
 
 enum GameState { InProgress, Win, Loss };
 
