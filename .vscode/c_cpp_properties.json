@@ -24,7 +24,8 @@
             "includePath": [
                 "${workspaceFolder}/**",
                 "${workspaceFolder}/includes/**",
-                "${workspaceFolder}/build/vcpkg_installed/**"
+                "${workspaceFolder}/build/vcpkg_installed/**",
+                "${workspaceFolder}/includes"
             ],
             // "mergeConfigurations": true,
             "defines": [

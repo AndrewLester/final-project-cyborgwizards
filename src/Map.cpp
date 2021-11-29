@@ -1,6 +1,21 @@
 #include "Map.hpp"
 
-Map::Map() : shapes_(std::vector<MapShape*>()), items_(std::vector<Item*>()) {}
+Map::Map(int width, int height) : items_(std::vector<Item*>()) {
+  map_ = new TCODMap(width, height);
+}
+
+Map::~Map() {
+  for (MapShape* shape : shapes_) {
+    delete shape;
+  }
+  delete map_;
+}
+
+TCODMap* Map::GetMap() { return map_; }
+
+void Map::SetShapes(std::vector<MapShape*> shapes) {
+  shapes_ = shapes;
+}
 
 void Map::Render(LevelPos center) {
   ScreenPos screen_center = {60, 60}; // TODO: relate this to UI initialization
