@@ -20,9 +20,9 @@ class UI {
  public:
   void RenderAll();
 
-  void GetPlayer();
-  void GetMap();
-  void GetMonster();
+  Player* GetPlayer();
+  Map* GetMap();
+  Monster* GetMonster();
 
   static UI& Instance() {
     static UI* instance = new UI();

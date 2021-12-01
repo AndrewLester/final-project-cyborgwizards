@@ -13,6 +13,7 @@ class Monster : public Entity {
   MonsterState state_ = MonsterState::Roam;
   int roam_speed_ = 5;
   int chase_speed_ = 3;
+  LevelPos destination_ = {-1, -1, -1};
   std::queue<LevelPos> path_;
 
  private:
@@ -20,7 +21,7 @@ class Monster : public Entity {
 
  public:
   virtual void Update();
-  void ChangeDestination(MapRoom* room);
+  void ChangeDestination(LevelPos destination);
   virtual void OnNotify(Event event) = 0;
 };
 

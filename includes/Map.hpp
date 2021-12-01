@@ -5,6 +5,8 @@
 
 #include "Item.hpp"
 #include "MapShape.hpp"
+#include "MapRoom.hpp"
+#include "MapCorridor.hpp"
 #include <libtcod/fov.hpp>
 
 class Map {
@@ -24,6 +26,10 @@ class Map {
   Item* GetItem(LevelPos position);
   MapShape* GetMapShape(LevelPos position);
   TCODMap* GetMap();
+
+  MapRoom* GetRoom(LevelPos position);
+  std::vector<MapCorridor*> GetCorriders();
+  std::vector<MapRoom*> GetRoomInRadius(LevelPos position, int radius);
 };
 
 #endif
