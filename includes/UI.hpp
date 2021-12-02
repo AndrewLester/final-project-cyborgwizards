@@ -1,7 +1,7 @@
 #ifndef UI_HPP
 #define UI_HPP
 
-#include "Map.hpp"
+#include "MapGenerator.hpp"
 #include "Monster.hpp"
 #include "Player.hpp"
 

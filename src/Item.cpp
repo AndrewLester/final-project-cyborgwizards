@@ -28,26 +28,26 @@ void Item::Pick(Player* player) {
 
 
 LevelPos Item::CheckNearestOpenPos() {
-    LevelPos curr_pos = UI::Instance().GetPlayer().GetPosition();
+    LevelPos curr_pos = player_->GetPosition();
     std::vector<LevelPos> neighbors;
     for(int i = 0; i < 3; i++) {
-        neighbors.push_back(LevelPos(curr_pos.x + i, curr_pos.y + i));
-        neighbors.push_back(LevelPos(curr_pos.x + i, curr_pos.y));
-        neighbors.push_back(LevelPos(curr_pos.x + i, curr_pos.y - i));
-        neighbors.push_back(LevelPos(curr_pos.x, curr_pos.y + i));
-        neighbors.push_back(LevelPos(curr_pos.x, curr_pos.y - i));
-        neighbors.push_back(LevelPos(curr_pos.x - i, curr_pos.y + i));
-        neighbors.push_back(LevelPos(curr_pos.x - i, curr_pos.y));
-        neighbors.push_back(LevelPos(curr_pos.x - i, curr_pos.y - i));
+        neighbors.push_back({curr_pos.x + i, curr_pos.y + i, curr_pos.level});
+        neighbors.push_back({curr_pos.x + i, curr_pos.y, curr_pos.level});
+        neighbors.push_back({curr_pos.x + i, curr_pos.y - i, curr_pos.level});
+        neighbors.push_back({curr_pos.x, curr_pos.y + i, curr_pos.level});
+        neighbors.push_back({curr_pos.x, curr_pos.y - i, curr_pos.level});
+        neighbors.push_back({curr_pos.x - i, curr_pos.y + i, curr_pos.level});
+        neighbors.push_back({curr_pos.x - i, curr_pos.y, curr_pos.level});
+        neighbors.push_back({curr_pos.x - i, curr_pos.y - i, curr_pos.level});
 
         for(size_t j = 0; j < neighbors.size(); j++) {
             if(neighbors.at(i).x != -1 && neighbors.at(i).y != -1) {
-                if(UI::Instance().GetMap().GetItem(neighbors.at(i)) == nullptr) {
+                if (UI::Instance().GetMap().IsReachable(neighbors.at(i)) && UI::Instance().GetMap().GetItem(neighbors.at(i)) == nullptr) {
                     player_->GetInventory()->RemoveItem(this);
                     return neighbors.at(i);
                 }
             }
         }
     }
-    return LevelPos(-1000,-1000);
+    return {-1, -1, -1};
 }
