@@ -12,7 +12,8 @@ class Player : public Entity {
   int timer_ = 0;
   PlayerState state_ = PlayerState::Stop;
   int hp_ = 100;
-  Inventory* inventory_;
+  Inventory* inventory_ = nullptr;
+
  public:
   Player(LevelPos init_pos);
   Inventory* GetInventory();

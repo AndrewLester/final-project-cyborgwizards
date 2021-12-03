@@ -1,9 +1,11 @@
 #ifndef INVENTORY_HPP
 #define INVENTORY_HPP
 
-#include "Item.hpp"
 #include <stdexcept>
 #include <vector>
+
+class Item;
+
 class Inventory {
  private:
   std::vector<Item*> inventory;

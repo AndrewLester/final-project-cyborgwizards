@@ -5,16 +5,14 @@
 #define sqr(x) ((x) * (x))
 
 struct LevelPos {
- public:
   int x;
   int y;
   int level;
 
-  LevelPos(int x_, int y_, int level_): x(x_), y(y_), level(level_){}
+  // LevelPos(int x_, int y_): x(x_), y(y_){}
 
   LevelPos& operator-=(const LevelPos& other);
 
- private:
   double Distance(const LevelPos& c) {
     return sqrt(sqr(c.x - this->x) + sqr(c.y - this->y) + sqr((c.level - this->level) * 5));
   }
