@@ -37,6 +37,8 @@ int main(int argc, char** argv) {
         case SDL_QUIT:
           std::exit(EXIT_SUCCESS);
           break;
+        case SDL_KEYDOWN:
+          std::cout << event.key.keysym.scancode << ' ' << event.key.keysym.mod << std::endl;
         default:
           EventListener::Instance().HandleInput(event);
       }
