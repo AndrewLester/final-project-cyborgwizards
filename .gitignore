@@ -123,3 +123,4 @@ build
 
 # Vcpkg installation log
 vcpkg-bootstrap.log
+vcpkg_installed
