@@ -9,6 +9,9 @@ Map::~Map() {
   for (MapShape* shape : shapes_) {
     delete shape;
   }
+  for (Item* item : items_) {
+    delete item;
+  }
   delete map_;
 }
 
