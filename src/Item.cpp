@@ -12,6 +12,7 @@ void Item::Drop() {
             //handle case
         }
     }
+    in_inventory_ = false;
     player_ = nullptr;
 }
 
@@ -24,6 +25,7 @@ void Item::Pick(Player* player) {
     } else {
         //need to emit message that player cannot pick up item because inventory is full
     }
+    in_inventory_ = true;
 }
 
 
@@ -50,4 +52,8 @@ LevelPos Item::CheckNearestOpenPos() {
         }
     }
     return {-1, -1, -1};
+}
+
+bool Item::InInventory(){
+    return in_inventory_;
 }
