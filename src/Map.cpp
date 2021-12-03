@@ -1,7 +1,6 @@
 #include "Map.hpp"
-#include <math.h>
 #define _USE_MATH_DEFINES
-#include <cmath>
+#include <math.h>
 
 Map::Map(int width, int height) : items_(std::vector<Item*>()), width_(width), height_(height) {
   map_ = new TCODMap(width, height);
