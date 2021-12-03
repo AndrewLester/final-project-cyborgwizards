@@ -23,7 +23,6 @@ void Item::Pick(Player* player) {
     } else {
         //need to emit message that player cannot pick up item because inventory is full
     }
-
 }
 
 
@@ -31,14 +30,14 @@ LevelPos Item::CheckNearestOpenPos() {
     LevelPos curr_pos = UI::Instance().GetPlayer().GetPosition();
     std::vector<LevelPos> neighbors;
     for(int i = 0; i < 3; i++) {
-        neighbors.push_back(LevelPos(curr_pos.x + i, curr_pos.y + i));
-        neighbors.push_back(LevelPos(curr_pos.x + i, curr_pos.y));
-        neighbors.push_back(LevelPos(curr_pos.x + i, curr_pos.y - i));
-        neighbors.push_back(LevelPos(curr_pos.x, curr_pos.y + i));
-        neighbors.push_back(LevelPos(curr_pos.x, curr_pos.y - i));
-        neighbors.push_back(LevelPos(curr_pos.x - i, curr_pos.y + i));
-        neighbors.push_back(LevelPos(curr_pos.x - i, curr_pos.y));
-        neighbors.push_back(LevelPos(curr_pos.x - i, curr_pos.y - i));
+        neighbors.push_back(LevelPos(curr_pos.x + i, curr_pos.y + i, curr_pos.level));
+        neighbors.push_back(LevelPos(curr_pos.x + i, curr_pos.y, curr_pos.level));
+        neighbors.push_back(LevelPos(curr_pos.x + i, curr_pos.y - i, curr_pos.level));
+        neighbors.push_back(LevelPos(curr_pos.x, curr_pos.y + i, curr_pos.level));
+        neighbors.push_back(LevelPos(curr_pos.x, curr_pos.y - i, curr_pos.level));
+        neighbors.push_back(LevelPos(curr_pos.x - i, curr_pos.y + i, curr_pos.level));
+        neighbors.push_back(LevelPos(curr_pos.x - i, curr_pos.y, curr_pos.level));
+        neighbors.push_back(LevelPos(curr_pos.x - i, curr_pos.y - i, curr_pos.level));
 
         for(size_t j = 0; j < neighbors.size(); j++) {
             if(neighbors.at(i).x != -1 && neighbors.at(i).y != -1) {
@@ -49,5 +48,5 @@ LevelPos Item::CheckNearestOpenPos() {
             }
         }
     }
-    return LevelPos(-1000,-1000);
+    return LevelPos(-1000,-1000, -1000);
 }

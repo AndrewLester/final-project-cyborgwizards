@@ -10,7 +10,7 @@ struct LevelPos {
   int y;
   int level;
 
-  LevelPos(int x_, int y_): x(x_), y(y_){}
+  LevelPos(int x_, int y_, int level_): x(x_), y(y_), level(level_){}
 
   LevelPos& operator-=(const LevelPos& other);
 
