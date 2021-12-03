@@ -3,10 +3,10 @@
 
 #include <vector>
 
-#include "Item.hpp"
 #include "MapShape.hpp"
 #include "MapRoom.hpp"
 #include "MapCorridor.hpp"
+#include "Item.hpp"
 #include <libtcod/fov.hpp>
 
 class Map {
@@ -22,14 +22,14 @@ class Map {
   void Render(LevelPos center);
   bool IsReachable(LevelPos position);
   void AddItem(Item* item);
-  void SetShapes(std::vector<MapShape*> shapes_);
+  void SetShapes(std::vector<MapShape*> shapes);
   Item* GetItem(LevelPos position);
   MapShape* GetMapShape(LevelPos position);
   TCODMap* GetMap();
-
   MapRoom* GetRoom(LevelPos position);
-  std::vector<MapCorridor*> GetCorriders();
-  std::vector<MapRoom*> GetRoomInRadius(LevelPos position, int radius);
+  std::vector<MapCorridor*> GetCorridors();
+  std::vector<MapRoom*> GetRooms();
+  std::vector<MapRoom*> GetRoomsInRadius(LevelPos position, int radius);
 };
 
 #endif
