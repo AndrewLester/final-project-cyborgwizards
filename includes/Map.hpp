@@ -3,6 +3,9 @@
 
 #include <vector>
 
+#include "MapShape.hpp"
+#include "MapRoom.hpp"
+#include "MapCorridor.hpp"
 #include "Item.hpp"
 #include <libtcod/fov.hpp>
 

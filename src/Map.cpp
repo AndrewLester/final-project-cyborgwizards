@@ -1,7 +1,4 @@
 #include "Map.hpp"
-#include "MapShape.hpp"
-#include "MapRoom.hpp"
-#include "MapCorridor.hpp"
 #include <math.h>
 
 Map::Map(int width, int height) : items_(std::vector<Item*>()) {
