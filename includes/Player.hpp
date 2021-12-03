@@ -4,6 +4,7 @@
 #include "Entity.hpp"
 
 enum class PlayerState { Walk, Run, Hide, Stop };
+enum class Facing {N, W, E, S};
 
 class Player : public Entity {
  private:
@@ -19,6 +20,8 @@ class Player : public Entity {
   void Draw(ScreenPos top_left);
   void OnNotify(Event event);
   void Update();
+
+  Facing GetFacingDir();
 };
 
 #endif
