@@ -2,6 +2,7 @@
 #define MAP_HPP
 
 #include <vector>
+#include <map>
 
 #include "MapShape.hpp"
 #include "MapRoom.hpp"
@@ -14,6 +15,7 @@ class Map {
   std::vector<MapShape*> shapes_;
   std::vector<Item*> items_;
   TCODMap* map_;
+  std::map<MapRoom*, std::map<MapRoom*, std::pair<MapCorridor*, MapCorridor*>>> relations_;
 
  public:
   Map(int width, int height);
@@ -23,6 +25,7 @@ class Map {
   bool IsReachable(LevelPos position);
   void AddItem(Item* item);
   void SetShapes(std::vector<MapShape*> shapes);
+
   Item* GetItem(LevelPos position);
   MapShape* GetMapShape(LevelPos position);
   TCODMap* GetMap();
