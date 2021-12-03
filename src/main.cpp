@@ -4,6 +4,7 @@
 #include <cstdlib>
 #include <iostream>
 
+#include "EventListener.hpp"
 #include "MapGenerator.hpp"
 
 int main(int argc, char** argv) {
@@ -38,6 +39,8 @@ int main(int argc, char** argv) {
         case SDL_QUIT:
           std::exit(EXIT_SUCCESS);
           break;
+        default:
+          EventListener::Instance().HandleInput(event);
       }
     }
   }
