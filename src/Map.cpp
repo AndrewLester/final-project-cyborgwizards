@@ -90,15 +90,19 @@ std::vector<MapRoom*> Map::GetRooms() {
   return corridors;
 }
 
-void GetRingAngles(int radius, std::vector<double>& angles) {
-  if (radius == 1) {
-    return;
+std::vector<double> GetRingAngles(int radius) {
+  std::vector<double> angles;
+  if (radius <= 1) {
+    return angles;
   }
 
-  double initital_angle = M_PI_2 / radius;
-  angles.push_back(initital_angle);
-  angles.push_back(M_PI_2 - initital_angle);
-  GetRingAngles(radius - 1, angles);
+  for (int i = radius; i > 1; i--) {
+    double initital_angle = M_PI_2 / i;
+    angles.push_back(i);
+    angles.push_back(M_PI_2 - i);
+  }
+
+  return angles;
 }
 
 void GetRingPositions(LevelPos center, int radius, std::vector<LevelPos>& positions) {
@@ -107,8 +111,7 @@ void GetRingPositions(LevelPos center, int radius, std::vector<LevelPos>& positi
     return;
   }
 
-  std::vector<double> angles;
-  GetRingAngles(radius, angles);
+  std::vector<double> angles = GetRingAngles(radius);
 
   std::vector<double> angles_copy = angles;
   for (double angle : angles_copy) {
