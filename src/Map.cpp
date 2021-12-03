@@ -98,8 +98,8 @@ std::vector<double> GetRingAngles(int radius) {
 
   for (int i = radius; i > 1; i--) {
     double initital_angle = M_PI_2 / i;
-    angles.push_back(i);
-    angles.push_back(M_PI_2 - i);
+    angles.push_back(initital_angle);
+    angles.push_back(M_PI_2 - initital_angle);
   }
 
   return angles;
