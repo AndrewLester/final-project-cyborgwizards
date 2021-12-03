@@ -1,11 +1,11 @@
-
 #include <SDL.h>
-#include <libtcod.h>
+#include <libtcod.hpp>
 
 #include <cstdlib>
 #include <iostream>
 
 #include "EventListener.hpp"
+#include "MapGenerator.hpp"
 
 int main(int argc, char** argv) {
   // std::cout << "HI" << std::endl;
@@ -21,6 +21,8 @@ int main(int argc, char** argv) {
   params.console = console.get();
 
   auto context = tcod::new_context(params);
+  MapGenerator generator;
+  Map* map = generator.Generate(100, 100, 1);
 
   // Game loop.
   while (true) {
@@ -42,5 +44,7 @@ int main(int argc, char** argv) {
       }
     }
   }
+
+  delete map;
   return 0;
 }

@@ -1,15 +1,14 @@
 #ifndef EVENT_LISTENER_HPP
 #define EVENT_LISTENER_HPP
 
-#include <map>
-#include <string>
-#include <set>
-
 #include <SDL_events.h>
 
-#include "Event.hpp"
-#include "Entity.hpp"
+#include <map>
+#include <set>
+#include <string>
 
+#include "Entity.hpp"
+#include "Event.hpp"
 #include "HideEvent.hpp"
 #include "KeyboardEvent.hpp"
 #include "SoundEvent.hpp"
@@ -27,7 +26,7 @@ class EventListener {
     static EventListener* instance = new EventListener();
     return *instance;
   }
-  
+
   void HandleInput(SDL_Event event);
 
   void BroadcastEvent(Event event);
