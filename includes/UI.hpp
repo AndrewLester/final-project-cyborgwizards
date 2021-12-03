@@ -1,7 +1,7 @@
 #ifndef UI_HPP
 #define UI_HPP
 
-#include "MapGenerator.hpp"
+#include "Map.hpp"
 #include "Monster.hpp"
 #include "Player.hpp"
 
@@ -20,9 +20,9 @@ class UI {
  public:
   void RenderAll();
 
-  Player GetPlayer();
-  Map GetMap();
-  Monster GetMonster();
+  Player* GetPlayer();
+  Map* GetMap();
+  Monster* GetMonster();
 
   static UI& Instance() {
     static UI* instance = new UI();

@@ -4,7 +4,6 @@
 #include "LevelPos.hpp"
 #include "Entity.hpp"
 #include "Player.hpp"
-#include "UI.hpp"
 
 class Item : public Entity {
  private:
