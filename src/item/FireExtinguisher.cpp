@@ -19,21 +19,21 @@ void FireExtinguisher::Use() {
         LevelPos start{play->GetPosition().x, play->GetPosition().y, play->GetPosition().level};
         LevelPos end{play->GetPosition().x, play->GetPosition().y + 2, play->GetPosition().level};
 
-        StunEvent stun = StunEvent(play, start, end);
+        StunEvent stun = StunEvent(play, start, end, stun_period);
     } else if(play->GetFacingDir() == Facing::S) {
         LevelPos start{play->GetPosition().x, play->GetPosition().y, play->GetPosition().level};
         LevelPos end{play->GetPosition().x, play->GetPosition().y - 2, play->GetPosition().level};
 
-        StunEvent stun = StunEvent(play, start, end);
+        StunEvent stun = StunEvent(play, start, end, stun_period);
     } else if(play->GetFacingDir() == Facing::E) {
         LevelPos start{play->GetPosition().x, play->GetPosition().y, play->GetPosition().level};
         LevelPos end{play->GetPosition().x + 2, play->GetPosition().y, play->GetPosition().level};
 
-        StunEvent stun = StunEvent(play, start, end);
+        StunEvent stun = StunEvent(play, start, end, stun_period);
     } else {
         LevelPos start{play->GetPosition().x, play->GetPosition().y, play->GetPosition().level};
         LevelPos end{play->GetPosition().x - 2, play->GetPosition().y, play->GetPosition().level};
 
-        StunEvent stun = StunEvent(play, start, end);
+        StunEvent stun = StunEvent(play, start, end, stun_period);
     }
 }

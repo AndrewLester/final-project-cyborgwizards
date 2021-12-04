@@ -6,11 +6,12 @@
 
 class StunEvent : public Event {
  public:
-  StunEvent(Entity* emitter, LevelPos start, LevelPos end);
+  StunEvent(Entity* emitter, LevelPos start, LevelPos end, int stun_period);
 
  public:
   LevelPos start;
   LevelPos end;
+  int stun_period;
 };
 
 #endif
