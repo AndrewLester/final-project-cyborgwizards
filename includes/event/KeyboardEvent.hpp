@@ -10,6 +10,7 @@ class KeyboardEvent : public Event {
   KeyType key;
   bool shift;
   bool ctrl;
+  bool keyup;
 
  public:
   KeyboardEvent(SDL_KeyboardEvent keyboard_event);
