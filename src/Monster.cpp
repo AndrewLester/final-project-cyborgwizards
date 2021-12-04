@@ -3,6 +3,10 @@
 #include <algorithm>
 
 #include "UI.hpp"
+#include "SoundEvent.hpp"
+
+Monster::Monster(LevelPos pos, int roam_sound, int chase_sound):
+  Entity(pos, 1, 1), kRoamSound(roam_sound), kChaseSound(chase_sound) {}
 
 void Monster::Update() {
   if (timer_ == 0) {
@@ -17,6 +21,9 @@ void Monster::Update() {
     } else {
       this->position_.x += next_turn.x > this->position_.x ? 1 : -1;
     }
+
+    SoundEvent se(this, this->position_, this->state_ == MonsterState::Chase ? kChaseSound : kRoamSound);
+    EventListener::Instance().BroadcastEvent(se);
   } else {
     timer_--;
   }
