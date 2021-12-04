@@ -3,6 +3,7 @@
 SoundEvent::SoundEvent(Entity* emitter, LevelPos source, int intensity):
   Event("SoundEvent", emitter), source(source), intensity(intensity) {}
 
+// kThreshold = 200 => 90% relative intensity = 180 => raw_intensity <= 20
 int SoundEvent::RelativeIntensity(LevelPos position) {
   LevelPos diff = position - source;
   double raw_intensity = sqrt(sqr(diff.x) + sqr(diff.y) + sqr(diff.level * kLevelHeight)) / this->intensity;
