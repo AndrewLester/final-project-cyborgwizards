@@ -1,9 +1,11 @@
 #ifndef MONSTER_HPP
 #define MONSTER_HPP
 
-#include <queue>
+#include <deque>
 
-#include "map/MapRoom.hpp"
+#include "Entity.hpp"
+#include "MapRoom.hpp"
+#include "Map.hpp"
 
 enum MonsterState { Roam, Chase, Search };
 
@@ -12,14 +14,16 @@ class Monster : public Entity {
   MonsterState state_ = MonsterState::Roam;
   int roam_speed_ = 5;
   int chase_speed_ = 3;
-  std::queue<LevelPos> path_;
+  LevelPos destination_ = {-1, -1, -1};
+  std::deque<LevelPos> path_;
 
  private:
   int timer_ = 0;
+  void Monster::FindPath(const AdjacentList& map, std::set<MapRoom*>& visited, MapRoom* curr, MapRoom* dest, bool& found);
 
  public:
   virtual void Update();
-  void ChangeDestination(MapRoom* room);
+  void ChangeDestination(LevelPos destination);
   virtual void OnNotify(Event event) = 0;
 };
 

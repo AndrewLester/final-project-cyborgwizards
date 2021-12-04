@@ -3,17 +3,20 @@
 
 #include "LevelPos.hpp"
 #include "Entity.hpp"
+#include "Player.hpp"
 
 class Item : public Entity {
  private:
-  int inventory_idx_ = -1;
+  LevelPos CheckNearestOpenPos();
+  Player* player_ = nullptr;
+  bool in_inventory_;
 
  public:
   virtual void Draw(ScreenPos top_left) = 0;
   virtual void Use() = 0;
   void Drop();
-  void Pick();
-  int GetInventoryIdx();
+  void Pick(Player* player);
+  bool InInventory();
 };
 
 #endif

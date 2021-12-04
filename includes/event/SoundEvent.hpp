@@ -5,14 +5,17 @@
 #include "LevelPos.hpp"
 
 enum Direction {
-  North,
-  South,
-  East,
-  West
+  Northwest,
+  Southwest,
+  Northeast,
+  Southeast
 };
 
 class SoundEvent : public Event {
  public:
+  static const int kThreshold = 200;
+  static const int kLevelHeight = 10;
+
   LevelPos source;
   int intensity;
 

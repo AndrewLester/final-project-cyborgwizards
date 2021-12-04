@@ -120,6 +120,8 @@ Temporary Items
 ## Custom
 # Default build directory
 build
+bin
 
 # Vcpkg installation log
 vcpkg-bootstrap.log
+vcpkg_installed

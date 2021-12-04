@@ -1,4 +1,5 @@
 #include "UI.hpp"
+<<<<<<< HEAD
 // maybe use the "Reading the content of the console" to test?
 
 UI::UI() {
@@ -53,3 +54,21 @@ Map* UI::GetMap() {
 Monster* UI::GetMonster() {
     return monster_;
 }
+=======
+
+void UI::RenderAll() {
+
+}
+
+Player* UI::GetPlayer() {
+  return player_;
+}
+
+Map* UI::GetMap() {
+  return map_;
+}
+
+Monster* UI::GetMonster() {
+  return monster_;
+}
+>>>>>>> main

@@ -58,7 +58,7 @@ list(REMOVE_ITEM testing_sources ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp)
 
 add_executable(tests tests/test.cpp ${testing_sources})
 target_compile_features(tests PRIVATE cxx_std_17)
-target_link_libraries(tests PRIVATE Catch2::Catch2WithMain)
+target_link_libraries(tests PRIVATE Catch2::Catch2WithMain SDL2::SDL2 SDL2::SDL2main libtcod::libtcod)
 
 # Failed attempt of autodetecting test files - will break #include
 # list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/build/_deps/catch2-src/extras)
@@ -73,10 +73,12 @@ include_directories(
     "${CMAKE_CURRENT_SOURCE_DIR}/includes/event"
     "${CMAKE_CURRENT_SOURCE_DIR}/includes/item"
     "${CMAKE_CURRENT_SOURCE_DIR}/includes/map"
+    "${CMAKE_CURRENT_SOURCE_DIR}/includes/monster"
     "${CMAKE_CURRENT_SOURCE_DIR}/build/vcpkg_installed/x64-windows/include/SDL2"
     "${CMAKE_CURRENT_SOURCE_DIR}/build/vcpkg_installed/arm64-osx/include/SDL2"
     "${CMAKE_CURRENT_SOURCE_DIR}/build/vcpkg_installed/x64-osx/include/SDL2"
     "${CMAKE_CURRENT_SOURCE_DIR}/build/vcpkg_installed/x64-linux/include/SDL2"
     "${CMAKE_CURRENT_SOURCE_DIR}/build/vcpkg_installed/**"
     "${CMAKE_CURRENT_SOURCE_DIR}/libtcod/src"
+    "${CMAKE_CURRENT_SOURCE_DIR}/libtcod/src/libtcod"
 )

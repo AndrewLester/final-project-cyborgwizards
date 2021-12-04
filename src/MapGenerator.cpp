@@ -1,0 +1,96 @@
+#include "MapGenerator.hpp"
+#include "MapRoom.hpp"
+#include "MapCorridor.hpp"
+
+bool MapGenerator::BspListener::visitNode(TCODBsp* node, void* user_data) {
+  auto* data = static_cast<std::pair<std::vector<MapShape*>*, AdjacentList*>*>(user_data);
+  auto* shapes = data->first;
+  auto* relations = data->second;
+
+  if (node->isLeaf()) {
+    int x, y, w, h;
+    TCODRandom* random = TCODRandom::getInstance();
+    w = random->getInt(ROOM_MIN_SIZE, node->w-2);
+    h = random->getInt(ROOM_MIN_SIZE, node->h-2);
+    x = random->getInt(node->x+1, node->x+node->w-w-1);
+    y = random->getInt(node->y+1, node->y+node->h-h-1);
+    MapRoom* new_room = static_cast<MapRoom*>(generator_->CreateShape(x, y, x + w - 1, y + h - 1, level_, ShapeType::ROOM));
+    shapes->push_back(new_room);
+
+    int last_room_center_x = this->last_room_->GetCenterPosition().x;
+    int last_room_center_y = this->last_room_->GetCenterPosition().y;
+    if (room_num_ != 0 ) {
+      MapCorridor* c1 = static_cast<MapCorridor*>(generator_->CreateShape(last_room_center_x, last_room_center_y, x + w / 2, last_room_center_y, level_, ShapeType::CORRIDOR));
+      MapCorridor* c2 = static_cast<MapCorridor*>(generator_->CreateShape(x + w / 2, last_room_center_y, x + w / 2, y + h / 2, level_, ShapeType::CORRIDOR));
+      shapes->push_back(c1);
+      shapes->push_back(c2);
+
+      if (relations->find(this->last_room_) == relations->end()) {
+        relations->insert({this->last_room_, {}});
+      }
+      relations->at(this->last_room_).insert({new_room, {c1, c2}});
+      relations->at(new_room).insert({this->last_room_, {c2, c1}});
+    }
+    last_room_center_x = x + w / 2;
+    last_room_center_y = y + h / 2;
+    room_num_++;
+  }
+  return true;
+}
+
+void MapGenerator::RunBspSplit(int width, int height, int level, std::pair<std::vector<MapShape*>*, AdjacentList*>* data) {
+  TCODBsp bsp(0, 0, width, height);
+  bsp.splitRecursive(NULL, 8, ROOM_MAX_SIZE, ROOM_MAX_SIZE, 1.5f, 1.5f);
+  BspListener listener(this, level);
+  bsp.traverseInvertedLevelOrder(&listener, data);
+}
+
+Map* MapGenerator::Generate(int width, int height, int level) {
+  std::vector<MapShape*> shapes;
+  AdjacentList relations;
+  std::pair<std::vector<MapShape*>*, AdjacentList*> data = {&shapes, &relations};
+  Map* map = new Map(width, height);
+  TCODMap* tcod_map = map->GetMap();
+
+  for (int row = 0; row < width; row++) {
+    for (int col = 0; col < height; col++) {
+      tcod_map->setProperties(row, col, false, false);
+      // TCODConsole::root->setChar(row, col, '#');
+    }
+  }
+
+  RunBspSplit(width, height, level, &data);
+
+  map->SetShapes(shapes);
+  map->SetRelations(relations);
+
+  for (MapShape* shape : shapes) {
+    for (LevelPos position : shape->GetPositions()) {
+      tcod_map->setProperties(position.x, position.y, false, true);
+    }
+  }
+
+  return map;
+}
+
+MapShape* MapGenerator::CreateShape(int x1, int y1, int x2, int y2, int level, ShapeType type) {
+  if (x2 < x1) {
+    int tmp = x2;
+    x2 = x1;
+    x1 = tmp;
+  }
+  if (y2 < y1) {
+    int tmp = y2;
+    y2 = y1;
+    y1 = tmp;
+  }
+
+  switch (type) {
+    case ShapeType::ROOM:
+      return new MapRoom({ x1, y1, level }, x2 - x1, y2 - y1);
+    case ShapeType::CORRIDOR:
+      return new MapCorridor({ x1, y1, level }, x2 - x1, y2 - y1);
+    default:
+      return nullptr;
+  }
+}
