@@ -18,6 +18,7 @@ class Player : public Entity {
  public:
   Player(LevelPos init_pos);
   Inventory* GetInventory();
+  int Gethp();
   void Draw(ScreenPos top_left);
   void OnNotify(Event event);
   void Update();

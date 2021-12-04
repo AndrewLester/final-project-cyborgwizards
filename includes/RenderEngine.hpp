@@ -3,6 +3,7 @@
 
 #include "ScreenPos.hpp"
 #include "libtcod.hpp"
+#include <string>
 
 class RenderEngine {
  public:
@@ -15,12 +16,10 @@ class RenderEngine {
 
   void SetChar(ScreenPos pos, char c); // TODO: maybe change this to UTF-8
   void SetCharCol(ScreenPos pos, char c, TCODColor col);
-  void RoomFill(ScreenPos upleft, ScreenPos lowright, char c);
-  void RoomFillCol(ScreenPos upleft, ScreenPos lowright, char c, TCODColor col);
-  // add one for walls vs play space in room?
-  // void Print()
-  // tcod::print(console, {0, 0}, "Hello World", TCOD_white, std::nullopt);
-  // TCODConsole::root->print(0, height-3, "Floor:");
+  void RoomFill(ScreenPos upleft, ScreenPos lowright, char c_floor, char c_wall);
+  void RoomFillCol(ScreenPos upleft, ScreenPos lowright, char c_floor, char c_wall, TCODColor col);
+  void Print(ScreenPos pos, std::string str);
+  void Print(ScreenPos pos, std::string str, TCODColor col);
 };
 
 #endif

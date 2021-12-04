@@ -20,11 +20,6 @@ class UI {
 
  public:
   void RenderAll();
-<<<<<<< HEAD
-  
-=======
-
->>>>>>> main
   Player* GetPlayer();
   Map* GetMap();
   Monster* GetMonster();

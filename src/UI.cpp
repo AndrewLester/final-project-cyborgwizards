@@ -1,5 +1,4 @@
 #include "UI.hpp"
-<<<<<<< HEAD
 // maybe use the "Reading the content of the console" to test?
 
 UI::UI() {
@@ -18,8 +17,8 @@ UI::~UI() {
 void UI::RenderAll() {
     // draw the player in the middle of the screen, also map, monster, items and additional UI info as needed
 
-    // RenderEngine screen = RenderEngine();
-    TCODConsole test = TCODConsole(80, 50); 
+    RenderEngine screen = RenderEngine();
+    TCODConsole test = TCODConsole(80, 25); 
     int width = test.getWidth();
     int height = test.getHeight();
 
@@ -33,14 +32,26 @@ void UI::RenderAll() {
     player_->Draw(center1);
     monster_->Draw(center1);
 
-    // how to draw inv to screen, player health, 
-    // tcod::print(console, {0, 0}, "Hello World", TCOD_white, std::nullopt);
-    // or TCODConsole::root->print(0, y, "text");
-    // pull and merge main branch, see getter for player hp, level #?
+    // items render? 
+
+    struct ScreenPos bottom1 = {0, height - 2}; // does it go from 0 to height - 1 instead?
+    std::string str1 = "Floor: " + "x";
+    screen.Print(bottom1, str1);
+
+    struct ScreenPos bottom2 = {0, height - 1}; // does it go from 0 to height - 1 instead?
+
+    std::string str2 = "Inventory: 1] " + "xxx" +  " 2] " + "xxx" + " 3] " + "xxx";
+    screen.Print(bottom2, str1);
+
+    struct ScreenPos bottom3 = {0, height}; // does it go from 0 to height - 1 instead?
+    std::string str3 = "HP: " + std::to_string(player_->Gethp()); + "/100";
+    screen.Print(bottom3, str3);
+    // how to draw inv to screen, player health, see getter for player hp, level #?
 
     // use gamestate to determine what to render, set up win and lost games too
-
     // TCOD_console_flush() or TCODConsole::flush() needed after this step
+    // notes on potential rendering of sound bar:
+    // keep on right? side of screen in fixed pos, allow arrows and level to be drawn in x spaces depending on criteria
 }
   
 Player* UI::GetPlayer() {
@@ -54,21 +65,3 @@ Map* UI::GetMap() {
 Monster* UI::GetMonster() {
     return monster_;
 }
-=======
-
-void UI::RenderAll() {
-
-}
-
-Player* UI::GetPlayer() {
-  return player_;
-}
-
-Map* UI::GetMap() {
-  return map_;
-}
-
-Monster* UI::GetMonster() {
-  return monster_;
-}
->>>>>>> main
