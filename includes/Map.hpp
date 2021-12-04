@@ -19,7 +19,6 @@ class Map {
   AdjacentList relations_;
   std::vector<Item*> items_;
   TCODMap* map_;
-  std::map<MapRoom*, std::map<MapRoom*, std::pair<MapCorridor*, MapCorridor*>>> relations_;
 
  public:
   Map(int width, int height);
