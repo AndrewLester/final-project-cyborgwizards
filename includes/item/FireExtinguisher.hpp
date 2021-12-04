@@ -7,11 +7,12 @@
 
 class FireExtinguisher : public Item {
  private:
-  int stun_period = 2;
-  int stun_buffer = 15;
-  int num_uses = 4;
+  int stun_period_ = 2;
+  int stun_buffer_ = 15;
+  int num_uses_ = 4;
  
  public:
+  FireExtinguisher(LevelPos pos);
   void Draw(ScreenPos top_left);
   void Use();
 };

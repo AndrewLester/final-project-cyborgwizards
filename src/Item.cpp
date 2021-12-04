@@ -3,6 +3,9 @@
 #include "UI.hpp"
 #include <vector>
 
+Item::Item(LevelPos pos, std::string name): 
+    Entity(pos, 1, 1), name_(name) {}
+
 void Item::Drop() {
     if(UI::Instance().GetMap()->GetItem(UI::Instance().GetPlayer()->GetPosition()) == nullptr) {
         player_->GetInventory()->RemoveItem(this);
@@ -60,4 +63,8 @@ bool Item::InInventory(){
 
 Player* Item::GetPlayer() {
     return player_;
+}
+
+std::string Item::GetName() {
+    return name_;
 }
