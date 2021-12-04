@@ -21,6 +21,10 @@ void Map::SetShapes(std::vector<MapShape*> shapes) {
   shapes_ = shapes;
 }
 
+void Map::SetRelations(AdjacentList relations) {
+  this->relations_ = relations;
+}
+
 void Map::Render(LevelPos center) {
   ScreenPos screen_center = {60, 60}; // TODO: relate this to UI initialization
   for (MapShape* shape : shapes_) {
