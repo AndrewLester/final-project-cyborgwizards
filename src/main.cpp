@@ -21,8 +21,8 @@ int main(int argc, char** argv) {
   params.console = console.get();
 
   auto context = tcod::new_context(params);
-  MapGenerator generator;
-  Map* map = generator.Generate(100, 100, 1);
+  //MapGenerator generator;
+  //Map* map = generator.Generate(100, 100, 1);
 
   // Game loop.
   while (true) {
@@ -45,6 +45,6 @@ int main(int argc, char** argv) {
     }
   }
 
-  delete map;
+  // delete map;
   return 0;
 }
