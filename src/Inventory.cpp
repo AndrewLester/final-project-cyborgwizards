@@ -26,3 +26,15 @@ void Inventory::RemoveItem(Item* item) {
         idx++;
     }
 }
+
+size_t Inventory::GetCurrIdx() {
+    return curr_idx_;
+}
+void Inventory::SetCurrIdx(size_t idx) {
+    if(idx < inventory.size() && idx < max_size_) {
+        curr_idx_ = idx;
+    }
+}
+Item* Inventory::GetItemAtCurrIdx() {
+    return inventory.at(curr_idx_);
+}
