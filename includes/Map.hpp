@@ -13,6 +13,8 @@
 typedef std::map<MapRoom*, std::map<MapRoom*, std::pair<MapCorridor*, MapCorridor*>>> AdjacentList;
 class Map {
  private:
+  int width_;
+  int height_;
   std::vector<MapShape*> shapes_;
   AdjacentList relations_;
   std::vector<Item*> items_;

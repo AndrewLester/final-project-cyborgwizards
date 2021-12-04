@@ -1,7 +1,8 @@
 #include "Map.hpp"
+#define _USE_MATH_DEFINES
 #include <math.h>
 
-Map::Map(int width, int height) : items_(std::vector<Item*>()) {
+Map::Map(int width, int height) : items_(std::vector<Item*>()), width_(width), height_(height) {
   map_ = new TCODMap(width, height);
 }
 
@@ -96,6 +97,11 @@ std::vector<MapRoom*> Map::GetRooms() {
 
   return corridors;
 }
+
+bool Map::IsReachable(LevelPos position) {
+  return position.x >= 0 && position.x < width_ && position.y > 0 && position.y < height_;
+}
+
 
 std::vector<double> GetRingAngles(int radius) {
   std::vector<double> angles;
