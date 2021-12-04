@@ -17,6 +17,7 @@ class Item : public Entity {
   void Drop();
   void Pick(Player* player);
   bool InInventory();
+  Player* GetPlayer();
 };
 
 #endif

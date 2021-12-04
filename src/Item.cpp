@@ -8,7 +8,7 @@ void Item::Drop() {
         player_->GetInventory()->RemoveItem(this);
     } else {
         LevelPos removed_coord = CheckNearestOpenPos();
-        if(removed_coord.x == -1000 && removed_coord.y == -1000) {
+        if(removed_coord.x == -1 && removed_coord.y == -1) {
             //handle case
         }
     }
@@ -56,4 +56,8 @@ LevelPos Item::CheckNearestOpenPos() {
 
 bool Item::InInventory(){
     return in_inventory_;
+}
+
+Player* Item::GetPlayer() {
+    return player_;
 }

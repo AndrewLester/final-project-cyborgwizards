@@ -3,16 +3,17 @@
 
 #include "Entity.hpp"
 #include "Item.hpp"
+#include "ScreenPos.hpp"
 
 class FireExtinguisher : public Item {
  private:
-  int inventory_idx_ = 0;
+  int stun_period = 2;
+  int stun_buffer = 15;
+  int num_uses = 4;
  
  public:
-  virtual void Draw() = 0;
-  virtual void Use() = 0;
-  void Interact();
-  void OnNotify(Event e);
+  void Draw(ScreenPos top_left);
+  void Use();
 };
 
 #endif
