@@ -5,6 +5,7 @@
 
 #include "Entity.hpp"
 #include "MapRoom.hpp"
+#include "Map.hpp"
 
 enum MonsterState { Roam, Chase, Search };
 
