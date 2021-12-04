@@ -19,10 +19,9 @@ int main(int argc, char** argv) {
 
   auto console = tcod::Console{80, 25};
   params.console = console.get();
+  UI::Instance().SetConsole(&console);
 
   auto context = tcod::new_context(params);
-  MapGenerator generator;
-  Map* map = generator.Generate(100, 100, 1);
 
   // Game loop.
   while (true) {

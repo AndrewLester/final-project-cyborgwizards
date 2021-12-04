@@ -14,6 +14,7 @@ class UI {
   Player* player_;
   Monster* monster_;
   GameState state_;
+  TCODConsole* con_;
 
   UI(){};
   ~UI(){};
@@ -28,6 +29,8 @@ class UI {
     static UI* instance = new UI();
     return *instance;
   }
+
+  void SetConsole(TCODConsole* console);
 };
 
 #endif

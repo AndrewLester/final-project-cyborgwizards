@@ -1,11 +1,14 @@
 #include "UI.hpp"
 // maybe use the "Reading the content of the console" to test?
 
+#include "MapGenerator.hpp"
+
 UI::UI() {
     // How should each be initialized? 
-    player_ = new Player();
-    monster_ = new Monster();
-    map_ = new Map();
+    MapGenerator generator;
+    Map* map = generator.Generate(100, 100, 1);
+    // player_ = new Player();
+    // monster_ = new Monster();
 }
 
 UI::~UI() {
@@ -18,9 +21,8 @@ void UI::RenderAll() {
     // draw the player in the middle of the screen, also map, monster, items and additional UI info as needed
 
     RenderEngine screen = RenderEngine();
-    TCODConsole test = TCODConsole(80, 25); 
-    int width = test.getWidth();
-    int height = test.getHeight();
+    int width = con_.getWidth();
+    int height = con_.getHeight();
 
     // auto console = tcod::Console{80, 50};  // get console from main? (have width/height be vars in main instead?)
     // int width = TCOD_console_get_width(console);
@@ -64,4 +66,8 @@ Map* UI::GetMap() {
 
 Monster* UI::GetMonster() {
     return monster_;
+}
+
+void SetConsole(TCODConsole* console) {
+  this->con_ = console;
 }
