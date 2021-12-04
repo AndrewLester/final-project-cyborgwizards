@@ -153,3 +153,7 @@ std::vector<MapRoom*> Map::GetRoomsInRadius(LevelPos position, int radius) {
   }
   return rooms;
 }
+
+const AdjacentList& Map::GetRelations() {
+  return this->relations_;
+}

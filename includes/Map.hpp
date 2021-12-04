@@ -27,6 +27,7 @@ class Map {
   void AddItem(Item* item);
   void SetShapes(std::vector<MapShape*> shapes);
   void SetRelations(AdjacentList relations);
+
   Item* GetItem(LevelPos position);
   MapShape* GetMapShape(LevelPos position);
   TCODMap* GetMap();
@@ -34,6 +35,7 @@ class Map {
   std::vector<MapCorridor*> GetCorridors();
   std::vector<MapRoom*> GetRooms();
   std::vector<MapRoom*> GetRoomsInRadius(LevelPos position, int radius);
+  const AdjacentList& GetRelations();
 };
 
 #endif

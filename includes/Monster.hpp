@@ -1,7 +1,7 @@
 #ifndef MONSTER_HPP
 #define MONSTER_HPP
 
-#include <queue>
+#include <deque>
 
 #include "Entity.hpp"
 #include "MapRoom.hpp"
@@ -14,10 +14,11 @@ class Monster : public Entity {
   int roam_speed_ = 5;
   int chase_speed_ = 3;
   LevelPos destination_ = {-1, -1, -1};
-  std::queue<LevelPos> path_;
+  std::deque<LevelPos> path_;
 
  private:
   int timer_ = 0;
+  void Monster::FindPath(const AdjacentList& map, std::set<MapRoom*>& visited, MapRoom* curr, MapRoom* dest, bool& found);
 
  public:
   virtual void Update();
