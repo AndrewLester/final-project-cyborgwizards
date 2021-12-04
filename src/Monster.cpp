@@ -1,5 +1,7 @@
 #include "Monster.hpp"
 
+#include <algorithm>
+
 #include "UI.hpp"
 
 void Monster::Update() {
