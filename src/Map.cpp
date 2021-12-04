@@ -9,6 +9,9 @@ Map::~Map() {
   for (MapShape* shape : shapes_) {
     delete shape;
   }
+  for (Item* item : items_) {
+    delete item;
+  }
   delete map_;
 }
 
@@ -16,6 +19,10 @@ TCODMap* Map::GetMap() { return map_; }
 
 void Map::SetShapes(std::vector<MapShape*> shapes) {
   shapes_ = shapes;
+}
+
+void Map::SetRelations(AdjacentList relations) {
+  this->relations_ = relations;
 }
 
 void Map::Render(LevelPos center) {
@@ -145,4 +152,8 @@ std::vector<MapRoom*> Map::GetRoomsInRadius(LevelPos position, int radius) {
     }
   }
   return rooms;
+}
+
+const AdjacentList& Map::GetRelations() {
+  return this->relations_;
 }

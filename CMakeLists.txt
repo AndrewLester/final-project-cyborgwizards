@@ -73,6 +73,7 @@ include_directories(
     "${CMAKE_CURRENT_SOURCE_DIR}/includes/event"
     "${CMAKE_CURRENT_SOURCE_DIR}/includes/item"
     "${CMAKE_CURRENT_SOURCE_DIR}/includes/map"
+    "${CMAKE_CURRENT_SOURCE_DIR}/includes/monster"
     "${CMAKE_CURRENT_SOURCE_DIR}/build/vcpkg_installed/x64-windows/include/SDL2"
     "${CMAKE_CURRENT_SOURCE_DIR}/build/vcpkg_installed/arm64-osx/include/SDL2"
     "${CMAKE_CURRENT_SOURCE_DIR}/build/vcpkg_installed/x64-osx/include/SDL2"

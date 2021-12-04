@@ -10,9 +10,11 @@
 #include "Item.hpp"
 #include <libtcod/fov.hpp>
 
+typedef std::map<MapRoom*, std::map<MapRoom*, std::pair<MapCorridor*, MapCorridor*>>> AdjacentList;
 class Map {
  private:
   std::vector<MapShape*> shapes_;
+  AdjacentList relations_;
   std::vector<Item*> items_;
   TCODMap* map_;
   std::map<MapRoom*, std::map<MapRoom*, std::pair<MapCorridor*, MapCorridor*>>> relations_;
@@ -25,6 +27,7 @@ class Map {
   bool IsReachable(LevelPos position);
   void AddItem(Item* item);
   void SetShapes(std::vector<MapShape*> shapes);
+  void SetRelations(AdjacentList relations);
 
   Item* GetItem(LevelPos position);
   MapShape* GetMapShape(LevelPos position);
@@ -33,6 +36,7 @@ class Map {
   std::vector<MapCorridor*> GetCorridors();
   std::vector<MapRoom*> GetRooms();
   std::vector<MapRoom*> GetRoomsInRadius(LevelPos position, int radius);
+  const AdjacentList& GetRelations();
 };
 
 #endif
