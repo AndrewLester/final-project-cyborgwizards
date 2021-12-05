@@ -6,6 +6,7 @@
 
 #include "EventListener.hpp"
 #include "MapGenerator.hpp"
+#include "UI.hpp"
 
 int main(int argc, char** argv) {
   // std::cout << "HI" << std::endl;
@@ -19,15 +20,17 @@ int main(int argc, char** argv) {
 
   auto console = tcod::Console{80, 25};
   params.console = console.get();
-  UI::Instance().SetConsole(&console);
+  // RenderEngine::Instance().SetConsole(&console);
 
   auto context = tcod::new_context(params);
+  // UI::Instance().RenderAll();
 
   // Game loop.
   while (true) {
     //   // Rendering.
     console.clear();
-    tcod::print(console, {0, 0}, "Hello World", TCOD_white, std::nullopt);
+    // tcod::print(console, {0, 0}, "Hello World", TCOD_white, std::nullopt);
+    TCOD_console_flush();
     context->present(console);
 
     // Handle input.
@@ -44,6 +47,6 @@ int main(int argc, char** argv) {
     }
   }
 
-  delete map;
+  // delete map;
   return 0;
 }
