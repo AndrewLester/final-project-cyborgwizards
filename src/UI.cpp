@@ -21,7 +21,10 @@ UI::~UI() {
 void UI::RenderAll() {
   // draw the player in the middle of the screen, also map, monster, items and additional UI info as needed
 
-  state_ = GameState::Loss;
+  // notes on potential rendering of sound bar:
+  // keep on right? side of screen in fixed pos, allow arrows and level to be drawn in x spaces depending on criteria
+
+  state_ = GameState::InProgress;
 
   if (state_ == GameState::InProgress) {
     int width = RenderEngine::Instance().GetWidth();
@@ -30,7 +33,7 @@ void UI::RenderAll() {
     struct ScreenPos center1 = {width / 2, height / 2}; // if even/odd how to define center?
     struct LevelPos center2 = {width / 2, height / 2, 0}; // instead of 0 get current floor
     
-    // map_->Render(center2); // handles item rendering
+    // map_->Render(center2); // handles item rendering?
     // player_->Draw(center1);
     // monster_->Draw(center1);
 
@@ -75,27 +78,90 @@ void UI::RenderAll() {
   } else if (state_ == GameState::Win) {
     int width = RenderEngine::Instance().GetWidth();
     int height = RenderEngine::Instance().GetHeight();
-    // struct ScreenPos one = {width/2-101/2, height/2-8/2+0};
-    // struct ScreenPos two = {width/2-101/2, height/2-8/2+1};
-    // struct ScreenPos three = {width/2-101/2, height/2-8/2+2};
-    // struct ScreenPos four = {width/2-101/2, height/2-8/2+3};
-    // struct ScreenPos five = {width/2-101/2, height/2-8/2+4};
-    // struct ScreenPos six = {width/2-101/2, height/2-8/2+5};
-    // struct ScreenPos seven = {width/2-101/2, height/2-8/2+6};
-    // struct ScreenPos eight = {width/2-101/2, height/2-8/2+7};
-    // RenderEngine::Instance().Print(one,  );
-    // RenderEngine::Instance().Print(two,  );
-    // RenderEngine::Instance().Print(three,
-    // RenderEngine::Instance().Print(four, 
-    // RenderEngine::Instance().Print(five, 
-    // RenderEngine::Instance().Print(six,  
-    // RenderEngine::Instance().Print(seven,
-    // RenderEngine::Instance().Print(eight,
+    struct ScreenPos one = {width/2-108/2, height/2-8/2+0};
+    struct ScreenPos two = {width/2-108/2, height/2-8/2+1};
+    struct ScreenPos three = {width/2-108/2, height/2-8/2+2};
+    struct ScreenPos four = {width/2-108/2, height/2-8/2+3};
+    struct ScreenPos five = {width/2-108/2, height/2-8/2+4};
+    struct ScreenPos six = {width/2-108/2, height/2-8/2+5};
+    struct ScreenPos seven = {width/2-108/2, height/2-8/2+6};
+    struct ScreenPos eight = {width/2-108/2, height/2-8/2+7};
+    RenderEngine::Instance().Print(one,   "                                      (`-')  _ (`-').->           (`-')  _  _  (`-') (`-')  _ _(`-')   ,---.");
+    RenderEngine::Instance().Print(two,   "     .->        .->        .->        ( OO).-/ ( OO)_   _         (OO ).-/  \\-.(OO ) ( OO).-/( (OO ).->|   |");
+    RenderEngine::Instance().Print(three, " ,--.'  ,-.(`-')----. ,--.(,--.      (,------.(_)--\\_)  \\-,-----. / ,---.   _.'    \\(,------. \\    .'_ |   |");
+    RenderEngine::Instance().Print(four,  "(`-')'.'  /( OO).-.  '|  | |(`-')     |  .---'/    _ /   |  .--./ | \\ /`.\\ (_...--'' |  .---' '`'-..__)|   |");
+    RenderEngine::Instance().Print(five,  "(OO \\    / ( _) | |  ||  | |(OO )    (|  '--. \\_..`--.  /_) (`-') '-'|_.' ||  |_.' |(|  '--.  |  |  ' ||  .'");
+    RenderEngine::Instance().Print(six,   " |  /   /)  \\|  |)|  ||  | | |  \\     |  .--' .-._)   \\ ||  |OO )(|  .-.  ||  .___.' |  .--'  |  |  / :`--' ");
+    RenderEngine::Instance().Print(seven, " `-/   /`    '  '-'  '\\  '-'(_ .'     |  `---.\\       /(_'  '--'\\ |  | |  ||  |      |  `---. |  '-'  /.--. ");
+    RenderEngine::Instance().Print(eight, "   `--'       `-----'  `-----'        `------' `-----'    `-----' `--' `--'`--'      `------' `------' `--' ");
   } else { }
+}
 
-  // use gamestate to determine what to render, set up win and lost games too
-  // notes on potential rendering of sound bar:
-  // keep on right? side of screen in fixed pos, allow arrows and level to be drawn in x spaces depending on criteria
+void UI::RenderWelcome() {
+  int width = RenderEngine::Instance().GetWidth();
+  int height = RenderEngine::Instance().GetHeight();
+  struct ScreenPos one = {width/2-100/2, height/3-20/2+0};
+  struct ScreenPos two = {width/2-100/2, height/3-20/2+1};
+  struct ScreenPos three = {width/2-100/2, height/3-20/2+2};
+  struct ScreenPos four = {width/2-100/2, height/3-20/2+3};
+  struct ScreenPos five = {width/2-100/2, height/3-20/2+4};
+  struct ScreenPos six = {width/2-100/2, height/3-20/2+5};
+  struct ScreenPos seven = {width/2-100/2, height/3-20/2+6};
+  struct ScreenPos eight = {width/2-100/2, height/3-20/2+7};
+  struct ScreenPos nine = {width/2-100/2, height/3-20/2+8};
+  RenderEngine::Instance().Print(one,   "  .-')      ('-.       .-') _   .-')     ('-.     .-') _                            .-') _   .-')   ");
+  RenderEngine::Instance().Print(two,   " ( OO ).  _(  OO)     ( OO ) ) ( OO ).  ( OO ).-.(  OO) )                          ( OO ) ) ( OO ). ");
+  RenderEngine::Instance().Print(three, "(_)---\\_)(,------.,--./ ,--,' (_)---\\_) / . --. //     '._ ,-.-')  .-'),-----. ,--./ ,--,' (_)---\\_)");
+  RenderEngine::Instance().Print(four,  "/    _ |  |  .---'|   \\ |  |\\ /    _ |  | \\-.  \\ |'--...__)|  |OO)( OO'  .-.  '|   \\ |  |\\ /    _ | ");
+  RenderEngine::Instance().Print(five,  "\\  :` `.  |  |    |    \\|  | )\\  :` `..-'-'  |  |'--.  .--'|  |  \\/   |  | |  ||    \\|  | )\\  :` `. ");
+  RenderEngine::Instance().Print(six,   " '..`''.)(|  '--. |  .     |/  '..`''.)\\| |_.'  |   |  |   |  |(_/\\_) |  |\\|  ||  .     |/  '..`''.)");
+  RenderEngine::Instance().Print(seven, ".-._)   \\ |  .--' |  |\\    |  .-._)   \\ |  .-.  |   |  |  ,|  |_.'  \\ |  | |  ||  |\\    |  .-._)   \\");
+  RenderEngine::Instance().Print(eight, "\\       / |  `---.|  | \\   |  \\       / |  | |  |   |  | (_|  |      `'  '-'  '|  | \\   |  \\       /");
+  RenderEngine::Instance().Print(nine,  " `-----'  `------'`--'  `--'   `-----'  `--' `--'   `--'   `--'        `-----' `--'  `--'   `-----' ");
+
+  struct ScreenPos ten = {width/2-60/2, 2*height/5-20/2+9};
+  struct ScreenPos eleven = {width/2-60/2, 2*height/5-20/2+10};
+  struct ScreenPos twelve = {width/2-60/2, 2*height/5-20/2+11};
+  struct ScreenPos thirteen = {width/2-60/2, 2*height/5-20/2+12};
+  struct ScreenPos fourteen = {width/2-60/2, 2*height/5-20/2+13};
+  struct ScreenPos fifteen = {width/2-60/2, 2*height/5-20/2+14};
+  struct ScreenPos sixteen = {width/2-60/2, 2*height/5-20/2+15};
+  struct ScreenPos seventeen = {width/2-60/2, 2*height/5-20/2+16};
+  struct ScreenPos eighteen = {width/2-60/2, 2*height/5-20/2+17};
+  struct ScreenPos nineteen = {width/2-60/2, 2*height/5-20/2+18};
+  struct ScreenPos twenty = {width/2-60/2, 2*height/5-20/2+19};
+  struct ScreenPos twentyone = {width/2-60/2, 2*height/5-20/2+20};
+  struct ScreenPos twentytwo = {width/2-60/2, 2*height/5-20/2+21};
+  struct ScreenPos twentythree = {width/2-60/2, 2*height/5-20/2+22};
+  struct ScreenPos twentyfour = {width/2-60/2, 2*height/5-20/2+23};
+  struct ScreenPos twentyfive = {width/2-60/2, 2*height/5-20/2+24};
+  struct ScreenPos twentysix = {width/2-60/2, 2*height/5-20/2+25};
+  struct ScreenPos twentyseven = {width/2-60/2, 2*height/5-20/2+26};
+  struct ScreenPos twentyeight = {width/2-60/2, 2*height/5-20/2+27};
+  struct ScreenPos twentynine = {width/2-60/2, 2*height/5-20/2+28};
+  RenderEngine::Instance().Print(ten,         "                                               /\\      /\\   ");
+  RenderEngine::Instance().Print(eleven,      "                                               ||______||   ");
+  RenderEngine::Instance().Print(twelve,      "                                               || ^  ^ ||   ");
+  RenderEngine::Instance().Print(thirteen,    "                                               \\| |  | |/   ");
+  RenderEngine::Instance().Print(fourteen,    "                                                |______|    ");
+  RenderEngine::Instance().Print(fifteen,     "              __                                |  __  |    ");
+  RenderEngine::Instance().Print(sixteen,     "             /  \\       ________________________|_/  \\_|__  ");
+  RenderEngine::Instance().Print(seventeen,   "            / ^^ \\     /=========================/ ^^ \\===| ");
+  RenderEngine::Instance().Print(eighteen,    "           /  []  \\   /=========================/  []  \\==| ");
+  RenderEngine::Instance().Print(nineteen,    "          /________\\ /=========================/________\\=| ");
+  RenderEngine::Instance().Print(twenty,      "       *  |        |/==========================|        |=| ");
+  RenderEngine::Instance().Print(twentyone,   "      *** | ^^  ^^ |---------------------------| ^^  ^^ |-- ");
+  RenderEngine::Instance().Print(twentytwo,   "     *****| []  [] |           _____           | []  [] | | ");
+  RenderEngine::Instance().Print(twentythree, "    *******        |          /_____\\          |      * | | ");
+  RenderEngine::Instance().Print(twentyfour,  "   *********^^  ^^ |  ^^  ^^  |  |  |  ^^  ^^  |     ***| | ");
+  RenderEngine::Instance().Print(twentyfive,  "  ***********]  [] |  []  []  |  |  |  []  []  | ===***** | ");
+  RenderEngine::Instance().Print(twentysix,   " *************     |         @|__|__|@         |/ |*******| ");
+  RenderEngine::Instance().Print(twentyseven, "***************   ***********--=====--**********| ********* ");
+  RenderEngine::Instance().Print(twentyeight, "***************___*********** |=====| **********|***********");
+  RenderEngine::Instance().Print(twentynine,  " *************     ********* /=======\\ ******** | ********* ");
+
+  struct ScreenPos cont = {width/2-25/2, 2*height/5-20/2+30};
+  RenderEngine::Instance().Print(cont, "Press any key to continue");
 }
   
 Player* UI::GetPlayer() {
