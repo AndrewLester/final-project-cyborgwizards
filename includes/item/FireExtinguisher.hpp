@@ -4,6 +4,7 @@
 #include "Entity.hpp"
 #include "Item.hpp"
 #include "ScreenPos.hpp"
+#include "RenderEngine.hpp"
 
 class FireExtinguisher : public Item {
  private:

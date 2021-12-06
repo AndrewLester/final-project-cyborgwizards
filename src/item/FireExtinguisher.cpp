@@ -5,10 +5,7 @@ FireExtinguisher::FireExtinguisher(LevelPos pos):
     Item(pos, "Fire Extinguisher") {}
 
 void FireExtinguisher::Draw(ScreenPos top_left) {
-    int x = top_left.x;
-    int y = top_left.y;
-    x++;
-    y++;
+    RenderEngine::Instance().SetChar(top_left, 'f');
 }
 
 void FireExtinguisher::Use() {

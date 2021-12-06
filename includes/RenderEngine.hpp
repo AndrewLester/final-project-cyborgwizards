@@ -7,7 +7,7 @@ class RenderEngine {
  public:
   RenderEngine();
 
-  RenderEngine& Instance() {
+  static RenderEngine& Instance() {
     static RenderEngine* instance = new RenderEngine();
     return *instance;
   }
