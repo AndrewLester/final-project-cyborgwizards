@@ -43,7 +43,7 @@ void Player::OnNotify(Event event) {
       } else if (key == 'e') { // use item
         this->inventory_->GetItemAtCurrIdx()->Use();
       } else if (key >= '0' && key <= '9') {
-        int idx = (key == '0') ? 9 : static_cast<int>(key - '0');
+        int idx = (key == '0') ? 9 : static_cast<int>(key - '0') - 1;
         this->inventory_->SetCurrIdx(idx);
       }
     }
