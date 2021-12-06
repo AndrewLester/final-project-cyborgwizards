@@ -40,6 +40,7 @@ int main(int argc, char** argv) {
 
     console.clear(); // or can do TCOD_console_clear(console.get());
     // tcod::print(console, {0, 0}, "Hello World", TCOD_white, std::nullopt);
+    UI::Instance().RenderAll();
     context->present(console);  // or can do TCOD_console_flush();
 
     // Handle input.
