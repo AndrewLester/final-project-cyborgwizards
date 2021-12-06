@@ -1,6 +1,9 @@
 #include "Map.hpp"
 #define _USE_MATH_DEFINES
+#include <libtcod.h>
 #include <math.h>
+
+#include <iostream>
 
 Map::Map(int width, int height) : items_(std::vector<Item*>()), width_(width), height_(height) {
   map_ = new TCODMap(width, height);
@@ -18,31 +21,44 @@ Map::~Map() {
 
 TCODMap* Map::GetMap() { return map_; }
 
-void Map::SetShapes(std::vector<MapShape*> shapes) {
-  shapes_ = shapes;
-}
+int Map::GetWidth() const { return width_; }
+int Map::GetHeight() const { return height_; }
 
-void Map::SetRelations(AdjacentList relations) {
-  this->relations_ = relations;
-}
+void Map::AddItem(Item* item) { items_.push_back(item); }
 
-void Map::Render(LevelPos center) {
-  ScreenPos screen_center = {60, 60}; // TODO: relate this to UI initialization
+void Map::SetShapes(std::vector<MapShape*> shapes) { shapes_ = shapes; }
+
+void Map::SetRelations(AdjacentList relations) { this->relations_ = relations; }
+
+void Map::Render(LevelPos center, ScreenPos screen_center, tcod::Console& console) {
+  for (int row = 0; row < width_; row++) {
+    for (int col = 0; col < height_; col++) {
+      LevelPos map_pos = {row, col};
+      LevelPos relative_pos = map_pos - center;
+      tcod::draw_rect(
+          console,
+          {screen_center.x + relative_pos.x, screen_center.y + relative_pos.y, 1, 1},
+          '#',
+          TCOD_gray,
+          TCOD_gray);
+    }
+  }
+
   for (MapShape* shape : shapes_) {
     LevelPos shape_pos = shape->GetPosition();
     if (shape_pos.level == center.level) {
       LevelPos relative_pos = shape_pos - center;
-      shape->Draw({screen_center.x + relative_pos.x, screen_center.y + relative_pos.y});
+      shape->Draw({screen_center.x + relative_pos.x, screen_center.y + relative_pos.y}, console);
     }
   }
 
-  for (Item* item : items_) {
-    LevelPos item_pos = item->GetPosition();
-    if (item_pos.level == center.level) {
-      LevelPos relative_pos = item_pos - center;
-      item->Draw({screen_center.x + relative_pos.x, screen_center.y + relative_pos.y});
-    }
-  }
+  // for (Item* item : items_) {
+  //   LevelPos item_pos = item->GetPosition();
+  //   if (item_pos.level == center.level) {
+  //     LevelPos relative_pos = item_pos - center;
+  //     item->Draw({screen_center.x + relative_pos.x, screen_center.y + relative_pos.y}, console);
+  //   }
+  // }
 }
 
 Item* Map::GetItem(LevelPos position) {
@@ -65,7 +81,7 @@ MapShape* Map::GetMapShape(LevelPos position) {
 
 MapRoom* Map::GetRoom(LevelPos position) {
   for (MapShape* shape : shapes_) {
-    if(MapRoom* room = dynamic_cast<MapRoom*>(shape)) {
+    if (MapRoom* room = dynamic_cast<MapRoom*>(shape)) {
       if (room->ContainsLevelPos(position)) {
         return room;
       }
@@ -74,7 +90,7 @@ MapRoom* Map::GetRoom(LevelPos position) {
   return nullptr;
 }
 
-std::vector<MapCorridor*> Map::GetCorridors() {
+std::vector<MapCorridor*> Map::GetCorridors() const {
   std::vector<MapCorridor*> corridors;
 
   for (auto* shape : shapes_) {
@@ -86,7 +102,7 @@ std::vector<MapCorridor*> Map::GetCorridors() {
   return corridors;
 }
 
-std::vector<MapRoom*> Map::GetRooms() {
+std::vector<MapRoom*> Map::GetRooms() const {
   std::vector<MapRoom*> corridors;
 
   for (auto* shape : shapes_) {
@@ -101,7 +117,6 @@ std::vector<MapRoom*> Map::GetRooms() {
 bool Map::IsReachable(LevelPos position) {
   return position.x >= 0 && position.x < width_ && position.y > 0 && position.y < height_;
 }
-
 
 std::vector<double> GetRingAngles(int radius) {
   std::vector<double> angles;
@@ -136,7 +151,7 @@ void GetRingPositions(LevelPos center, int radius, std::vector<LevelPos>& positi
   for (double angle : angles) {
     double x = cos(angle) * radius;
     double y = sin(angle) * radius;
-    positions.push_back({ static_cast<int>(round(x)), static_cast<int>(round(y)), center.level });
+    positions.push_back({static_cast<int>(round(x)), static_cast<int>(round(y)), center.level});
   }
 
   GetRingPositions(center, radius - 1, positions);
@@ -160,6 +175,43 @@ std::vector<MapRoom*> Map::GetRoomsInRadius(LevelPos position, int radius) {
   return rooms;
 }
 
-const AdjacentList& Map::GetRelations() {
-  return this->relations_;
+const AdjacentList& Map::GetRelations() { return this->relations_; }
+
+std::ostream& operator<<(std::ostream& os, const Map& map) {
+  char** grid = new char*[map.GetWidth()];
+  for (int i = 0; i < map.GetHeight(); i++) {
+    grid[i] = new char[map.GetHeight()];
+  }
+
+  for (int i = 0; i < map.GetWidth(); i++) {
+    for (int j = 0; j < map.GetHeight(); j++) {
+      grid[i][j] = '#';
+    }
+  }
+
+  for (auto* room : map.GetRooms()) {
+    std::cout << "Going through room: " << room->GetWidth() << " " << room->GetHeight() << std::endl;
+    for (auto pos : room->GetPositions()) {
+      grid[pos.x][pos.y] = 'R';
+    }
+  }
+
+  for (auto* corridor : map.GetCorridors()) {
+    for (auto pos : corridor->GetPositions()) {
+      grid[pos.x][pos.y] = 'C';
+    }
+  }
+
+  for (int i = 0; i < map.GetWidth(); i++) {
+    for (int j = 0; j < map.GetHeight(); j++) {
+      os << grid[i][j];
+    }
+    os << std::endl;
+  }
+
+  for (int i = 0; i < map.GetWidth(); i++) {
+    delete[] grid[i];
+  }
+  delete[] grid;
+  return os;
 }
