@@ -29,9 +29,15 @@ void Player::OnNotify(Event event) {
           case 'd': this->facing_ = Facing::E; break;
         }
       } else if (key == 'f') { // pick up item
-
+        Item* item = UI::Instance().GetMap()->GetItem(this->position_);
+        if (item != nullptr) {
+          item->Pick(this);
+        }
       } else if (key == 'e') { // use item
-
+        this->inventory_->GetItemAtCurrIdx()->Use();
+      } else if (key >= '0' && key <= '9') {
+        int idx = (key == '0') ? 9 : static_cast<int>(key - '0');
+        this->inventory_->SetCurrIdx(idx);
       }
     }
   }
