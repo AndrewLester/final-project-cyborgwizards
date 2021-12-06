@@ -17,8 +17,9 @@ int main(int argc, char** argv) {
   params.sdl_window_flags = SDL_WINDOW_RESIZABLE;
   params.window_title = "Libtcod Template Project";
 
-  auto console = tcod::Console{80, 25};
+  auto console = tcod::Console{125, 25};
   params.console = console.get();
+  params.renderer_type = TCOD_RENDERER_SDL2;
 
   auto context = tcod::new_context(params);
 
@@ -37,7 +38,7 @@ int main(int argc, char** argv) {
     // context->present(console);
 
     console.clear();
-    tcod::print(console, {0, 0}, "Hello World", TCOD_white, std::nullopt);
+    // tcod::print(console, {0, 0}, "Hello World", TCOD_white, std::nullopt);
     UI::Instance().RenderAll();
     context->present(console);  // TCOD_console_flush();
 
