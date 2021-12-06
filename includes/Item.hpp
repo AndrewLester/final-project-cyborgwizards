@@ -1,10 +1,11 @@
 #ifndef ITEM_HPP
 #define ITEM_HPP
 
-#include "LevelPos.hpp"
-#include "Entity.hpp"
-#include "Player.hpp"
 #include <string>
+
+#include "Entity.hpp"
+#include "LevelPos.hpp"
+#include "Player.hpp"
 
 class Item : public Entity {
  private:
@@ -17,7 +18,7 @@ class Item : public Entity {
   Item(LevelPos pos, std::string name);
 
  public:
-  virtual void Draw(ScreenPos top_left) = 0;
+  virtual void Draw(ScreenPos top_left, tcod::Console& console) = 0;
   virtual void Use() = 0;
   void Drop();
   void Pick(Player* player);
