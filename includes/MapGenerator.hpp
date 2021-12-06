@@ -1,9 +1,11 @@
-#include "Map.hpp"
-#include <memory>
 #include <libtcod.h>
 
+#include <memory>
+
+#include "Map.hpp"
+
 class MapGenerator {
-private:
+ private:
   static const int ROOM_MAX_SIZE = 12;
   static const int ROOM_MIN_SIZE = 6;
 
@@ -11,15 +13,18 @@ private:
   void RunBspSplit(int width, int height, int level, std::pair<std::vector<MapShape*>*, AdjacentList*>* shapes);
 
   class BspListener : public ITCODBspCallback {
-  private:
+   private:
     MapGenerator* generator_;
     int level_;
     int room_num_;
     MapRoom* last_room_;
-  public:
-    BspListener(MapGenerator* generator, int level) : generator_(generator), level_(level), room_num_(0), last_room_(nullptr) {};
-    bool visitNode(TCODBsp *node, void *userData);
+
+   public:
+    BspListener(MapGenerator* generator, int level)
+        : generator_(generator), level_(level), room_num_(0), last_room_(nullptr){};
+    bool visitNode(TCODBsp* node, void* userData);
   };
-public:
+
+ public:
   Map* Generate(int width, int height, int level);
 };

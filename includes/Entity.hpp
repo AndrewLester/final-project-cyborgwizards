@@ -1,14 +1,16 @@
 #ifndef ENTITY_HPP
 #define ENTITY_HPP
 
-#include "LevelPos.hpp"
-#include "ScreenPos.hpp"
+#include <libtcod.h>
+
 #include "Event.hpp"
 #include "EventListener.hpp"
+#include "LevelPos.hpp"
+#include "ScreenPos.hpp"
 
 class Entity {
  protected:
-  LevelPos position_; // top_left
+  LevelPos position_;  // top_left
   int width_;
   int height_;
 
@@ -23,7 +25,10 @@ class Entity {
   LevelPos GetPosition();
   LevelPos GetCenterPosition();
 
-  virtual void Draw(ScreenPos top_left) = 0;
+  int GetWidth() const { return width_; }
+  int GetHeight() const { return height_; }
+
+  virtual void Draw(ScreenPos top_left, tcod::Console& console) = 0;
 };
 
 #endif
