@@ -17,6 +17,7 @@ class RenderEngine {
   }
 
   void SetConsole(tcod::Console* console);
+  tcod::Console& GetConsole();
   int GetWidth();
   int GetHeight();
 

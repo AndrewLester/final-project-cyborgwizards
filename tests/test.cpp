@@ -57,7 +57,7 @@ TEST_CASE("EventListener", "[event-listener]") {
 
 /////////////////////// RenderEngine ///////////////////////
 
-TEST_CASE("RenderEngine", "[render-engine]") {
+TEST_CASE("RenderEngine & UI", "[render-engine_UI]") {
   auto params = TCOD_ContextParams{};
   params.tcod_version = TCOD_COMPILEDVERSION;
   params.vsync = 1;
@@ -86,30 +86,73 @@ TEST_CASE("RenderEngine", "[render-engine]") {
   struct ScreenPos test5 = {-1, -1};
   RenderEngine::Instance().SetChar(test5, '1');
   context->present(console);
-  // basic console dimensions
-  REQUIRE(TCOD_console_get_width(console.get()) == 120);
-  REQUIRE(TCOD_console_get_height(console.get()) == 40);
-  // check set char with and without color including invalid inputs
-  REQUIRE(TCOD_console_get_char(console.get(), 0, 0) == '@');
-  REQUIRE(TCOD_console_get_char_foreground(console.get(), 0, 0) == TCOD_white);
-  REQUIRE_FALSE(TCOD_console_get_char(console.get(), -1, -1) == '1');
-  REQUIRE(TCOD_console_get_char_foreground(console.get(), 0, 1) == TCOD_yellow);
-  // check fill room without color including valid and invalid points
-  REQUIRE(TCOD_console_get_char(console.get(), 0, 10) == '#');
-  REQUIRE(TCOD_console_get_char(console.get(), 1, 11) == '.');
-  REQUIRE_FALSE(TCOD_console_get_char(console.get(), -1, 10) == '#');
-  // check fill room with color that chars of certain colors are correct
-  REQUIRE(TCOD_console_get_char(console.get(), 20, 30) == '#');
-  REQUIRE(TCOD_console_get_char(console.get(), 21, 31) == '.');
-  REQUIRE(TCOD_console_get_char_foreground(console.get(), 20, 30) == TCOD_red);
-  REQUIRE(TCOD_console_get_char_foreground(console.get(), 21, 31) == TCOD_yellow);
-  // check print statements including colors
-  REQUIRE(TCOD_console_get_char(console.get(), 50, 10) == 't');
-  REQUIRE(TCOD_console_get_char_foreground(console.get(), 50, 10) == TCOD_white);
-  REQUIRE(TCOD_console_get_char(console.get(), 50, 11) == 't');
-  REQUIRE(TCOD_console_get_char_foreground(console.get(), 50, 11) == TCOD_red);
-
-  // test UI
+  SECTION("Render Engine") {
+    // basic console dimensions
+    REQUIRE(TCOD_console_get_width(console.get()) == 120);
+    REQUIRE(TCOD_console_get_height(console.get()) == 40);
+    // check set char with and without color including invalid inputs
+    REQUIRE(TCOD_console_get_char(console.get(), 0, 0) == '@');
+    REQUIRE(TCOD_console_get_char_foreground(console.get(), 0, 0) == TCOD_white);
+    REQUIRE_FALSE(TCOD_console_get_char(console.get(), -1, -1) == '1');
+    REQUIRE(TCOD_console_get_char_foreground(console.get(), 0, 1) == TCOD_yellow);
+    // check fill room without color including valid and invalid points
+    REQUIRE(TCOD_console_get_char(console.get(), 0, 10) == '#');
+    REQUIRE(TCOD_console_get_char(console.get(), 1, 11) == '.');
+    REQUIRE_FALSE(TCOD_console_get_char(console.get(), -1, 10) == '#');
+    // check fill room with color that chars of certain colors are correct
+    REQUIRE(TCOD_console_get_char(console.get(), 20, 30) == '#');
+    REQUIRE(TCOD_console_get_char(console.get(), 21, 31) == '.');
+    REQUIRE(TCOD_console_get_char_foreground(console.get(), 20, 30) == TCOD_red);
+    REQUIRE(TCOD_console_get_char_foreground(console.get(), 21, 31) == TCOD_yellow);
+    // check print statements including colors
+    REQUIRE(TCOD_console_get_char(console.get(), 50, 10) == 't');
+    REQUIRE(TCOD_console_get_char_foreground(console.get(), 50, 10) == TCOD_white);
+    REQUIRE(TCOD_console_get_char(console.get(), 50, 11) == 't');
+    REQUIRE(TCOD_console_get_char_foreground(console.get(), 50, 11) == TCOD_red);
+  }
+  SECTION("UI") {
+    console.clear();
+    UI::Instance().RenderWelcome();
+    context->present(console);
+    // a few chars in the first line of the intro screen to verify message in correct place
+    REQUIRE(TCOD_console_get_char(console.get(), 120/2-100/2+2, 40/3-20/2) == '.');
+    REQUIRE(TCOD_console_get_char(console.get(), 120/2-100/2+3, 40/3-20/2) == '-');
+    REQUIRE(TCOD_console_get_char(console.get(), 120/2-100/2+5, 40/3-20/2) == ')');
+    console.clear();
+    GameState state1 = GameState::Loss;
+    UI::Instance().SetState(state1);
+    UI::Instance().RenderAll();
+    context->present(console);
+    // a few chars in the first line of the loss screen to verify message in correct place
+    REQUIRE(TCOD_console_get_char(console.get(), 120/2-101/2+5, 40/2-8/2+1) == '.');
+    REQUIRE(TCOD_console_get_char(console.get(), 120/2-101/2+6, 40/2-8/2+1) == '-');
+    REQUIRE(TCOD_console_get_char(console.get(), 120/2-101/2+7, 40/2-8/2+1) == '>');
+    console.clear();
+    GameState state2 = GameState::Win;
+    UI::Instance().SetState(state2);
+    UI::Instance().RenderAll();
+    context->present(console);
+    // a few chars in the first line of the win screen to verify message in correct place
+    REQUIRE(TCOD_console_get_char(console.get(), 120/2-108/2, 40/2-8/2+4) == '(');
+    REQUIRE(TCOD_console_get_char(console.get(), 120/2-108/2+1, 40/2-8/2+4) == 'O');
+    REQUIRE(TCOD_console_get_char(console.get(), 120/2-108/2+4, 40/2-8/2+4) == '\\');
+    console.clear();
+    GameState state3 = GameState::InProgress;
+    UI::Instance().SetState(state3);
+    UI::Instance().RenderAll();
+    context->present(console);
+    // testing various aspects of the main renderall
+    // player HP display
+    REQUIRE(TCOD_console_get_char(console.get(), 4, 40-1) == '1');
+    REQUIRE(TCOD_console_get_char(console.get(), 5, 40-1) == '0');
+    REQUIRE(TCOD_console_get_char(console.get(), 6, 40-1) == '0');
+    // player inventory display
+    // put item in inventory here?
+    REQUIRE(TCOD_console_get_char(console.get(), 11, 40-2) == '1');
+    REQUIRE(TCOD_console_get_char(console.get(), 13, 40-2) == ' ');  // set to first letter of item name
+    // floor indicator display
+    REQUIRE(TCOD_console_get_char(console.get(), 7, 40-3) == '0');
+  }
 }
 
 /////////////////////// Items ///////////////////////

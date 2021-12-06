@@ -4,6 +4,10 @@ void RenderEngine::SetConsole(tcod::Console* console) {
   this->console_ = console;
 }
 
+ tcod::Console& RenderEngine::GetConsole() {
+   return *console_;
+ }
+
 int RenderEngine::GetWidth() { return this->console_->get_width(); }
 int RenderEngine::GetHeight() { return this->console_->get_height(); }
 
