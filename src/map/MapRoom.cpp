@@ -1,10 +1,13 @@
 #include "MapRoom.hpp"
+
+#include <libtcod.h>
+
 #include <iostream>
 
-void MapRoom::Draw(ScreenPos top_left) {
-  for (int row = top_left.x; row < width_; row++) {
-    for (int col = top_left.y; col < height_; col++) {
-      // TCODConsole::root->setChar(row, col, ' ');
+void MapRoom::Draw(ScreenPos top_left, tcod::Console& console) {
+  for (int row = 0; row < width_; row++) {
+    for (int col = 0; col < height_; col++) {
+      tcod::draw_rect(console, {top_left.x + row, top_left.y + col, 1, 1}, ' ', TCOD_black, TCOD_black);
     }
   }
 }
@@ -17,9 +20,9 @@ void MapRoom::OnNotify(Event event) {
 std::vector<LevelPos> MapRoom::GetPositions() {
   std::vector<LevelPos> positions;
 
-  for (int row = position_.x; row < width_; row++) {
-    for (int col = position_.y; col < height_; col++) {
-      positions.push_back({ row, col, position_.level });
+  for (int row = 0; row < width_; row++) {
+    for (int col = 0; col < height_; col++) {
+      positions.push_back({position_.x + row, position_.y + col, position_.level});
     }
   }
   return positions;

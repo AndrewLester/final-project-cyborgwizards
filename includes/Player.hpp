@@ -1,10 +1,12 @@
 #ifndef PLAYER_HPP
 #define PLAYER_HPP
 
+#include <libtcod.h>
+
 #include "Entity.hpp"
 #include "Inventory.hpp"
 enum class PlayerState { Walk, Run, Hide, Stop };
-enum class Facing {N, W, E, S};
+enum class Facing { N, W, E, S };
 
 class Player : public Entity {
  private:
@@ -22,14 +24,13 @@ class Player : public Entity {
  public:
   Player(LevelPos init_pos);
 
-  void Draw(ScreenPos top_left);
+  void Draw(ScreenPos top_left, tcod::Console& console);
   void OnNotify(Event event);
   void Update();
 
   Inventory* GetInventory();
   Facing GetFacingDir();
   int GetHp();
-
 };
 
 #endif
