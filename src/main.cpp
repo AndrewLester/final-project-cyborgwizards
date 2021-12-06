@@ -6,9 +6,9 @@
 
 #include "EventListener.hpp"
 #include "MapGenerator.hpp"
+#include "UI.hpp"
 
 int main(int argc, char** argv) {
-  // std::cout << "HI" << std::endl;
   auto params = TCOD_ContextParams{};
   params.tcod_version = TCOD_COMPILEDVERSION;
   params.argc = argc;
@@ -17,19 +17,35 @@ int main(int argc, char** argv) {
   params.sdl_window_flags = SDL_WINDOW_RESIZABLE;
   params.window_title = "Libtcod Template Project";
 
-  auto console = tcod::Console{80, 25};
+  auto console = tcod::Console{125, 25};
   params.console = console.get();
+  params.renderer_type = TCOD_RENDERER_SDL2;
 
   auto context = tcod::new_context(params);
-  //MapGenerator generator;
-  //Map* map = generator.Generate(100, 100, 1);
+
+  RenderEngine::Instance().SetConsole(&console);
+  // UI::Instance().RenderAll();
+
+  // depricated code that works 
+  // TCODConsole::initRoot(80, 25, "title", false);
 
   // Game loop.
   while (true) {
     //   // Rendering.
+
+    // TCOD_console_clear(console.get());
+    // tcod::print(console, {0, 0}, "Hello World", std::nullopt, std::nullopt);
+    // context->present(console);
+
     console.clear();
-    tcod::print(console, {0, 0}, "Hello World", TCOD_white, std::nullopt);
-    context->present(console);
+    // tcod::print(console, {0, 0}, "Hello World", TCOD_white, std::nullopt);
+    UI::Instance().RenderAll();
+    context->present(console);  // TCOD_console_flush();
+
+    // depricated code that works 
+    // TCODConsole::root->clear();
+    // TCODConsole::root->print(0, 0, "Hello World");
+    // TCODConsole::root->flush();
 
     // Handle input.
     SDL_Event event;

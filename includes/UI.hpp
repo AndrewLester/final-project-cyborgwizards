@@ -4,6 +4,7 @@
 #include "Map.hpp"
 #include "Monster.hpp"
 #include "Player.hpp"
+#include "RenderEngine.hpp"
 
 enum GameState { InProgress, Win, Loss };
 
@@ -14,12 +15,11 @@ class UI {
   Monster* monster_;
   GameState state_;
 
-  UI(){};
-  ~UI(){};
+  UI();
+  ~UI();
 
  public:
   void RenderAll();
-
   Player* GetPlayer();
   Map* GetMap();
   Monster* GetMonster();
@@ -28,6 +28,7 @@ class UI {
     static UI* instance = new UI();
     return *instance;
   }
+
 };
 
 #endif

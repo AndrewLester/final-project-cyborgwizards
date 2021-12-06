@@ -62,7 +62,11 @@ void Player::Update() {
 }
 
 Inventory* Player::GetInventory() {
-  return this->inventory_;
+  return inventory_;
+}
+
+int Player::GetHp() {
+  return hp_;
 }
 
 Facing Player::GetFacingDir() {

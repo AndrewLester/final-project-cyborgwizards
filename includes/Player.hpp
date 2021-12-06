@@ -28,6 +28,7 @@ class Player : public Entity {
 
   Inventory* GetInventory();
   Facing GetFacingDir();
+  int GetHp();
 
 };
 
