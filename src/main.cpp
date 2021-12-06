@@ -15,37 +15,32 @@ int main(int argc, char** argv) {
   params.argv = argv;
   params.vsync = 1;
   params.sdl_window_flags = SDL_WINDOW_RESIZABLE;
-  params.window_title = "Libtcod Template Project";
+  params.window_title = "Sensations";
 
-  auto console = tcod::Console{125, 25};
+  auto console = tcod::Console{120, 40};
   params.console = console.get();
   params.renderer_type = TCOD_RENDERER_SDL2;
 
   auto context = tcod::new_context(params);
-
   RenderEngine::Instance().SetConsole(&console);
-  // UI::Instance().RenderAll();
 
-  // depricated code that works 
-  // TCODConsole::initRoot(80, 25, "title", false);
+  // Main Menu
+  bool run = true;
+  while (run) {
+    console.clear();
+    UI::Instance().RenderWelcome();
+    context->present(console);
+    TCOD_console_wait_for_keypress(true);
+    run = false;
+  }
 
   // Game loop.
   while (true) {
-    //   // Rendering.
+    // Rendering.
 
-    // TCOD_console_clear(console.get());
-    // tcod::print(console, {0, 0}, "Hello World", std::nullopt, std::nullopt);
-    // context->present(console);
-
-    console.clear();
+    console.clear(); // or can do TCOD_console_clear(console.get());
     // tcod::print(console, {0, 0}, "Hello World", TCOD_white, std::nullopt);
-    UI::Instance().RenderAll();
-    context->present(console);  // TCOD_console_flush();
-
-    // depricated code that works 
-    // TCODConsole::root->clear();
-    // TCODConsole::root->print(0, 0, "Hello World");
-    // TCODConsole::root->flush();
+    context->present(console);  // or can do TCOD_console_flush();
 
     // Handle input.
     SDL_Event event;
