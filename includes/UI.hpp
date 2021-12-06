@@ -14,10 +14,9 @@ class UI {
   Player* player_;
   Monster* monster_;
   GameState state_;
-  TCODConsole* con_;
 
-  UI(){};
-  ~UI(){};
+  UI();
+  ~UI();
 
  public:
   void RenderAll();
@@ -30,7 +29,6 @@ class UI {
     return *instance;
   }
 
-  void SetConsole(TCODConsole* console);
 };
 
 #endif

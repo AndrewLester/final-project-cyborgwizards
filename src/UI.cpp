@@ -1,13 +1,14 @@
 #include "UI.hpp"
-// maybe use the "Reading the content of the console" to test?
-
 #include "MapGenerator.hpp"
+// maybe use the "Reading the content of the console" to test?
 
 UI::UI() {
     // How should each be initialized? 
-    MapGenerator generator;
-    Map* map = generator.Generate(100, 100, 1);
+    // MapGenerator generator;
+    // Map* map = generator.Generate(100, 100, 1);
     // player_ = new Player();
+    // struct LevelPos test = {0, 0, 0};
+    // player_ = new Player(test);
     // monster_ = new Monster();
 }
 
@@ -20,38 +21,36 @@ UI::~UI() {
 void UI::RenderAll() {
     // draw the player in the middle of the screen, also map, monster, items and additional UI info as needed
 
-    RenderEngine screen = RenderEngine();
-    int width = con_.getWidth();
-    int height = con_.getHeight();
-
-    // auto console = tcod::Console{80, 50};  // get console from main? (have width/height be vars in main instead?)
-    // int width = TCOD_console_get_width(console);
-    // int height = TCOD_console_get_height(console);
+    int width = RenderEngine::Instance().GetWidth();
+    int height = RenderEngine::Instance().GetHeight();
 
     struct ScreenPos center1 = {width / 2, height / 2}; // if even/odd how to define center?
-    struct LevelPos center2 = {width / 2, height / 2, 0}; // initial level but change to make abitrary
-    map_->Render(center2);
-    player_->Draw(center1);
-    monster_->Draw(center1);
-
+    struct LevelPos center2 = {width / 2, height / 2, 0}; // instead of 0 get current floor
+    
+    // map_->Render(center2);
+    // player_->Draw(center1);
+    // monster_->Draw(center1);
     // items render? 
 
-    struct ScreenPos bottom1 = {0, height - 2}; // does it go from 0 to height - 1 instead?
-    std::string str1 = "Floor: " + "x";
-    screen.Print(bottom1, str1);
+    struct ScreenPos bottom1 = {0, height - 3};
+    std::string str1 = "Floor: 0"; // TODO: add level display, how to get current floor #?
+    RenderEngine::Instance().Print(bottom1, str1);
 
-    struct ScreenPos bottom2 = {0, height - 1}; // does it go from 0 to height - 1 instead?
+    struct ScreenPos bottom2 = {0, height - 2};
+    Inventory* inv = player_->GetInventory();
+    size_t size = inv->GetSize();
+    std::string str2 = "Inventory:";
+    for (size_t i = 0; i < size; i++) {
+        Item* item = inv->GetItemAt(i);
+        str2 = str2 + " " + std::to_string(i+1) + " " + item->GetName();
+    }    
+    RenderEngine::Instance().Print(bottom2, str2);  // TODO: add item display
 
-    std::string str2 = "Inventory: 1] " + "xxx" +  " 2] " + "xxx" + " 3] " + "xxx";
-    screen.Print(bottom2, str1);
-
-    struct ScreenPos bottom3 = {0, height}; // does it go from 0 to height - 1 instead?
-    std::string str3 = "HP: " + std::to_string(player_->Gethp()); + "/100";
-    screen.Print(bottom3, str3);
-    // how to draw inv to screen, player health, see getter for player hp, level #?
+    struct ScreenPos bottom3 = {0, height - 1}; 
+    std::string str3 = "HP: " + std::to_string(player_->GetHp()) + "/100"; // works when player properly initialized
+    RenderEngine::Instance().Print(bottom3, str3);
 
     // use gamestate to determine what to render, set up win and lost games too
-    // TCOD_console_flush() or TCODConsole::flush() needed after this step
     // notes on potential rendering of sound bar:
     // keep on right? side of screen in fixed pos, allow arrows and level to be drawn in x spaces depending on criteria
 }
@@ -66,8 +65,4 @@ Map* UI::GetMap() {
 
 Monster* UI::GetMonster() {
     return monster_;
-}
-
-void SetConsole(TCODConsole* console) {
-  this->con_ = console;
 }

@@ -22,7 +22,7 @@ int main(int argc, char** argv) {
 
   auto context = tcod::new_context(params);
 
-  // RenderEngine::Instance().SetConsole(&console);
+  RenderEngine::Instance().SetConsole(&console);
   // UI::Instance().RenderAll();
 
   // depricated code that works 
@@ -38,8 +38,8 @@ int main(int argc, char** argv) {
 
     console.clear();
     tcod::print(console, {0, 0}, "Hello World", TCOD_white, std::nullopt);
-    context->present(console);
-    // TCOD_console_flush();
+    UI::Instance().RenderAll();
+    context->present(console);  // TCOD_console_flush();
 
     // depricated code that works 
     // TCODConsole::root->clear();

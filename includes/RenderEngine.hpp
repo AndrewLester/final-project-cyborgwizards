@@ -6,20 +6,26 @@
 #include <string>
 
 class RenderEngine {
+ private:
+  tcod::Console* console_;
  public:
-  RenderEngine();
+  RenderEngine() = default;
 
-  RenderEngine& Instance() {
+  static RenderEngine& Instance() {
     static RenderEngine* instance = new RenderEngine();
     return *instance;
   }
 
+  void SetConsole(tcod::Console* console);
+  int GetWidth();
+  int GetHeight();
+
   void SetChar(ScreenPos pos, char c); // TODO: maybe change this to UTF-8
-  void SetCharCol(ScreenPos pos, char c, TCODColor col);
+  void SetCharCol(ScreenPos pos, char c, TCOD_ColorRGB col);
   void RoomFill(ScreenPos upleft, ScreenPos lowright, char c_floor, char c_wall);
-  void RoomFillCol(ScreenPos upleft, ScreenPos lowright, char c_floor, char c_wall, TCODColor col);
+  void RoomFillCol(ScreenPos upleft, ScreenPos lowright, char c_floor, char c_wall, TCOD_ColorRGB col);
   void Print(ScreenPos pos, std::string str);
-  void Print(ScreenPos pos, std::string str, TCODColor col);
+  void Print(ScreenPos pos, std::string str, TCOD_ColorRGB col);
 };
 
 #endif
