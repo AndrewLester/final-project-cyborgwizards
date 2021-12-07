@@ -12,8 +12,8 @@ enum MonsterState { Roam, Chase, Search };
 class Monster : public Entity {
  protected:
   MonsterState state_ = MonsterState::Roam;
-  int roam_speed_ = 5;
-  int chase_speed_ = 3;
+  int roam_speed_ = 10;
+  int chase_speed_ = 7;
   LevelPos destination_ = {-1, -1, -1};
   std::deque<LevelPos> path_;
 

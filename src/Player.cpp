@@ -45,9 +45,12 @@ void Player::OnNotify(Event* event) {
             this->facing_ = Facing::E;
             break;
         }
-        if (this->facing_ != prev_facing) {
-          this->timer_ = 0;
-        }
+        // if (this->facing_ != prev_facing) {
+        //   this->timer_ = 0;
+        // }
+      } else if (key == 1073742049) { // presses shift during running
+        std::cout << "Current State: " << (int)this->state_ << std::endl;
+        this->state_ = PlayerState::Run;
       } else if (key == 'f') { // pick up item
         Item* item = UI::Instance().GetMap()->GetItem(this->position_);
         if (item != nullptr) {
