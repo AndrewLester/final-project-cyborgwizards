@@ -33,6 +33,7 @@ int main(int argc, char** argv) {
     TCOD_console_wait_for_keypress(true);
     run = false;
   }
+  UI::Instance().SetState(GameState::InProgress);
 
   // Game loop.
   // UI::Instance().GetMonster()->ChangeDestination(UI::Instance().GetMap()->GetRandomLocation());
