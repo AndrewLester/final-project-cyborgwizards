@@ -42,13 +42,14 @@ void Map::SetShapes(std::vector<MapShape*> shapes) { shapes_ = shapes; }
 void Map::SetRelations(AdjacentList relations) { this->relations_ = relations; }
 
 void Map::Render(LevelPos center, ScreenPos screen_center) {
-  map_->computeFov(center.x, center.y);
+  map_->computeFov(center.x, center.y, 20, true);
   for (int row = 0; row < width_; row++) {
     for (int col = 0; col < height_; col++) {
       LevelPos map_pos = {row, col};
       LevelPos relative_pos = map_pos - center;
       ScreenPos relative_pos_screen = {relative_pos.x, relative_pos.y};
-      RenderEngine::Instance().DrawRect(screen_center + relative_pos_screen, 1, 1, '#', TCOD_gray, TCOD_gray);
+      if (map_->isInFov(row, col))
+        RenderEngine::Instance().DrawRect(screen_center + relative_pos_screen, 1, 1, '#', TCOD_gray, TCOD_gray);
       // tcod::draw_rect(
       //     console,
       //     {screen_center.x + relative_pos.x, screen_center.y + relative_pos.y, 1, 1},
