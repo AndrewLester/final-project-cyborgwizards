@@ -49,8 +49,6 @@ int main(int argc, char** argv) {
     while (SDL_PollEvent(&event)) {
       switch (event.type) {
         case SDL_QUIT:
-          delete &UI::Instance();
-          delete &RenderEngine::Instance();
           std::exit(EXIT_SUCCESS);
           break;
         default:
