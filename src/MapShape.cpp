@@ -6,5 +6,5 @@ bool MapShape::IsReachable() { return reachable_; }
 
 bool MapShape::ContainsLevelPos(LevelPos position) {
   LevelPos difference = position - this->position_;
-  return difference.x < width_ && difference.y < height_ && difference.level == 0;
+  return difference.x >= 0 && difference.x < width_ && difference.y >= 0 && difference.y < height_ && difference.level == 0;
 }

@@ -25,14 +25,20 @@ TCODMap* Map::GetMap() { return map_; }
 int Map::GetWidth() const { return width_; }
 int Map::GetHeight() const { return height_; }
 
-LevelPos Map::GetSpawnLocation() const {
+LevelPos Map::GetSpawnLocation(int idx) const {
   std::vector<MapRoom*> rooms = GetRooms();
+  int room_num = (idx < 0) ? rooms.size() + idx : idx;
   for (MapRoom* room : rooms) {
-    if (room->GetRoomNumber() == 0) {
+    if (room->GetRoomNumber() == room_num) {
       return room->GetCenterPosition();
     }
   }
   return {0, 0, 1};
+}
+
+LevelPos Map::GetRandomLocation() const {
+  LevelPos ret = this->GetSpawnLocation(rand() % this->GetRooms().size());
+  return ret;
 }
 
 void Map::AddItem(Item* item) { items_.push_back(item); }
@@ -183,7 +189,7 @@ std::vector<MapRoom*> Map::GetRoomsInRadius(LevelPos position, int radius) {
   std::vector<MapRoom*> rooms;
   for (LevelPos pos : GetCirclePositions(position, radius)) {
     for (MapRoom* room : GetRooms()) {
-      if (room->ContainsLevelPos(pos)) {
+      if (room->ContainsLevelPos(pos) && std::find(rooms.begin(), rooms.end(), room) != rooms.end()) {
         rooms.push_back(room);
       }
     }

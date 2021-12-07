@@ -5,6 +5,17 @@
 #include "MapCorridor.hpp"
 #include "MapRoom.hpp"
 
+void AddEdge(AdjacentList* relations, MapShape* s1, MapShape* s2) {
+  if (relations->find(s1) == relations->end()) {
+    relations->insert({s1, {}});
+  }
+  relations->at(s1).push_back(s2);
+  if (relations->find(s2) == relations->end()) {
+    relations->insert({s2, {}});
+  }
+  relations->at(s2).push_back(s1);
+}
+
 bool MapGenerator::BspListener::visitNode(TCODBsp* node, void* user_data) {
   auto* data = static_cast<std::pair<std::vector<MapShape*>*, AdjacentList*>*>(user_data);
   auto* shapes = data->first;
@@ -25,19 +36,19 @@ bool MapGenerator::BspListener::visitNode(TCODBsp* node, void* user_data) {
     if (room_num_ != 0) {
       int last_room_center_x = this->last_room_->GetCenterPosition().x;
       int last_room_center_y = this->last_room_->GetCenterPosition().y;
+      int new_room_center_x = new_room->GetCenterPosition().x;
+      int new_room_center_y = new_room->GetCenterPosition().y;
 
       MapCorridor* c1 = static_cast<MapCorridor*>(generator_->CreateShape(
-          last_room_center_x, last_room_center_y, x + (w / 2), last_room_center_y, level_, room_num_, ShapeType::CORRIDOR));
+          last_room_center_x, last_room_center_y, new_room_center_x, last_room_center_y, level_, room_num_, ShapeType::CORRIDOR));
       MapCorridor* c2 = static_cast<MapCorridor*>(generator_->CreateShape(
-          x + (w / 2), last_room_center_y, x + (w / 2), y + (h / 2), level_, room_num_, ShapeType::CORRIDOR));
+          new_room_center_x, last_room_center_y, new_room_center_x, new_room_center_y, level_, room_num_, ShapeType::CORRIDOR));
       shapes->push_back(c1);
       shapes->push_back(c2);
 
-      if (relations->find(this->last_room_) == relations->end()) {
-        relations->insert({this->last_room_, {}});
-      }
-      relations->at(this->last_room_).insert({new_room, {c1, c2}});
-      relations->insert({new_room, {{this->last_room_, {c2, c1}}}});
+      AddEdge(relations, last_room_, c1);
+      AddEdge(relations, c1, c2);
+      AddEdge(relations, c2, new_room);
     }
     last_room_ = new_room;
     room_num_++;
@@ -91,8 +102,6 @@ MapShape* MapGenerator::CreateShape(int x1, int y1, int x2, int y2, int level, i
     y2 = y1;
     y1 = tmp;
   }
-  // std::cout << "Creating shape: POS=(" << x1 << ", " << y1 << ")  WIDTH=(" << (x2 - x1 + 1) << ")  HEIGHT=("
-  //           << (y2 - y1 + 1) << ")" << std::endl;
 
   switch (type) {
     case ShapeType::ROOM:
