@@ -4,7 +4,15 @@
 #include "SoundEvent.hpp"
 #include "UI.hpp"
 
-Player::Player(LevelPos init_pos) : Entity(init_pos, 1, 1) {}
+Player::Player(LevelPos init_pos) : Entity(init_pos, 1, 1) {
+  this->inventory_ = new Inventory();
+  this->inventory_->SetMaxSize(6);
+  this->inventory_->SetCurrIdx(0);
+}
+
+Player::~Player() {
+  delete this->inventory_;
+}
 
 void Player::Draw(ScreenPos top_left) {
   RenderEngine::Instance().SetChar(top_left, '@');
@@ -22,6 +30,7 @@ void Player::OnNotify(Event* event) {
     } else {
       if (key == 'w' || key == 'a' || key == 's' || key == 'd') {  // start moving
         this->state_ = ke.shift ? PlayerState::Run : PlayerState::Walk;
+        Facing prev_facing = this->facing_;
         switch (key) {
           case 'w':
             this->facing_ = Facing::N;
@@ -36,13 +45,18 @@ void Player::OnNotify(Event* event) {
             this->facing_ = Facing::E;
             break;
         }
+        if (this->facing_ != prev_facing) {
+          this->timer_ = 0;
+          std::cout << "Changed, timer: " << this->timer_ << std::endl;
+        }
       } else if (key == 'f') { // pick up item
         Item* item = UI::Instance().GetMap()->GetItem(this->position_);
         if (item != nullptr) {
           item->Pick(this);
         }
       } else if (key == 'e') { // use item
-        this->inventory_->GetItemAtCurrIdx()->Use();
+        Item* item = this->inventory_->GetItemAtCurrIdx();
+        if (item != nullptr) item->Use();
       } else if (key >= '0' && key <= '9') {
         int idx = (key == '0') ? 9 : static_cast<int>(key - '0') - 1;
         this->inventory_->SetCurrIdx(idx);

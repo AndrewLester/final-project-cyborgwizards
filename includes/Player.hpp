@@ -23,6 +23,7 @@ class Player : public Entity {
 
  public:
   Player(LevelPos init_pos);
+  ~Player();
 
   void Draw(ScreenPos top_left);
   void OnNotify(Event* event);
