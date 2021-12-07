@@ -94,4 +94,6 @@ Inventory* Player::GetInventory() { return inventory_; }
 
 int Player::GetHp() { return hp_; }
 
+void Player::Harmed(int hp) { hp_ -= hp; }
+
 Facing Player::GetFacingDir() { return this->facing_; }

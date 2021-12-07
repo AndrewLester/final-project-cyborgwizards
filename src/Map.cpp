@@ -75,13 +75,14 @@ void Map::Render(LevelPos center, ScreenPos screen_center) {
     }
   }
 
-  // for (Item* item : items_) {
-  //   LevelPos item_pos = item->GetPosition();
-  //   if (item_pos.level == center.level) {
-  //     LevelPos relative_pos = item_pos - center;
-  //     item->Draw({screen_center.x + relative_pos.x, screen_center.y + relative_pos.y}, console);
-  //   }
-  // }
+  for (Item* item : items_) {
+    LevelPos item_pos = item->GetPosition();
+    if (item_pos.level == center.level) {
+      LevelPos relative_pos = item_pos - center;
+      if (map_->isInFov(screen_center.x + relative_pos.x, screen_center.y + relative_pos.y) && item->InInventory())
+        item->Draw({screen_center.x + relative_pos.x, screen_center.y + relative_pos.y});
+    }
+  }
 }
 
 Item* Map::GetItem(LevelPos position) {

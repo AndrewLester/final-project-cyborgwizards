@@ -11,7 +11,7 @@ class StunEvent : public Event {
  public:
   LevelPos start;
   LevelPos end;
-  int stun_period_;
+  int stun_period;
 };
 
 #endif

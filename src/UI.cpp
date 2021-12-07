@@ -2,6 +2,7 @@
 
 #include "MapGenerator.hpp"
 #include "UnsightedMonster.hpp"
+#include "FireExtinguisher.hpp"
 
 UI::UI() {
   MapGenerator generator;
@@ -14,6 +15,9 @@ UI::UI() {
   EventListener::Instance().RegisterListener(player_, "KeyboardEvent");
   monster_ = new UnsightedMonster(map_->GetSpawnLocation(-1));
   EventListener::Instance().RegisterListener(monster_, "SoundEvent");
+
+  LevelPos rand_pos = map_->GetRandomLocation();
+  map_->AddItem(new FireExtinguisher(rand_pos));
 }
 
 UI::~UI() {
