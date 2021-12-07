@@ -71,8 +71,9 @@ Map* MapGenerator::Generate(int width, int height, int level) {
   map->SetRelations(relations);
 
   for (MapShape* shape : shapes) {
+    shape->SetMap(tcod_map);
     for (LevelPos position : shape->GetPositions()) {
-      tcod_map->setProperties(position.x, position.y, false, true);
+      tcod_map->setProperties(position.x, position.y, true, true);
     }
   }
 
