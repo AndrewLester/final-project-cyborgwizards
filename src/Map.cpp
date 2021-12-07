@@ -42,6 +42,7 @@ void Map::SetShapes(std::vector<MapShape*> shapes) { shapes_ = shapes; }
 void Map::SetRelations(AdjacentList relations) { this->relations_ = relations; }
 
 void Map::Render(LevelPos center, ScreenPos screen_center) {
+  map_->computeFov(center.x, center.y);
   for (int row = 0; row < width_; row++) {
     for (int col = 0; col < height_; col++) {
       LevelPos map_pos = {row, col};
@@ -128,7 +129,8 @@ std::vector<MapRoom*> Map::GetRooms() const {
 }
 
 bool Map::IsReachable(LevelPos position) {
-  return position.x >= 0 && position.x < width_ && position.y > 0 && position.y < height_;
+  // return position.x >= 0 && position.x < width_ && position.y > 0 && position.y < height_;
+  return this->map_->isWalkable(position.x, position.y);
 }
 
 std::vector<double> GetRingAngles(int radius) {

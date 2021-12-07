@@ -13,8 +13,8 @@ void MapCorridor::Draw(ScreenPos top_left) {
   }
 }
 
-void MapCorridor::OnNotify(Event event) {
-  std::cout << event.GetType() << std::endl;
+void MapCorridor::OnNotify(Event* event) {
+  std::cout << event->GetType() << std::endl;
   return;
 }
 

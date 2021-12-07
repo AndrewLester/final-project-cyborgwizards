@@ -15,8 +15,8 @@ void MapRoom::Draw(ScreenPos top_left) {
   }
 }
 
-void MapRoom::OnNotify(Event event) {
-  std::cout << event.GetType() << std::endl;
+void MapRoom::OnNotify(Event* event) {
+  std::cout << event->GetType() << std::endl;
   return;
 }
 

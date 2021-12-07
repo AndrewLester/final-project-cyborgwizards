@@ -39,6 +39,7 @@ int main(int argc, char** argv) {
     // Rendering.
 
     console.clear();  // or can do TCOD_console_clear(console.get());
+    UI::Instance().Update();
     UI::Instance().RenderAll();
     context->present(console);  // or can do TCOD_console_flush();
 
@@ -50,8 +51,8 @@ int main(int argc, char** argv) {
         case SDL_QUIT:
           std::exit(EXIT_SUCCESS);
           break;
-        // default:
-        //   EventListener::Instance().HandleInput(event);
+        default:
+          EventListener::Instance().HandleInput(event);
       }
     }
   }

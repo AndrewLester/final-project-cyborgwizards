@@ -7,10 +7,11 @@ UI::UI() {
   MapGenerator generator;
   std::cout << "Generating map...";
   std::cout.flush();
-  Map* map = generator.Generate(RenderEngine::Instance().GetWidth(), RenderEngine::Instance().GetHeight(), 1);
+  this->map_ = generator.Generate(RenderEngine::Instance().GetWidth(), RenderEngine::Instance().GetHeight(), 1);
   std::cout << " Done." << std::endl;
 
-  player_ = new Player(map->GetSpawnLocation());
+  player_ = new Player(map_->GetSpawnLocation());
+  EventListener::Instance().RegisterListener(player_, "KeyboardEvent");
   // struct LevelPos test = {0, 0, 0};
   // player_ = new Player(test);
   // monster_ = new Monster();
@@ -20,6 +21,10 @@ UI::~UI() {
   delete player_; 
   delete monster_;
   delete map_;
+}
+
+void UI::Update() {
+  this->player_->Update();
 }
   
 void UI::RenderAll() {
@@ -36,9 +41,7 @@ void UI::RenderAll() {
 
     struct ScreenPos center1 = {width / 2, height / 2}; // if even/odd how to define center?
     // struct LevelPos center2 = {width / 2, height / 2, 1};
-    
-    // map_->Render(player_->GetPosition(), center1);
-    map_->Render({40, 18, 1}, {40, 18});
+    map_->Render(player_->GetPosition(), center1);
     player_->Draw(center1);
     // monster_->Draw(center1);
 

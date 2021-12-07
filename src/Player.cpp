@@ -10,9 +10,10 @@ void Player::Draw(ScreenPos top_left) {
   RenderEngine::Instance().SetChar(top_left, '@');
 }
 
-void Player::OnNotify(Event event) {
-  if (event.GetType() == "KeyboardEvent") {
-    KeyboardEvent ke = *static_cast<KeyboardEvent*>(&event);
+void Player::OnNotify(Event* event) {
+  if (event->GetType() == "KeyboardEvent") {
+    KeyboardEvent* key_ptr = dynamic_cast<KeyboardEvent*>(event);
+    KeyboardEvent& ke = *key_ptr;
     KeyType key = ke.key;
     if (ke.keyup) {  // key released, only care about moving
       if (key == 'w' || key == 'a' || key == 's' || key == 'd') {
@@ -68,7 +69,7 @@ void Player::Update() {
         this->position_ = next_pos;
         this->timer_ = running ? this->run_speed_ : this->walk_speed_;
         SoundEvent se(this, this->position_, running ? kRunSound : kWalkSound);
-        EventListener::Instance().BroadcastEvent(se);
+        EventListener::Instance().BroadcastEvent(&se);
       } else {
         this->state_ = PlayerState::Stop;
       }
