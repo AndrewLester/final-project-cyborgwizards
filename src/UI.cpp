@@ -51,7 +51,9 @@ void UI::RenderAll() {
     if (monster_pos.level == player_pos.level) {
       LevelPos relative_pos = monster_pos - player_pos;
       ScreenPos offset = {relative_pos.x, relative_pos.y};
-      monster_->Draw(center + offset);
+      if (map_->GetMap()->isInFov(monster_pos.x, monster_pos.y)) {
+        monster_->Draw(center + offset);
+      }
     }
 
     struct ScreenPos bottom1 = {0, height - 3};
