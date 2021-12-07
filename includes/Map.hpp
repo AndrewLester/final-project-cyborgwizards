@@ -11,7 +11,7 @@
 #include "MapRoom.hpp"
 #include "MapShape.hpp"
 
-typedef std::map<MapRoom*, std::map<MapRoom*, std::pair<MapCorridor*, MapCorridor*>>> AdjacentList;
+typedef std::map<MapShape*, std::vector<MapShape*>> AdjacentList;
 class Map {
  private:
   const int width_;
@@ -41,7 +41,8 @@ class Map {
   std::vector<MapRoom*> GetRooms() const;
   std::vector<MapRoom*> GetRoomsInRadius(LevelPos position, int radius);
   const AdjacentList& GetRelations();
-  LevelPos GetSpawnLocation() const;
+  LevelPos GetSpawnLocation(int idx) const;
+  LevelPos GetRandomLocation() const;
 };
 
 std::ostream& operator<<(std::ostream& os, const Map& map);
