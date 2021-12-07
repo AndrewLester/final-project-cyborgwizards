@@ -54,7 +54,7 @@ void Map::Render(LevelPos center, ScreenPos screen_center) {
       LevelPos map_pos = {row, col};
       LevelPos relative_pos = map_pos - center;
       ScreenPos relative_pos_screen = {relative_pos.x, relative_pos.y};
-      // if (map_->isInFov(row, col)) // TODO: add this back
+      if (map_->isInFov(row, col))
         RenderEngine::Instance().DrawRect(screen_center + relative_pos_screen, 1, 1, '#', TCOD_gray, TCOD_gray);
       // tcod::draw_rect(
       //     console,

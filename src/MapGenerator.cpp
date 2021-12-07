@@ -49,11 +49,6 @@ bool MapGenerator::BspListener::visitNode(TCODBsp* node, void* user_data) {
       AddEdge(relations, last_room_, c1);
       AddEdge(relations, c1, c2);
       AddEdge(relations, c2, new_room);
-
-      std::cout << last_room_->GetCenterPosition().ToString() << ", "
-                << c1->GetCenterPosition().ToString() << ", "
-                << c2->GetCenterPosition().ToString() << ", "
-                << new_room->GetCenterPosition().ToString()  << std::endl;
     }
     last_room_ = new_room;
     room_num_++;
@@ -107,8 +102,6 @@ MapShape* MapGenerator::CreateShape(int x1, int y1, int x2, int y2, int level, i
     y2 = y1;
     y1 = tmp;
   }
-  // std::cout << "Creating shape: POS=(" << x1 << ", " << y1 << ")  WIDTH=(" << (x2 - x1 + 1) << ")  HEIGHT=("
-  //           << (y2 - y1 + 1) << ")" << std::endl;
 
   switch (type) {
     case ShapeType::ROOM:

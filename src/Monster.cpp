@@ -24,12 +24,9 @@ void Monster::Update() {
     } else if (next_turn.y == this->position_.y) {
       this->position_.x += next_turn.x > this->position_.x ? 1 : -1;
     } else {
-      std::cout << "pathfind error!" << std::endl;
+      std::cout << "Pathfind error!" << std::endl;
       return;
     }
-
-    if (!this->path_.empty() && this->position_ != this->path_.front())
-      std::cout << "Current: " << position_.ToString() << ", Intended: " << path_.front().ToString() << std::endl;
 
     SoundEvent se(this, this->position_, this->state_ == MonsterState::Chase ? kChaseSound : kRoamSound);
     EventListener::Instance().BroadcastEvent(&se);
@@ -39,7 +36,6 @@ void Monster::Update() {
 }
 
 void Monster::ChangeDestination(LevelPos destination) {
-  std::cout << "Current Destination: (" << destination.x << ", " << destination.y << ")" << std::endl;
   this->destination_ = destination;
   MapShape* curr = UI::Instance().GetMap()->GetMapShape(this->position_);
   MapShape* dest = UI::Instance().GetMap()->GetMapShape(this->destination_);
@@ -60,11 +56,6 @@ void Monster::ChangeDestination(LevelPos destination) {
     std::sort(this->paths_.begin(), this->paths_.end(),
               [](std::deque<LevelPos>& p1, std::deque<LevelPos>& p2){ return p1.size() < p2.size(); });
     this->path_ = this->paths_.at(0);
-    std::cout << "Pathfind to room";
-    for (LevelPos& pos : this->path_) {
-      std::cout << "(" << pos.x << ", " << pos.y << "), ";
-    }
-    std::cout << std::endl;
 
     // Find path to start of room-to-room path
     LevelPos start_pos = this->path_.front();
@@ -75,12 +66,6 @@ void Monster::ChangeDestination(LevelPos destination) {
     }
     this->path_.push_front(corner);
 
-    std::cout << "Going to center";
-    for (LevelPos& pos : this->path_) {
-      std::cout << "(" << pos.x << ", " << pos.y << "), ";
-    }
-    std::cout << std::endl;
-
     // then go the the place
     LevelPos center = dest->GetCenterPosition();
     if (center == destination) return;
@@ -90,11 +75,6 @@ void Monster::ChangeDestination(LevelPos destination) {
       this->path_.push_back({center.x, this->destination_.y, center.level});
       this->path_.push_back(this->destination_);
     }
-    std::cout << "Final";
-    for (LevelPos& pos : this->path_) {
-      std::cout << "(" << pos.x << ", " << pos.y << "), ";
-    }
-    std::cout << std::endl;
   }
 }
 
@@ -109,9 +89,6 @@ void Monster::FindPath(const AdjacentList& map, std::set<MapShape*>& visited, Ma
   LevelPos curr_center = curr->GetCenterPosition();
   for (MapShape* shape : edges) { // iterate all connected rooms
     if (visited.find(shape) == visited.end()) { // not visited
-      if (!path_.empty() && shape->GetCenterPosition().x != path_.front().x && shape->GetCenterPosition().y != path_.front().y)
-        std::cout << "Regular push" << std::endl;
-
       // corridor to corridor special test
       bool corner_required = false;
       LevelPos next_center = shape->GetCenterPosition();
@@ -121,8 +98,6 @@ void Monster::FindPath(const AdjacentList& map, std::set<MapShape*>& visited, Ma
         if (std::find(curr_points.begin(), curr_points.end(), corner) == curr_points.end()) {
           corner = {next_center.x, curr_center.y, curr_center.level};
         }
-        if (!path_.empty() && corner.x != path_.front().x && corner.y != path_.front().y)
-          std::cout << "Corner push" << std::endl;
         this->path_.push_back(corner);
 
         corner_required = true;
