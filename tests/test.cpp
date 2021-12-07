@@ -3,12 +3,19 @@
 /////////////////////// Library Includes ///////////////////////
 
 #include <iostream>
+#include <stdexcept>
 
 /////////////////////// Project Includes ///////////////////////
 
 #include "Entity.hpp"
-#include "UI.hpp"
 #include "FireExtinguisher.hpp"
+#include "MapGenerator.hpp"
+#include "UI.hpp"
+
+/////////////////////// Constants ///////////////////////
+constexpr int MAP_GEN_SEED = 1234567;
+constexpr int TEST_MAP_ROOMS = 13;
+constexpr int TEST_MAP_CORRIDORS = 24;
 
 /////////////////////// EventListener ///////////////////////
 
@@ -116,27 +123,27 @@ TEST_CASE("RenderEngine & UI", "[render-engine_UI]") {
     UI::Instance().RenderWelcome();
     context->present(console);
     // a few chars in the first line of the intro screen to verify message in correct place
-    REQUIRE(TCOD_console_get_char(console.get(), 120/2-100/2+2, 40/3-20/2) == '.');
-    REQUIRE(TCOD_console_get_char(console.get(), 120/2-100/2+3, 40/3-20/2) == '-');
-    REQUIRE(TCOD_console_get_char(console.get(), 120/2-100/2+5, 40/3-20/2) == ')');
+    REQUIRE(TCOD_console_get_char(console.get(), 120 / 2 - 100 / 2 + 2, 40 / 3 - 20 / 2) == '.');
+    REQUIRE(TCOD_console_get_char(console.get(), 120 / 2 - 100 / 2 + 3, 40 / 3 - 20 / 2) == '-');
+    REQUIRE(TCOD_console_get_char(console.get(), 120 / 2 - 100 / 2 + 5, 40 / 3 - 20 / 2) == ')');
     console.clear();
     GameState state1 = GameState::Loss;
     UI::Instance().SetState(state1);
     UI::Instance().RenderAll();
     context->present(console);
     // a few chars in the first line of the loss screen to verify message in correct place
-    REQUIRE(TCOD_console_get_char(console.get(), 120/2-101/2+5, 40/2-8/2+1) == '.');
-    REQUIRE(TCOD_console_get_char(console.get(), 120/2-101/2+6, 40/2-8/2+1) == '-');
-    REQUIRE(TCOD_console_get_char(console.get(), 120/2-101/2+7, 40/2-8/2+1) == '>');
+    REQUIRE(TCOD_console_get_char(console.get(), 120 / 2 - 101 / 2 + 5, 40 / 2 - 8 / 2 + 1) == '.');
+    REQUIRE(TCOD_console_get_char(console.get(), 120 / 2 - 101 / 2 + 6, 40 / 2 - 8 / 2 + 1) == '-');
+    REQUIRE(TCOD_console_get_char(console.get(), 120 / 2 - 101 / 2 + 7, 40 / 2 - 8 / 2 + 1) == '>');
     console.clear();
     GameState state2 = GameState::Win;
     UI::Instance().SetState(state2);
     UI::Instance().RenderAll();
     context->present(console);
     // a few chars in the first line of the win screen to verify message in correct place
-    REQUIRE(TCOD_console_get_char(console.get(), 120/2-108/2, 40/2-8/2+4) == '(');
-    REQUIRE(TCOD_console_get_char(console.get(), 120/2-108/2+1, 40/2-8/2+4) == 'O');
-    REQUIRE(TCOD_console_get_char(console.get(), 120/2-108/2+4, 40/2-8/2+4) == '\\');
+    REQUIRE(TCOD_console_get_char(console.get(), 120 / 2 - 108 / 2, 40 / 2 - 8 / 2 + 4) == '(');
+    REQUIRE(TCOD_console_get_char(console.get(), 120 / 2 - 108 / 2 + 1, 40 / 2 - 8 / 2 + 4) == 'O');
+    REQUIRE(TCOD_console_get_char(console.get(), 120 / 2 - 108 / 2 + 4, 40 / 2 - 8 / 2 + 4) == '\\');
     console.clear();
     GameState state3 = GameState::InProgress;
     UI::Instance().SetState(state3);
@@ -144,12 +151,12 @@ TEST_CASE("RenderEngine & UI", "[render-engine_UI]") {
     context->present(console);
     // testing various aspects of the main renderall
     // player HP display
-    REQUIRE(TCOD_console_get_char(console.get(), 4, 40-1) == '1');
-    REQUIRE(TCOD_console_get_char(console.get(), 5, 40-1) == '0');
-    REQUIRE(TCOD_console_get_char(console.get(), 6, 40-1) == '0');
+    REQUIRE(TCOD_console_get_char(console.get(), 4, 40 - 1) == '1');
+    REQUIRE(TCOD_console_get_char(console.get(), 5, 40 - 1) == '0');
+    REQUIRE(TCOD_console_get_char(console.get(), 6, 40 - 1) == '0');
     // player inventory display
     Player* player_ = new Player({0, 0, 0});
-    Item* item = new FireExtinguisher({0,0,0});
+    Item* item = new FireExtinguisher({0, 0, 0});
     player_->GetInventory()->AddItem(item);
     // code ripped from UI for ease of testing
     struct ScreenPos bottom2 = {0, 40 - 2};
@@ -161,21 +168,117 @@ TEST_CASE("RenderEngine & UI", "[render-engine_UI]") {
         for (size_t i = 0; i < size; i++) {
           Item* item = inv->GetItemAt(i);
           int index = static_cast<int>(i);
-          str2 = str2 + " " + std::to_string(index+1) + "] " + item->GetName();
+          str2 = str2 + " " + std::to_string(index + 1) + "] " + item->GetName();
         }
       }
-    }  
+    }
     RenderEngine::Instance().Print(bottom2, str2);
-    REQUIRE(TCOD_console_get_char(console.get(), 11, 40-2) == '1');
-    REQUIRE(TCOD_console_get_char(console.get(), 14, 40-2) == 'F');
+    REQUIRE(TCOD_console_get_char(console.get(), 11, 40 - 2) == '1');
+    REQUIRE(TCOD_console_get_char(console.get(), 14, 40 - 2) == 'F');
     delete player_;
     // floor indicator display
-    REQUIRE(TCOD_console_get_char(console.get(), 7, 40-3) == '1');
+    REQUIRE(TCOD_console_get_char(console.get(), 7, 40 - 3) == '1');
   }
 }
 
 /////////////////////// Items ///////////////////////
 
-// Write tests here
+TEST_CASE("FireExtinguisher", "[fire-extinguisher]") {
+  Player* p = new Player({0, 0, 1});
+  Item* fe = new FireExtinguisher({0, 0, 1});
+  Item* fe2 = new FireExtinguisher({0, 0, 1});
+  p->GetInventory()->AddItem(fe);
+  REQUIRE(p->GetInventory()->GetSize() == 1);
+
+  delete p;
+  delete fe;
+  delete fe2;
+}
+
+/////////////////////// Map ///////////////////////
+
+Map* GetTestMap() {
+  TCODRandom* random = new TCODRandom(MAP_GEN_SEED);
+
+  MapGenerator gen;
+  Map* map = gen.Generate(120, 40, 1, random);
+
+  delete random;
+  return map;
+}
+
+TEST_CASE("Map Generation", "[map-generation]") {
+  Map* map = GetTestMap();
+  SECTION("Map has correct number of rooms") { REQUIRE(map->GetRooms().size() == TEST_MAP_ROOMS); }
+
+  SECTION("Map has correct number of corridors") { REQUIRE(map->GetCorridors().size() == TEST_MAP_CORRIDORS); }
+
+  SECTION("Map shapes are dug properly") {
+    TCODMap* tcod_map = map->GetMap();
+
+    for (MapRoom* room : map->GetRooms()) {
+      for (LevelPos pos : room->GetPositions()) {
+        REQUIRE(tcod_map->isWalkable(pos.x, pos.y));
+        REQUIRE(tcod_map->isTransparent(pos.x, pos.y));
+      }
+    }
+
+    for (MapCorridor* corridor : map->GetCorridors()) {
+      for (LevelPos pos : corridor->GetPositions()) {
+        REQUIRE(tcod_map->isWalkable(pos.x, pos.y));
+        REQUIRE(tcod_map->isTransparent(pos.x, pos.y));
+      }
+    }
+  }
+
+  SECTION("Map room adjacency") {
+    for (MapRoom* room : map->GetRooms()) {
+      auto& relations = map->GetRelations();
+      for (auto it = relations.begin(); it != relations.end(); it++) {
+        auto& cur = *it;
+        const MapShape* cur_shape = cur.first;
+        if (const MapRoom* cur_room = dynamic_cast<const MapRoom*>(cur_shape)) {
+          auto& cur_relationships = cur.second;
+
+          for (MapShape* shape : cur_relationships) {
+            if (MapRoom* cur_rel_room = dynamic_cast<MapRoom*>(shape)) {
+              bool is_num_valid = cur_rel_room->GetRoomNumber() == cur_room->GetRoomNumber() - 1 ||
+                                  cur_rel_room->GetRoomNumber() == cur_room->GetRoomNumber() + 1;
+              REQUIRE(is_num_valid);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  delete map;
+}
+
+TEST_CASE("Map", "[map]") {
+  Map* map = GetTestMap();
+
+  SECTION("Get spawn location") {
+    for (int i = 0; i < map->GetRooms().size(); i++) {
+      REQUIRE(map->GetRooms().at(i)->GetCenterPosition() == map->GetSpawnLocation(i));
+    }
+  }
+
+  SECTION("Get rooms in radius") {
+    SECTION("Invalid position") {
+      std::vector<LevelPos> bad_pos = {{-1, 5, 1}, {5, -1, 0}, {20000000, 0, 0}, {0, 200000, 0}};
+      for (LevelPos pos : bad_pos) {
+        REQUIRE_THROWS_AS(map->GetRoomsInRadius(pos, 5), std::invalid_argument);
+      }
+    }
+
+    SECTION("Invalid radius") {
+      std::vector<int> bad_rad = {-1, -222};
+      for (int radius : bad_rad) {
+        REQUIRE_THROWS_AS(map->GetRoomsInRadius({0, 0, 0}, radius), std::invalid_argument);
+      }
+    }
+  }
+}
 
 /////////////////////// Add section below ///////////////////////

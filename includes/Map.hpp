@@ -40,9 +40,10 @@ class Map {
   std::vector<MapCorridor*> GetCorridors() const;
   std::vector<MapRoom*> GetRooms() const;
   std::vector<MapRoom*> GetRoomsInRadius(LevelPos position, int radius);
-  const AdjacentList& GetRelations();
   LevelPos GetSpawnLocation(int idx) const;
   LevelPos GetRandomLocation() const;
+  AdjacentList& GetRelations();
+  LevelPos GetSpawnLocation() const;
 };
 
 std::ostream& operator<<(std::ostream& os, const Map& map);

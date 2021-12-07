@@ -2,7 +2,9 @@
 #define _USE_MATH_DEFINES
 #include <libtcod.h>
 #include <math.h>
+
 #include <iostream>
+#include <stdexcept>
 
 #include "RenderEngine.hpp"
 
@@ -186,6 +188,14 @@ std::vector<LevelPos> GetCirclePositions(LevelPos center, int radius) {
 }
 
 std::vector<MapRoom*> Map::GetRoomsInRadius(LevelPos position, int radius) {
+  if (position.x < 0 || position.x > width_ - 1 || position.y < 0 || position.y > height_ - 1) {
+    throw std::invalid_argument("Invalid position");
+  }
+
+  if (radius < 0) {
+    throw std::invalid_argument("Invalid radius");
+  }
+
   std::vector<MapRoom*> rooms;
   for (LevelPos pos : GetCirclePositions(position, radius)) {
     for (MapRoom* room : GetRooms()) {
@@ -197,11 +207,11 @@ std::vector<MapRoom*> Map::GetRoomsInRadius(LevelPos position, int radius) {
   return rooms;
 }
 
-const AdjacentList& Map::GetRelations() { return this->relations_; }
+AdjacentList& Map::GetRelations() { return this->relations_; }
 
 std::ostream& operator<<(std::ostream& os, const Map& map) {
   char** grid = new char*[map.GetWidth()];
-  for (int i = 0; i < map.GetHeight(); i++) {
+  for (int i = 0; i < map.GetWidth(); i++) {
     grid[i] = new char[map.GetHeight()];
   }
 
@@ -212,7 +222,6 @@ std::ostream& operator<<(std::ostream& os, const Map& map) {
   }
 
   for (auto* room : map.GetRooms()) {
-    std::cout << "Going through room: " << room->GetWidth() << " " << room->GetHeight() << std::endl;
     for (auto pos : room->GetPositions()) {
       grid[pos.x][pos.y] = 'R';
     }
