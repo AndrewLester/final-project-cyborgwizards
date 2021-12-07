@@ -8,8 +8,7 @@
 
 class FireExtinguisher : public Item {
  private:
-  int stun_period_ = 2;
-  int stun_buffer_ = 15;
+  int stun_period_ = 200; // fps count
   int num_uses_ = 4;
  
  public:

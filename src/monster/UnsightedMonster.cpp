@@ -2,6 +2,7 @@
 
 #include "UI.hpp"
 #include "RenderEngine.hpp"
+#include "StunEvent.hpp"
 
 #include <cmath>
 
@@ -29,6 +30,12 @@ void UnsightedMonster::OnNotify(Event* event) {
       this->state_ = MonsterState::Roam;
     } // else: too small, don't react
   } else if (event->GetType() == "StunEvent") {
-
+    StunEvent stun_event = *dynamic_cast<StunEvent*>(event);
+    if (position_.x >= stun_event.start.x && position_.y >= stun_event.start.y &&
+        position_.x <= stun_event.end.x && position_.y <= stun_event.end.y &&
+        stun_cooldown_ == 0) {
+      stun_cooldown_ = kStunCooldown;
+      timer_ += stun_event.stun_period;
+    }
   }
 }

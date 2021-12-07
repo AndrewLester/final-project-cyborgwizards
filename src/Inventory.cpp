@@ -43,5 +43,9 @@ void Inventory::SetCurrIdx(size_t idx) {
 	}
 }
 Item* Inventory::GetItemAtCurrIdx() {
-	return inventory.at(curr_idx_);
+	try {
+		return inventory.at(curr_idx_);
+	} catch (std::out_of_range err) {
+		return nullptr;
+	}
 }

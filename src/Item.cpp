@@ -4,7 +4,7 @@
 #include <vector>
 
 Item::Item(LevelPos pos, std::string name): 
-    Entity(pos, 1, 1), name_(name) {}
+    Entity(pos, 1, 1), name_(name), in_inventory_(false) {}
 
 void Item::Drop() {
     if(UI::Instance().GetMap()->GetItem(UI::Instance().GetPlayer()->GetPosition()) == nullptr) {

@@ -33,6 +33,8 @@ void Monster::Update() {
   } else {
     timer_--;
   }
+
+  if (stun_cooldown_ > 0) stun_cooldown_--;
 }
 
 void Monster::ChangeDestination(LevelPos destination) {

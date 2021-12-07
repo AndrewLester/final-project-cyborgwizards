@@ -54,7 +54,7 @@ void Map::Render(LevelPos center, ScreenPos screen_center) {
       LevelPos map_pos = {row, col};
       LevelPos relative_pos = map_pos - center;
       ScreenPos relative_pos_screen = {relative_pos.x, relative_pos.y};
-      if (map_->isInFov(row, col))
+      // if (map_->isInFov(row, col))
         RenderEngine::Instance().DrawRect(screen_center + relative_pos_screen, 1, 1, '#', TCOD_gray, TCOD_gray);
       // tcod::draw_rect(
       //     console,
@@ -73,13 +73,15 @@ void Map::Render(LevelPos center, ScreenPos screen_center) {
     }
   }
 
-  // for (Item* item : items_) {
-  //   LevelPos item_pos = item->GetPosition();
-  //   if (item_pos.level == center.level) {
-  //     LevelPos relative_pos = item_pos - center;
-  //     item->Draw({screen_center.x + relative_pos.x, screen_center.y + relative_pos.y}, console);
-  //   }
-  // }
+  for (Item* item : items_) {
+    LevelPos item_pos = item->GetPosition();
+    if (item_pos.level == center.level) {
+      LevelPos relative_pos = item_pos - center;
+      // if (map_->isInFov(screen_center.x + relative_pos.x, screen_center.y + relative_pos.y) && item->InInventory())
+      if (!item->InInventory())
+        item->Draw({screen_center.x + relative_pos.x, screen_center.y + relative_pos.y});
+    }
+  }
 }
 
 Item* Map::GetItem(LevelPos position) {
