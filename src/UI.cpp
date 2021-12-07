@@ -63,9 +63,9 @@ void UI::RenderAll() {
       str1 = str1 + std::to_string(player_->GetPosition().level);
     }
     RenderEngine::Instance().Print(bottom1, str1);
-    ScreenPos bottom2 = {0, height - 2};
-    std::string str2 = "Monster Pos: " + monster_->GetCenterPosition().ToString();
-    RenderEngine::Instance().Print(bottom2, str2);
+    ScreenPos bottom4 = {0, height - 2};
+    std::string str4 = "Monster Pos: " + monster_->GetCenterPosition().ToString();
+    RenderEngine::Instance().Print(bottom4, str4);
 
     struct ScreenPos bottom2 = {0, height - 2};
     std::string str2 = "Inventory:";
