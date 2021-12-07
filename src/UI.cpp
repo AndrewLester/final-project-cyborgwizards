@@ -1,11 +1,9 @@
 #include "UI.hpp"
 #include "MapGenerator.hpp"
-// maybe use the "Reading the content of the console" to test?
 
 #include "UnsightedMonster.hpp"
 
 UI::UI() {
-  // How should each be initialized? 
   MapGenerator generator;
   std::cout << "Generating map...";
   std::cout.flush();
@@ -33,10 +31,13 @@ void UI::Update() {
 void UI::RenderAll() {
   // draw the player in the middle of the screen, also map, monster, items and additional UI info as needed
 
-  // notes on potential rendering of sound bar:
-  // keep on right? side of screen in fixed pos, allow arrows and level to be drawn in x spaces depending on criteria
+  if (player_->GetHp() <= 0) {
+    this->SetState(GameState::Loss);
+  }
 
-  state_ = GameState::InProgress;
+  // if (win condition) {
+  //   this->SetState(GameState::Win);
+  // }
 
   if (state_ == GameState::InProgress) {
     int width = RenderEngine::Instance().GetWidth();
@@ -57,27 +58,90 @@ void UI::RenderAll() {
     }
 
     struct ScreenPos bottom1 = {0, height - 3};
-    std::string str1 = "Floor: 1"; // TODO: add level display, how to get current floor #?
+    std::string str1 = "Floor: ";
+    if (player_ != nullptr) {
+      str1 = str1 + std::to_string(player_->GetPosition().level);
+    }
     RenderEngine::Instance().Print(bottom1, str1);
-    ScreenPos bottom2 = {0, height - 2};
-    std::string str2 = "Monster Pos: " + monster_->GetCenterPosition().ToString();
-    RenderEngine::Instance().Print(bottom2, str2);
+    ScreenPos bottom4 = {0, height - 2};
+    std::string str4 = "Monster Pos: " + monster_->GetCenterPosition().ToString();
+    RenderEngine::Instance().Print(bottom4, str4);
 
-    // struct ScreenPos bottom2 = {0, height - 2};
-    // Inventory* inv = player_->GetInventory();
-    // std::string str2 = "Inventory:";
-    // if (inv != nullptr) {
-    //   size_t size = inv->GetSize();
-    //   for (size_t i = 0; i < size; i++) {
-    //     Item* item = inv->GetItemAt(i);
-    //     str2 = str2 + " " + std::to_string(i+1) + " " + item->GetName();  // might need to conv i to int
+    struct ScreenPos bottom2 = {0, height - 2};
+    std::string str2 = "Inventory:";
+    if (player_ != nullptr) {
+      Inventory* inv = player_->GetInventory();
+      if (inv != nullptr) {
+        size_t size = inv->GetSize();
+        for (size_t i = 0; i < size; i++) {
+          Item* item = inv->GetItemAt(i);
+          int index = static_cast<int>(i);
+          str2 = str2 + " " + std::to_string(index+1) + " " + item->GetName();
+        }
+      }
+    }  
+    RenderEngine::Instance().Print(bottom2, str2);  // works with no items, does it work with items?
+
+    struct ScreenPos bottom3 = {0, height - 1}; 
+    std::string str3 = "HP: ";
+    if (player_ != nullptr) {
+      str3 = str3 + std::to_string(player_->GetHp());
+    }
+    str3 = str3 + "/100";
+    RenderEngine::Instance().Print(bottom3, str3);
+
+    // sound bar code, but would need bool indicators for direction arrows and int for total sound intensity value
+    // struct ScreenPos sound1 = {width - 10, height/3+0};
+    // struct ScreenPos sound2 = {width - 10, height/3+2}; 
+    // struct ScreenPos sound3 = {width - 10, height/3+3}; 
+    // struct ScreenPos sound4 = {width - 10, height/3+4}; 
+    // struct ScreenPos sound5 = {width - 10, height/3+5}; 
+    // struct ScreenPos sound6 = {width - 10, height/3+6}; 
+    // struct ScreenPos sound7 = {width - 10, height/3+7}; 
+    // RenderEngine::Instance().Print(sound1, "Sound");
+    // RenderEngine::Instance().Print(sound2, "|---|");
+    // RenderEngine::Instance().Print(sound3, "|   |");
+    // RenderEngine::Instance().Print(sound4, "|   |");
+    // RenderEngine::Instance().Print(sound5, "|   |");
+    // RenderEngine::Instance().Print(sound6, "|   |");
+    // RenderEngine::Instance().Print(sound7, "|---|");
+    // bool up_, down_, left_, right_;
+    // up_ = false;
+    // down_ = false;
+    // left_ = false;
+    // right_ = false;
+    // if (up_) {
+    //   struct ScreenPos up = {width - 8, height/3+1};
+    //   RenderEngine::Instance().Print(up, "v");
+    // }
+    // if (down_) {
+    //   struct ScreenPos down = {width - 8, height/3+8};
+    //   RenderEngine::Instance().Print(down, "^");
+    // }
+    // if (left_) {
+    //   struct ScreenPos left = {width - 11, height/3+4};
+    //   RenderEngine::Instance().Print(left, ">");
+    // } 
+    // if (right_) {
+    //   struct ScreenPos right = {width - 5, height/3+4};
+    //   RenderEngine::Instance().Print(right, "<");
+    // }
+    // int intensity_num = 0;
+    // for (int i = 0; i < intensity_num; i++) {
+    //   if (i == 3) {
+    //     struct ScreenPos intensity1 = {width - 9, height/3+3};
+    //     RenderEngine::Instance().Print(intensity1, "***");
+    //   } else if (i == 2) {
+    //     struct ScreenPos intensity2 = {width - 9, height/3+4};
+    //     RenderEngine::Instance().Print(intensity2, "***");
+    //   } else if (i == 1) {
+    //     struct ScreenPos intensity3 = {width - 9, height/3+5};
+    //     RenderEngine::Instance().Print(intensity3, "***");
+    //   } else if (i == 0) {
+    //     struct ScreenPos intensity4 = {width - 9, height/3+6};
+    //     RenderEngine::Instance().Print(intensity4, "***");
     //   }
-    // }  
-    // RenderEngine::Instance().Print(bottom2, str2);  // works with no items, does it work with items?
-
-    // struct ScreenPos bottom3 = {0, height - 1}; 
-    // std::string str3 = "HP: " + std::to_string(player_->GetHp()) + "/100"; // works when player properly initialized
-    // RenderEngine::Instance().Print(bottom3, str3);
+    // }
   } else if (state_ == GameState::Loss) {
     int width = RenderEngine::Instance().GetWidth();
     int height = RenderEngine::Instance().GetHeight();
@@ -196,4 +260,8 @@ Map* UI::GetMap() {
 
 Monster* UI::GetMonster() {
   return monster_;
+}
+
+void UI::SetState(GameState state) {
+  state_ = state;
 }

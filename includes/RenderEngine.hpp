@@ -27,6 +27,7 @@ class RenderEngine {
   void DrawRect(ScreenPos upleft, int width, int height, char c, TCOD_ColorRGB fore, TCOD_ColorRGB back);
   void Print(ScreenPos pos, std::string str);
   void Print(ScreenPos pos, std::string str, TCOD_ColorRGB col);
+  void DrawRect(ScreenPos pos, int width, int height, char c, tcod::ColorRGB col);
 };
 
 #endif

@@ -11,7 +11,7 @@ enum GameState { InProgress, Win, Loss };
 class UI {
  private:
   Map* map_;
-  Player* player_;
+  Player* player_ = nullptr;
   Monster* monster_;
   GameState state_;
 
@@ -25,6 +25,7 @@ class UI {
   Player* GetPlayer();
   Map* GetMap();
   Monster* GetMonster();
+  void SetState(GameState state);
 
   static UI& Instance() {
     static UI* instance = new UI();
