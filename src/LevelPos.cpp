@@ -13,6 +13,11 @@ LevelPos& LevelPos::operator-=(const LevelPos& other) {
   return *this;
 }
 
-std::string LevelPos::ToString() {
+std::string LevelPos::ToString() const {
   return "(" + std::to_string(x) + ", " + std::to_string(y) + ", " + std::to_string(level) + ")";
+}
+
+std::ostream& operator<<(std::ostream& os, const LevelPos& pos) {
+  os << pos.ToString();
+  return os;
 }

@@ -2,6 +2,7 @@
 #define LEVEL_POS_HPP
 
 #include <cmath>
+#include <ostream>
 #include <string>
 #define sqr(x) ((x) * (x))
 
@@ -18,11 +19,11 @@ struct LevelPos {
     return sqrt(sqr(c.x - this->x) + sqr(c.y - this->y) + sqr((c.level - this->level) * 5));
   }
 
-  std::string ToString();
+  std::string ToString() const;
 };
 
 bool operator==(const LevelPos& c1, const LevelPos& c2);
 bool operator!=(const LevelPos& c1, const LevelPos& c2);
 LevelPos operator-(const LevelPos& c1, const LevelPos& c2);
-
+std::ostream& operator<<(std::ostream& os, const LevelPos& pos);
 #endif
