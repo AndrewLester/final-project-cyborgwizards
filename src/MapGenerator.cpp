@@ -5,6 +5,17 @@
 #include "MapCorridor.hpp"
 #include "MapRoom.hpp"
 
+void AddEdge(AdjacentList* relations, MapShape* s1, MapShape* s2) {
+  if (relations->find(s1) == relations->end()) {
+    relations->insert({s1, {}});
+  }
+  relations->at(s1).push_back(s2);
+  if (relations->find(s2) == relations->end()) {
+    relations->insert({s2, {}});
+  }
+  relations->at(s2).push_back(s1);
+}
+
 bool MapGenerator::BspListener::visitNode(TCODBsp* node, void* user_data) {
   auto* data = static_cast<std::pair<std::vector<MapShape*>*, AdjacentList*>*>(user_data);
   auto* shapes = data->first;
@@ -35,11 +46,14 @@ bool MapGenerator::BspListener::visitNode(TCODBsp* node, void* user_data) {
       shapes->push_back(c1);
       shapes->push_back(c2);
 
-      if (relations->find(this->last_room_) == relations->end()) {
-        relations->insert({this->last_room_, {}});
-      }
-      relations->at(this->last_room_).insert({new_room, {c1, c2}});
-      relations->insert({new_room, {{this->last_room_, {c2, c1}}}});
+      AddEdge(relations, last_room_, c1);
+      AddEdge(relations, c1, c2);
+      AddEdge(relations, c2, new_room);
+
+      std::cout << last_room_->GetCenterPosition().ToString() << ", "
+                << c1->GetCenterPosition().ToString() << ", "
+                << c2->GetCenterPosition().ToString() << ", "
+                << new_room->GetCenterPosition().ToString()  << std::endl;
     }
     last_room_ = new_room;
     room_num_++;

@@ -11,7 +11,7 @@
 #include "MapRoom.hpp"
 #include "MapShape.hpp"
 
-typedef std::map<MapRoom*, std::map<MapRoom*, std::pair<MapCorridor*, MapCorridor*>>> AdjacentList;
+typedef std::map<MapShape*, std::vector<MapShape*>> AdjacentList;
 class Map {
  private:
   const int width_;

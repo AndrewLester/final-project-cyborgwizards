@@ -12,3 +12,7 @@ LevelPos& LevelPos::operator-=(const LevelPos& other) {
 
   return *this;
 }
+
+std::string LevelPos::ToString() {
+  return "(" + std::to_string(x) + ", " + std::to_string(y) + ", " + std::to_string(level) + ")";
+}

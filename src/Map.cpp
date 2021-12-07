@@ -188,7 +188,7 @@ std::vector<MapRoom*> Map::GetRoomsInRadius(LevelPos position, int radius) {
   std::vector<MapRoom*> rooms;
   for (LevelPos pos : GetCirclePositions(position, radius)) {
     for (MapRoom* room : GetRooms()) {
-      if (room->ContainsLevelPos(pos)) {
+      if (room->ContainsLevelPos(pos) && std::find(rooms.begin(), rooms.end(), room) != rooms.end()) {
         rooms.push_back(room);
       }
     }

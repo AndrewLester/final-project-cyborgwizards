@@ -23,7 +23,7 @@ class Monster : public Entity {
 
  private:
   int timer_ = 0;
-  void FindPath(const AdjacentList& map, std::set<MapRoom*>& visited, MapRoom* curr, MapRoom* dest, bool& found);
+  void FindPath(const AdjacentList& map, std::set<MapShape*>& visited, MapShape* curr, MapShape* dest, bool& found);
 
  public:
   void Update();

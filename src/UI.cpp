@@ -10,7 +10,6 @@ UI::UI() {
   std::cout << "Generating map...";
   std::cout.flush();
   this->map_ = generator.Generate(RenderEngine::Instance().GetWidth(), RenderEngine::Instance().GetHeight(), 1);
-  // this->map_ = generator.Generate(40, 40, 1); // TODO: CHANGE BACK
 
   std::cout << " Done." << std::endl;
 
@@ -58,6 +57,9 @@ void UI::RenderAll() {
     struct ScreenPos bottom1 = {0, height - 3};
     std::string str1 = "Floor: 1"; // TODO: add level display, how to get current floor #?
     RenderEngine::Instance().Print(bottom1, str1);
+    ScreenPos bottom2 = {0, height - 2};
+    std::string str2 = "Monster Pos: " + monster_->GetCenterPosition().ToString();
+    RenderEngine::Instance().Print(bottom2, str2);
 
     // struct ScreenPos bottom2 = {0, height - 2};
     // Inventory* inv = player_->GetInventory();

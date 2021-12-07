@@ -16,7 +16,7 @@ void UnsightedMonster::OnNotify(Event* event) {
   if (event->emitter_ != this && event->GetType() == "SoundEvent") {
     SoundEvent sound_event = *dynamic_cast<SoundEvent*>(event);
     int rel_intensity = sound_event.RelativeIntensity(this->position_);
-    if (rel_intensity > 97) { // directly change
+    if (rel_intensity > 80) { // directly change
       this->prev_intensity_ = rel_intensity;
       this->ChangeDestination(sound_event.source);
       this->state_ = MonsterState::Chase;
