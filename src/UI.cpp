@@ -1,8 +1,8 @@
 #include "UI.hpp"
 
+#include "FireExtinguisher.hpp"
 #include "MapGenerator.hpp"
 #include "UnsightedMonster.hpp"
-#include "FireExtinguisher.hpp"
 
 UI::UI() {
   MapGenerator generator;
@@ -67,8 +67,8 @@ void UI::RenderAll() {
     }
     RenderEngine::Instance().Print(bottom1, str1);
     ScreenPos bottom4 = {0, height - 2};
-    std::string str4 = "Monster Pos: " + monster_->GetCenterPosition().ToString();
-    RenderEngine::Instance().Print(bottom4, str4);
+    // std::string str4 = "Monster Pos: " + monster_->GetCenterPosition().ToString();
+    // RenderEngine::Instance().Print(bottom4, str4);
 
     struct ScreenPos bottom2 = {0, height - 2};
     std::string str2 = "Inventory:";
