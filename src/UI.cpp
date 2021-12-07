@@ -55,33 +55,34 @@ void UI::RenderAll() {
     if (monster_pos.level == player_pos.level) {
       LevelPos relative_pos = monster_pos - player_pos;
       ScreenPos offset = {relative_pos.x, relative_pos.y};
-      if (map_->GetMap()->isInFov(monster_pos.x, monster_pos.y)) {
+      // if (map_->GetMap()->isInFov(monster_pos.x, monster_pos.y)) {
         monster_->Draw(center + offset);
-      }
+      // }
     }
 
     struct ScreenPos bottom1 = {0, height - 3};
     std::string str1 = "Floor: 1"; // TODO: add level display, how to get current floor #?
     RenderEngine::Instance().Print(bottom1, str1);
-    ScreenPos bottom2 = {0, height - 2};
-    std::string str2 = "Monster Pos: " + monster_->GetCenterPosition().ToString();
-    RenderEngine::Instance().Print(bottom2, str2);
+    // ScreenPos bottom2 = {0, height - 2};
+    // std::string str2 = "Monster Pos: " + monster_->GetCenterPosition().ToString();
+    // RenderEngine::Instance().Print(bottom2, str2);
 
-    // struct ScreenPos bottom2 = {0, height - 2};
-    // Inventory* inv = player_->GetInventory();
-    // std::string str2 = "Inventory:";
-    // if (inv != nullptr) {
-    //   size_t size = inv->GetSize();
-    //   for (size_t i = 0; i < size; i++) {
-    //     Item* item = inv->GetItemAt(i);
-    //     str2 = str2 + " " + std::to_string(i+1) + " " + item->GetName();  // might need to conv i to int
-    //   }
-    // }  
-    // RenderEngine::Instance().Print(bottom2, str2);  // works with no items, does it work with items?
+    struct ScreenPos bottom2 = {, height - 2};
+    Inventory* inv = player_->GetInventory();
+    std::string str2 = "Inventory:";
+    if (inv != nullptr) {
+      size_t size = inv->GetSize();
+      for (size_t i = 0; i < size; i++) {
+        Item* item = inv->GetItemAt(i);
+        str2 = str2 + " " + std::to_string(i+1) + " " + item->GetName();  // might need to conv i to int
+      }
+    }  
+    RenderEngine::Instance().Print(bottom2, str2);  // works with no items, does it work with items?
 
-    // struct ScreenPos bottom3 = {0, height - 1}; 
-    // std::string str3 = "HP: " + std::to_string(player_->GetHp()) + "/100"; // works when player properly initialized
-    // RenderEngine::Instance().Print(bottom3, str3);
+    struct ScreenPos bottom3 = {0, height - 1}; 
+    if (player_->GetPosition() == monster_->GetPosition()) player_->Harmed(2);
+    std::string str3 = "HP: " + std::to_string(player_->GetHp()) + "/100"; // works when player properly initialized
+    RenderEngine::Instance().Print(bottom3, str3);
   } else if (state_ == GameState::Loss) {
     int width = RenderEngine::Instance().GetWidth();
     int height = RenderEngine::Instance().GetHeight();

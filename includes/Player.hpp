@@ -32,6 +32,7 @@ class Player : public Entity {
   Inventory* GetInventory();
   Facing GetFacingDir();
   int GetHp();
+  void Harmed(int hp);
 };
 
 #endif
