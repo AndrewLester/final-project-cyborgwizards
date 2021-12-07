@@ -19,6 +19,7 @@ class UI {
   ~UI();
 
  public:
+  void Update();
   void RenderAll();
   void RenderWelcome();
   Player* GetPlayer();

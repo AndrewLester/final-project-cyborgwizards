@@ -28,7 +28,7 @@ class Monster : public Entity {
  public:
   virtual void Update();
   void ChangeDestination(LevelPos destination);
-  virtual void OnNotify(Event event) = 0;
+  virtual void OnNotify(Event* event) = 0;
 };
 
 #endif

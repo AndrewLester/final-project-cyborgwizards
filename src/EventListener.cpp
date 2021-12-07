@@ -8,13 +8,13 @@ void EventListener::HandleInput(SDL_Event event) {
   switch (event.type) {
     case SDL_KEYUP: case SDL_KEYDOWN:
       KeyboardEvent ke(event.key);
-      this->BroadcastEvent(ke);
+      this->BroadcastEvent(&ke);
       break;
   }
 }
 
-void EventListener::BroadcastEvent(Event event) {
-  std::string event_type = event.GetType();
+void EventListener::BroadcastEvent(Event* event) {
+  std::string event_type = event->GetType();
   for (auto it = this->listeners_.begin(); it != this->listeners_.end(); it++) {
     if (it->second.find(event_type) != it->second.end()) {
       it->first->OnNotify(event);

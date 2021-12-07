@@ -14,8 +14,8 @@
 typedef std::map<MapRoom*, std::map<MapRoom*, std::pair<MapCorridor*, MapCorridor*>>> AdjacentList;
 class Map {
  private:
-  int width_;
-  int height_;
+  const int width_;
+  const int height_;
   std::vector<MapShape*> shapes_;
   AdjacentList relations_;
   std::vector<Item*> items_;
@@ -25,7 +25,7 @@ class Map {
   Map(int width, int height);
   ~Map();
 
-  void Render(LevelPos center, ScreenPos screen_center, tcod::Console& console);
+  void Render(LevelPos center, ScreenPos screen_center);
   bool IsReachable(LevelPos position);
   void AddItem(Item* item);
   void SetShapes(std::vector<MapShape*> shapes);
@@ -41,6 +41,7 @@ class Map {
   std::vector<MapRoom*> GetRooms() const;
   std::vector<MapRoom*> GetRoomsInRadius(LevelPos position, int radius);
   const AdjacentList& GetRelations();
+  LevelPos GetSpawnLocation() const;
 };
 
 std::ostream& operator<<(std::ostream& os, const Map& map);

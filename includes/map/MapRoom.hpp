@@ -7,11 +7,14 @@
 #include "MapShape.hpp"
 
 class MapRoom : public MapShape {
+ private:
+  int room_num_;
  public:
-  MapRoom(LevelPos position, int width, int height) : MapShape(position, width, height){};
-  void Draw(ScreenPos top_left, tcod::Console& console) override;
-  void OnNotify(Event event) override;
+  MapRoom(LevelPos position, int width, int height, int room_num) : MapShape(position, width, height){ room_num_ = room_num;};
+  void Draw(ScreenPos top_left) override;
+  void OnNotify(Event* event) override;
   std::vector<LevelPos> GetPositions() override;
+  int GetRoomNumber() const;
 };
 
 #endif

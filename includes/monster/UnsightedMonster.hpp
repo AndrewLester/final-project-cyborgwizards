@@ -9,7 +9,7 @@ class UnsightedMonster : public Monster {
  public:
   UnsightedMonster(LevelPos pos);
 
-  void OnNotify(Event event);
+  void OnNotify(Event* event);
 };
 
 #endif

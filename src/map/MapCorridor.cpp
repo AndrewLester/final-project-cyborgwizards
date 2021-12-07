@@ -1,17 +1,20 @@
 #include "MapCorridor.hpp"
 
+#include "RenderEngine.hpp"
+
 #include <iostream>
 
-void MapCorridor::Draw(ScreenPos top_left, tcod::Console& console) {
+void MapCorridor::Draw(ScreenPos top_left) {
   for (int row = 0; row < width_; row++) {
     for (int col = 0; col < height_; col++) {
-      tcod::draw_rect(console, {top_left.x + row, top_left.y + col, 1, 1}, ' ', TCOD_black, TCOD_black);
+      ScreenPos offset = {row, col};
+      RenderEngine::Instance().DrawRect(top_left + offset, 1, 1, ' ', TCOD_black, TCOD_black);
     }
   }
 }
 
-void MapCorridor::OnNotify(Event event) {
-  std::cout << event.GetType() << std::endl;
+void MapCorridor::OnNotify(Event* event) {
+  std::cout << event->GetType() << std::endl;
   return;
 }
 

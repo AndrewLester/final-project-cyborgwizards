@@ -18,7 +18,7 @@ class Item : public Entity {
   Item(LevelPos pos, std::string name);
 
  public:
-  virtual void Draw(ScreenPos top_left, tcod::Console& console) = 0;
+  virtual void Draw(ScreenPos top_left) = 0;
   virtual void Use() = 0;
   void Drop();
   void Pick(Player* player);

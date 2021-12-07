@@ -18,7 +18,7 @@ bool MapGenerator::BspListener::visitNode(TCODBsp* node, void* user_data) {
     x = random->getInt(node->x + 1, node->x + node->w - w - 1);
     y = random->getInt(node->y + 1, node->y + node->h - h - 1);
     MapRoom* new_room =
-        static_cast<MapRoom*>(generator_->CreateShape(x, y, x + w - 1, y + h - 1, level_, ShapeType::ROOM));
+        static_cast<MapRoom*>(generator_->CreateShape(x, y, x + w - 1, y + h - 1, level_, room_num_, ShapeType::ROOM));
 
     shapes->push_back(new_room);
 
@@ -27,9 +27,9 @@ bool MapGenerator::BspListener::visitNode(TCODBsp* node, void* user_data) {
       int last_room_center_y = this->last_room_->GetCenterPosition().y;
 
       MapCorridor* c1 = static_cast<MapCorridor*>(generator_->CreateShape(
-          last_room_center_x, last_room_center_y, x + (w / 2), last_room_center_y, level_, ShapeType::CORRIDOR));
+          last_room_center_x, last_room_center_y, x + (w / 2), last_room_center_y, level_, room_num_, ShapeType::CORRIDOR));
       MapCorridor* c2 = static_cast<MapCorridor*>(generator_->CreateShape(
-          x + (w / 2), last_room_center_y, x + (w / 2), y + (h / 2), level_, ShapeType::CORRIDOR));
+          x + (w / 2), last_room_center_y, x + (w / 2), y + (h / 2), level_, room_num_, ShapeType::CORRIDOR));
       shapes->push_back(c1);
       shapes->push_back(c2);
 
@@ -79,7 +79,7 @@ Map* MapGenerator::Generate(int width, int height, int level) {
   return map;
 }
 
-MapShape* MapGenerator::CreateShape(int x1, int y1, int x2, int y2, int level, ShapeType type) {
+MapShape* MapGenerator::CreateShape(int x1, int y1, int x2, int y2, int level, int room_num, ShapeType type) {
   if (x2 < x1) {
     int tmp = x2;
     x2 = x1;
@@ -95,7 +95,7 @@ MapShape* MapGenerator::CreateShape(int x1, int y1, int x2, int y2, int level, S
 
   switch (type) {
     case ShapeType::ROOM:
-      return new MapRoom({x1, y1, level}, x2 - x1 + 1, y2 - y1 + 1);
+      return new MapRoom({x1, y1, level}, x2 - x1 + 1, y2 - y1 + 1, room_num);
     case ShapeType::CORRIDOR:
       return new MapCorridor({x1, y1, level}, x2 - x1 + 1, y2 - y1 + 1);
     default:

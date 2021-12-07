@@ -1,11 +1,18 @@
 #include "UI.hpp"
 #include "MapGenerator.hpp"
 
-UI::UI() { // maybe take in map with a setter? 
-  state_ = GameState::InProgress;
+UI::UI() {
+  // How should each be initialized? 
   MapGenerator generator;
-  Map* map = generator.Generate(120, 40, 1);
-  player_ = new Player(map->); //spawn location
+  std::cout << "Generating map...";
+  std::cout.flush();
+  this->map_ = generator.Generate(RenderEngine::Instance().GetWidth(), RenderEngine::Instance().GetHeight(), 1);
+  std::cout << " Done." << std::endl;
+
+  player_ = new Player(map_->GetSpawnLocation());
+  EventListener::Instance().RegisterListener(player_, "KeyboardEvent");
+  // struct LevelPos test = {0, 0, 0};
+  // player_ = new Player(test);
   // monster_ = new Monster();
 }
 
@@ -13,6 +20,10 @@ UI::~UI() {
   delete player_; 
   delete monster_;
   delete map_;
+}
+
+void UI::Update() {
+  this->player_->Update();
 }
   
 void UI::RenderAll() {
@@ -22,20 +33,14 @@ void UI::RenderAll() {
     int width = RenderEngine::Instance().GetWidth();
     int height = RenderEngine::Instance().GetHeight();
 
-    struct ScreenPos center1 = {width / 2, height / 2}; 
-    struct LevelPos center2 = {width / 2, height / 2, player_->GetPosition().level}; 
-    
-    // map_->Render() handles item rendering?
-    // map uses console for drawing a rect, but why does player and monster need it? 
-    // map_->Render({40, 18, 1}, {40, 18}, RenderEngine::Instance().GetConsole());  // center2, center 1
-    // player_->Draw(center1, RenderEngine::Instance().GetConsole());
-    // monster_->Draw(center1, RenderEngine::Instance().GetConsole());
+    struct ScreenPos center1 = {width / 2, height / 2}; // if even/odd how to define center?
+    // struct LevelPos center2 = {width / 2, height / 2, 1};
+    map_->Render(player_->GetPosition(), center1);
+    player_->Draw(center1);
+    // monster_->Draw(center1);
 
     struct ScreenPos bottom1 = {0, height - 3};
-    std::string str1 = "Floor: ";
-    if (player_ != nullptr) {
-      str1 = str1 + std::to_string(player_->GetPosition().level);
-    }
+    std::string str1 = "Floor: 1"; // TODO: add level display, how to get current floor #?
     RenderEngine::Instance().Print(bottom1, str1);
 
     struct ScreenPos bottom2 = {0, height - 2};

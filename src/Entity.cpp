@@ -4,7 +4,7 @@ Entity::Entity(LevelPos init_pos, int width, int height) : position_(init_pos), 
 
 Entity::~Entity() {}
 
-void Entity::UploadEvent(Event event) { EventListener::Instance().BroadcastEvent(event); }
+void Entity::UploadEvent(Event event) { EventListener::Instance().BroadcastEvent(&event); }
 
 void Entity::RegisterListen(std::string event_type) { EventListener::Instance().RegisterListener(this, event_type); }
 

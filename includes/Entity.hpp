@@ -20,7 +20,7 @@ class Entity {
 
   void UploadEvent(Event event);
   void RegisterListen(std::string event_type);
-  virtual void OnNotify(Event event) = 0;
+  virtual void OnNotify(Event* event) = 0;
 
   LevelPos GetPosition();
   LevelPos GetCenterPosition();
@@ -28,7 +28,7 @@ class Entity {
   int GetWidth() const { return width_; }
   int GetHeight() const { return height_; }
 
-  virtual void Draw(ScreenPos top_left, tcod::Console& console) = 0;
+  virtual void Draw(ScreenPos top_left) = 0;
 };
 
 #endif
