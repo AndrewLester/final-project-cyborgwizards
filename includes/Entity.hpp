@@ -28,7 +28,7 @@ class Entity {
   int GetWidth() const { return width_; }
   int GetHeight() const { return height_; }
 
-  virtual void Draw(ScreenPos top_left, tcod::Console& console) = 0;
+  virtual void Draw(ScreenPos top_left) = 0;
 };
 
 #endif

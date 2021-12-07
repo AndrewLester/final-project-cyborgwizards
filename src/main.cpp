@@ -22,7 +22,7 @@ int main(int argc, char** argv) {
   params.console = console.get();
 
   auto context = tcod::new_context(params);
-  RenderEngine::Instance().SetConsole(&console);
+  RenderEngine::Instance().SetConsole(console.get());
 
   // Main Menu
   bool run = true;
@@ -34,18 +34,12 @@ int main(int argc, char** argv) {
     run = false;
   }
 
-  MapGenerator generator;
-  std::cout << "Generating map...";
-  std::cout.flush();
-  Map* map = generator.Generate(120, 40, 1);
-  std::cout << " Done." << std::endl;
-
   // Game loop.
   while (true) {
     // Rendering.
 
     console.clear();  // or can do TCOD_console_clear(console.get());
-    map->Render({40, 18, 1}, {40, 18}, console);
+    UI::Instance().RenderAll();
     context->present(console);  // or can do TCOD_console_flush();
 
     // Handle input.
@@ -56,12 +50,11 @@ int main(int argc, char** argv) {
         case SDL_QUIT:
           std::exit(EXIT_SUCCESS);
           break;
-        default:
-          EventListener::Instance().HandleInput(event);
+        // default:
+        //   EventListener::Instance().HandleInput(event);
       }
     }
   }
 
-  delete map;
   return 0;
 }

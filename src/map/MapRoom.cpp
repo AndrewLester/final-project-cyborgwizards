@@ -1,13 +1,16 @@
 #include "MapRoom.hpp"
 
-#include <libtcod.h>
-
 #include <iostream>
 
-void MapRoom::Draw(ScreenPos top_left, tcod::Console& console) {
+#include "RenderEngine.hpp"
+
+int MapRoom::GetRoomNumber() const { return room_num_; }
+
+void MapRoom::Draw(ScreenPos top_left) {
   for (int row = 0; row < width_; row++) {
     for (int col = 0; col < height_; col++) {
-      tcod::draw_rect(console, {top_left.x + row, top_left.y + col, 1, 1}, ' ', TCOD_black, TCOD_black);
+      ScreenPos offset = {row, col};
+      RenderEngine::Instance().DrawRect(top_left + offset, 1, 1, ' ', TCOD_black, TCOD_black);
     }
   }
 }

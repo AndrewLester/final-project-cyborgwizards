@@ -24,7 +24,7 @@ class Player : public Entity {
  public:
   Player(LevelPos init_pos);
 
-  void Draw(ScreenPos top_left, tcod::Console& console);
+  void Draw(ScreenPos top_left);
   void OnNotify(Event event);
   void Update();
 

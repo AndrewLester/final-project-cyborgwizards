@@ -6,8 +6,8 @@
 
 Player::Player(LevelPos init_pos) : Entity(init_pos, 1, 1) {}
 
-void Player::Draw(ScreenPos top_left, tcod::Console& console) {
-  // TODO: draw the player
+void Player::Draw(ScreenPos top_left) {
+  RenderEngine::Instance().SetChar(top_left, '@');
 }
 
 void Player::OnNotify(Event event) {

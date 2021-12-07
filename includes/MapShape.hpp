@@ -18,7 +18,7 @@ class MapShape : public Entity {
   bool reachable_ = false;
 
  public:
-  virtual void Draw(ScreenPos top_left, tcod::Console& console) = 0;
+  virtual void Draw(ScreenPos top_left) = 0;
   virtual std::vector<LevelPos> GetPositions() = 0;
   bool IsReachable();
   bool ContainsLevelPos(LevelPos position);

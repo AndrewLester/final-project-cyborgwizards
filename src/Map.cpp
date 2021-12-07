@@ -2,8 +2,9 @@
 #define _USE_MATH_DEFINES
 #include <libtcod.h>
 #include <math.h>
-
 #include <iostream>
+
+#include "RenderEngine.hpp"
 
 Map::Map(int width, int height) : items_(std::vector<Item*>()), width_(width), height_(height) {
   map_ = new TCODMap(width, height);
@@ -24,23 +25,35 @@ TCODMap* Map::GetMap() { return map_; }
 int Map::GetWidth() const { return width_; }
 int Map::GetHeight() const { return height_; }
 
+LevelPos Map::GetSpawnLocation() const {
+  std::vector<MapRoom*> rooms = GetRooms();
+  for (MapRoom* room : rooms) {
+    if (room->GetRoomNumber() == 0) {
+      return room->GetCenterPosition();
+    }
+  }
+  return {0, 0, 1};
+}
+
 void Map::AddItem(Item* item) { items_.push_back(item); }
 
 void Map::SetShapes(std::vector<MapShape*> shapes) { shapes_ = shapes; }
 
 void Map::SetRelations(AdjacentList relations) { this->relations_ = relations; }
 
-void Map::Render(LevelPos center, ScreenPos screen_center, tcod::Console& console) {
+void Map::Render(LevelPos center, ScreenPos screen_center) {
   for (int row = 0; row < width_; row++) {
     for (int col = 0; col < height_; col++) {
       LevelPos map_pos = {row, col};
       LevelPos relative_pos = map_pos - center;
-      tcod::draw_rect(
-          console,
-          {screen_center.x + relative_pos.x, screen_center.y + relative_pos.y, 1, 1},
-          '#',
-          TCOD_gray,
-          TCOD_gray);
+      ScreenPos relative_pos_screen = {relative_pos.x, relative_pos.y};
+      RenderEngine::Instance().DrawRect(screen_center + relative_pos_screen, 1, 1, '#', TCOD_gray, TCOD_gray);
+      // tcod::draw_rect(
+      //     console,
+      //     {screen_center.x + relative_pos.x, screen_center.y + relative_pos.y, 1, 1},
+      //     '#',
+      //     TCOD_gray,
+      //     TCOD_gray);
     }
   }
 
@@ -48,7 +61,7 @@ void Map::Render(LevelPos center, ScreenPos screen_center, tcod::Console& consol
     LevelPos shape_pos = shape->GetPosition();
     if (shape_pos.level == center.level) {
       LevelPos relative_pos = shape_pos - center;
-      shape->Draw({screen_center.x + relative_pos.x, screen_center.y + relative_pos.y}, console);
+      shape->Draw({screen_center.x + relative_pos.x, screen_center.y + relative_pos.y});
     }
   }
 
