@@ -19,6 +19,9 @@ void Item::Drop() {
     player_ = nullptr;
 }
 
+void Item::OnNotify(Event* event) {
+    std::string event_type = event->GetType();
+}
 
 void Item::Pick(Player* player) {
     player_ = player;

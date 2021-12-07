@@ -25,6 +25,7 @@ class Item : public Entity {
   bool InInventory();
   Player* GetPlayer();
   std::string GetName();
+  void OnNotify(Event* event);
 };
 
 #endif
