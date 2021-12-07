@@ -2,7 +2,6 @@
 #include "MapGenerator.hpp"
 
 UI::UI() {
-  // How should each be initialized? 
   MapGenerator generator;
   std::cout << "Generating map...";
   std::cout.flush();
@@ -11,8 +10,6 @@ UI::UI() {
 
   player_ = new Player(map_->GetSpawnLocation());
   EventListener::Instance().RegisterListener(player_, "KeyboardEvent");
-  // struct LevelPos test = {0, 0, 0};
-  // player_ = new Player(test);
   // monster_ = new Monster();
 }
 
@@ -28,6 +25,10 @@ void UI::Update() {
   
 void UI::RenderAll() {
   // draw the player in the middle of the screen, also map, monster, items and additional UI info as needed
+
+  if (player_->GetHp() < 0) {
+    this->SetState(GameState::Loss);
+  }
 
   if (state_ == GameState::InProgress) {
     int width = RenderEngine::Instance().GetWidth();

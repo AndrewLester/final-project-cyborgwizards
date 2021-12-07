@@ -68,7 +68,7 @@ TEST_CASE("RenderEngine & UI", "[render-engine_UI]") {
   params.console = console.get();
   params.renderer_type = TCOD_RENDERER_SDL2;
   auto context = tcod::new_context(params);
-  RenderEngine::Instance().SetConsole(&console);
+  RenderEngine::Instance().SetConsole(console.get());
   console.clear();
   struct ScreenPos test = {0, 0};
   RenderEngine::Instance().SetChar(test, '@');
@@ -148,31 +148,30 @@ TEST_CASE("RenderEngine & UI", "[render-engine_UI]") {
     REQUIRE(TCOD_console_get_char(console.get(), 5, 40-1) == '0');
     REQUIRE(TCOD_console_get_char(console.get(), 6, 40-1) == '0');
     // player inventory display
-    // put item in inventory here?
     Player* player_ = new Player({0, 0, 0});
+    FireExtinguisher *item;
     // Item* Item({0, 0, 0}, "name");
-    // FireExtinguisher* fire_extinguisher({0, 0, 0});
-    // player_->GetInventory()->AddItem(fire_extinguisher);
+    player_->GetInventory()->AddItem(item);
     // code ripped from UI for ease of testing
     struct ScreenPos bottom2 = {0, 40 - 2};
     std::string str2 = "Inventory:";
-    if (player_ != nullptr) {
-      Inventory* inv = player_->GetInventory();
-      if (inv != nullptr) {
-        size_t size = inv->GetSize();
-        for (size_t i = 0; i < size; i++) {
-          Item* item = inv->GetItemAt(i);
-          int index = static_cast<int>(i);
-          str2 = str2 + " " + std::to_string(index+1) + "] " + item->GetName();
-        }
-      }
-    }  
-    RenderEngine::Instance().Print(bottom2, str2);  // works with no items, does it work with items?
+    // if (player_ != nullptr) {
+    //   Inventory* inv = player_->GetInventory();
+    //   if (inv != nullptr) {
+    //     size_t size = inv->GetSize();
+    //     for (size_t i = 0; i < size; i++) {
+    //       Item* item = inv->GetItemAt(i)
+    //       int index = static_cast<int>(i);
+    //       str2 = str2 + " " + std::to_string(index+1) + "] " + item->GetName();
+    //     }
+    //   }
+    // }  
+    // RenderEngine::Instance().Print(bottom2, str2);  // works with no items, does it work with items?
     REQUIRE(TCOD_console_get_char(console.get(), 11, 40-2) == '1');
     // REQUIRE(TCOD_console_get_char(console.get(), 14, 40-2) == ' ');  // set to first letter of item name
     delete player_;
     // floor indicator display
-    REQUIRE(TCOD_console_get_char(console.get(), 7, 40-3) == '0');
+    REQUIRE(TCOD_console_get_char(console.get(), 7, 40-3) == '1');
   }
 }
 
