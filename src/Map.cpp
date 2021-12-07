@@ -42,7 +42,7 @@ void Map::SetShapes(std::vector<MapShape*> shapes) { shapes_ = shapes; }
 void Map::SetRelations(AdjacentList relations) { this->relations_ = relations; }
 
 void Map::Render(LevelPos center, ScreenPos screen_center) {
-  map_->computeFov(center.x, center.y, 20);
+  map_->computeFov(center.x, center.y, 20, true);
   for (int row = 0; row < width_; row++) {
     for (int col = 0; col < height_; col++) {
       LevelPos map_pos = {row, col};
