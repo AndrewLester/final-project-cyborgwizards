@@ -19,10 +19,12 @@ class Monster : public Entity {
 
   const int kRoamSound;
   const int kChaseSound;
+  const int kStunCooldown = 300;
   Monster(LevelPos pos, int roam_sound, int chase_sound);
 
  private:
   int timer_ = 0;
+  int stun_cooldown_ = 0;
   void FindPath(const AdjacentList& map, std::set<MapRoom*>& visited, MapRoom* curr, MapRoom* dest, bool& found);
 
  public:

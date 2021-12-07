@@ -22,5 +22,7 @@ void UnsightedMonster::OnNotify(Event* event) {
       this->ChangeDestination(rooms.at(rand_idx)->GetCenterPosition());
       this->state_ = MonsterState::Roam;
     } // else: too small, don't react
+  } else if (event->GetType() == "StunEvent") {
+
   }
 }

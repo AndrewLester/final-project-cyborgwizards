@@ -1,5 +1,5 @@
 #include "Inventory.hpp"
-
+#include <iostream>
 void Inventory::AddItem(Item* item) {
 	inventory.push_back(item);
 }
@@ -23,8 +23,10 @@ Item* Inventory::GetItemAt(size_t idx) {
 
 void Inventory::RemoveItem(Item* item) {
 	size_t idx = 0;
+    std::cout << "here" << std::endl;
 	for(Item* i: inventory) {
 		if(i == item) {
+            // std::cout << "in this if" << std::endl;
 			inventory.erase(inventory.begin() + idx);
 			break;
 		}
