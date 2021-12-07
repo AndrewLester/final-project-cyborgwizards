@@ -29,7 +29,7 @@ class EventListener {
 
   void HandleInput(SDL_Event event);
 
-  void BroadcastEvent(Event event);
+  void BroadcastEvent(Event* event);
   void RegisterListener(Entity* listener, std::string event_type);
 };
 

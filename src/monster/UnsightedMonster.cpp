@@ -7,9 +7,9 @@
 UnsightedMonster::UnsightedMonster(LevelPos pos):
   Monster(pos, 1, 2) {}
 
-void UnsightedMonster::OnNotify(Event event) {
-  if (event.emitter_ != this && event.GetType() == "SoundEvent") {
-    SoundEvent sound_event = *static_cast<SoundEvent*>(&event);
+void UnsightedMonster::OnNotify(Event* event) {
+  if (event->emitter_ != this && event->GetType() == "SoundEvent") {
+    SoundEvent sound_event = *dynamic_cast<SoundEvent*>(event);
     int rel_intensity = sound_event.RelativeIntensity(this->position_);
     if (rel_intensity > 90) { // directly change
       this->prev_intensity_ = rel_intensity;

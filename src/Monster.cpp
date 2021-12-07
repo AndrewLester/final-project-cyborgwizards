@@ -23,7 +23,7 @@ void Monster::Update() {
     }
 
     SoundEvent se(this, this->position_, this->state_ == MonsterState::Chase ? kChaseSound : kRoamSound);
-    EventListener::Instance().BroadcastEvent(se);
+    EventListener::Instance().BroadcastEvent(&se);
   } else {
     timer_--;
   }

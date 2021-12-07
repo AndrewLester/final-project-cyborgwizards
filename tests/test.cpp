@@ -17,11 +17,11 @@ TEST_CASE("EventListener", "[event-listener]") {
 
    public:
     DerivedEntity(std::string indicator) : Entity({0, 0, 1}, 1, 1), indicator_(indicator) {}
-    void OnNotify(Event event) override {
-      std::string msg = this->indicator_ + ", " + event.GetType();
+    void OnNotify(Event* event) override {
+      std::string msg = this->indicator_ + ", " + event->GetType();
       throw std::runtime_error(msg);
     }
-    void Draw(ScreenPos top_left, tcod::Console& console) override {}
+    void Draw(ScreenPos top_left) override {}
   };
   class DerivedEvent : public Event {
    public:

@@ -16,6 +16,7 @@ class Event {
 
  public:
   Event(std::string type, Entity* emitter) : emitter_(emitter), type_(type) {}
+  virtual ~Event() = default;
 
   std::string GetType() { return this->type_; }
 };

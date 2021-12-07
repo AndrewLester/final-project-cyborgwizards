@@ -18,6 +18,7 @@ class Inventory {
   void RemoveItem(Item* item);
   size_t GetSize();
   size_t GetMaxSize();
+  void SetMaxSize(size_t size);
   Item* GetItemAt(size_t idx);
   size_t GetCurrIdx();
   void SetCurrIdx(size_t idx);

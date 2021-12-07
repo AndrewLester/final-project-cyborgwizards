@@ -23,9 +23,10 @@ class Player : public Entity {
 
  public:
   Player(LevelPos init_pos);
+  ~Player();
 
-  void Draw(ScreenPos top_left, tcod::Console& console);
-  void OnNotify(Event event);
+  void Draw(ScreenPos top_left);
+  void OnNotify(Event* event);
   void Update();
 
   Inventory* GetInventory();

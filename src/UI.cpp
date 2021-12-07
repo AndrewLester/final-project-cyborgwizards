@@ -4,9 +4,14 @@
 
 UI::UI() {
   // How should each be initialized? 
-  // MapGenerator generator;
-  // Map* map = generator.Generate(100, 100, 1);
-  // player_ = new Player();
+  MapGenerator generator;
+  std::cout << "Generating map...";
+  std::cout.flush();
+  this->map_ = generator.Generate(RenderEngine::Instance().GetWidth(), RenderEngine::Instance().GetHeight(), 1);
+  std::cout << " Done." << std::endl;
+
+  player_ = new Player(map_->GetSpawnLocation());
+  EventListener::Instance().RegisterListener(player_, "KeyboardEvent");
   // struct LevelPos test = {0, 0, 0};
   // player_ = new Player(test);
   // monster_ = new Monster();
@@ -16,6 +21,10 @@ UI::~UI() {
   delete player_; 
   delete monster_;
   delete map_;
+}
+
+void UI::Update() {
+  this->player_->Update();
 }
   
 void UI::RenderAll() {
@@ -31,14 +40,13 @@ void UI::RenderAll() {
     int height = RenderEngine::Instance().GetHeight();
 
     struct ScreenPos center1 = {width / 2, height / 2}; // if even/odd how to define center?
-    struct LevelPos center2 = {width / 2, height / 2, 0}; // instead of 0 get current floor
-    
-    // map_->Render(center2); // handles item rendering?
-    // player_->Draw(center1);
+    // struct LevelPos center2 = {width / 2, height / 2, 1};
+    map_->Render(player_->GetPosition(), center1);
+    player_->Draw(center1);
     // monster_->Draw(center1);
 
     struct ScreenPos bottom1 = {0, height - 3};
-    std::string str1 = "Floor: 0"; // TODO: add level display, how to get current floor #?
+    std::string str1 = "Floor: 1"; // TODO: add level display, how to get current floor #?
     RenderEngine::Instance().Print(bottom1, str1);
 
     // struct ScreenPos bottom2 = {0, height - 2};
