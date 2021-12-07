@@ -36,6 +36,11 @@ LevelPos Map::GetSpawnLocation(int idx) const {
   return {0, 0, 1};
 }
 
+LevelPos Map::GetRandomLocation() const {
+  LevelPos ret = this->GetSpawnLocation(rand() % this->GetRooms().size());
+  return ret;
+}
+
 void Map::AddItem(Item* item) { items_.push_back(item); }
 
 void Map::SetShapes(std::vector<MapShape*> shapes) { shapes_ = shapes; }

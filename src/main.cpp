@@ -35,6 +35,7 @@ int main(int argc, char** argv) {
   }
 
   // Game loop.
+  // UI::Instance().GetMonster()->ChangeDestination(UI::Instance().GetMap()->GetRandomLocation());
   while (true) {
     // Rendering.
 
@@ -51,12 +52,8 @@ int main(int argc, char** argv) {
         case SDL_QUIT:
           std::exit(EXIT_SUCCESS);
           break;
-        case SDL_KEYDOWN: 
-          std::cout << event.key.keysym.sym << ' ' << event.key.keysym.mod << std::endl;
-          EventListener::Instance().HandleInput(event);
-          break;
-        case SDL_KEYUP:
-          std::cout << event.key.keysym.sym << ' ' << event.key.keysym.mod << "RELEASE" << std::endl;
+        default:
+          // std::cout << event.key.keysym.sym << ' ' << event.key.keysym.mod << std::endl;
           EventListener::Instance().HandleInput(event);
       }
     }

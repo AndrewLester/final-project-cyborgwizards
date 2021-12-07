@@ -25,11 +25,13 @@ bool MapGenerator::BspListener::visitNode(TCODBsp* node, void* user_data) {
     if (room_num_ != 0) {
       int last_room_center_x = this->last_room_->GetCenterPosition().x;
       int last_room_center_y = this->last_room_->GetCenterPosition().y;
+      int new_room_center_x = new_room->GetCenterPosition().x;
+      int new_room_center_y = new_room->GetCenterPosition().y;
 
       MapCorridor* c1 = static_cast<MapCorridor*>(generator_->CreateShape(
-          last_room_center_x, last_room_center_y, x + (w / 2), last_room_center_y, level_, room_num_, ShapeType::CORRIDOR));
+          last_room_center_x, last_room_center_y, new_room_center_x, last_room_center_y, level_, room_num_, ShapeType::CORRIDOR));
       MapCorridor* c2 = static_cast<MapCorridor*>(generator_->CreateShape(
-          x + (w / 2), last_room_center_y, x + (w / 2), y + (h / 2), level_, room_num_, ShapeType::CORRIDOR));
+          new_room_center_x, last_room_center_y, new_room_center_x, new_room_center_y, level_, room_num_, ShapeType::CORRIDOR));
       shapes->push_back(c1);
       shapes->push_back(c2);
 

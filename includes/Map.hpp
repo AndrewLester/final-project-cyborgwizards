@@ -42,6 +42,7 @@ class Map {
   std::vector<MapRoom*> GetRoomsInRadius(LevelPos position, int radius);
   const AdjacentList& GetRelations();
   LevelPos GetSpawnLocation(int idx) const;
+  LevelPos GetRandomLocation() const;
 };
 
 std::ostream& operator<<(std::ostream& os, const Map& map);
