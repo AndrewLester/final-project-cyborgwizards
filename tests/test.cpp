@@ -7,6 +7,8 @@
 /////////////////////// Project Includes ///////////////////////
 
 #include "Entity.hpp"
+#include "UI.hpp"
+#include "FireExtinguisher.hpp"
 
 /////////////////////// EventListener ///////////////////////
 
@@ -61,5 +63,16 @@ TEST_CASE("EventListener", "[event-listener]") {
 /////////////////////// Items ///////////////////////
 
 // Write tests here
+TEST_CASE("FireExtinguisher", "[fire-extinguisher]") {
+  Player p({0,0,1});
+  Item* fe = new FireExtinguisher({0,0,1});
+  Item* fe2 = new FireExtinguisher({0,0,1});
+  p.GetInventory()->AddItem(fe);
+  UI::Instance().GetMap()->AddItem(fe2);
+  REQUIRE(p.GetInventory()->GetSize() == 1);
+  fe->Drop();
+  REQUIRE(p.GetInventory()->GetSize() == 0);
+}
+
 
 /////////////////////// Add section below ///////////////////////
