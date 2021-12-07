@@ -3,9 +3,9 @@
 
 UI::UI() { // maybe take in map with a setter? 
   state_ = GameState::InProgress;
-  // MapGenerator generator;
-  // Map* map = generator.Generate(120, 40, 1);
-  player_ = new Player({0, 0, 0});
+  MapGenerator generator;
+  Map* map = generator.Generate(120, 40, 1);
+  player_ = new Player(map->); //spawn location
   // monster_ = new Monster();
 }
 

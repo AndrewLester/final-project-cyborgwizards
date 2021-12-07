@@ -17,7 +17,6 @@ class RenderEngine {
   }
 
   void SetConsole(tcod::Console* console);
-  tcod::Console& GetConsole();
   int GetWidth();
   int GetHeight();
 
@@ -27,6 +26,7 @@ class RenderEngine {
   void RoomFillCol(ScreenPos upleft, ScreenPos lowright, char c_floor, char c_wall, TCOD_ColorRGB col_floor, TCOD_ColorRGB col_wall);
   void Print(ScreenPos pos, std::string str);
   void Print(ScreenPos pos, std::string str, TCOD_ColorRGB col);
+  void DrawRect(ScreenPos pos, int width, int height, char c, tcod::ColorRGB col);
 };
 
 #endif

@@ -4,10 +4,6 @@ void RenderEngine::SetConsole(tcod::Console* console) {
   this->console_ = console;
 }
 
- tcod::Console& RenderEngine::GetConsole() {
-   return *console_;
- }
-
 int RenderEngine::GetWidth() { return this->console_->get_width(); }
 int RenderEngine::GetHeight() { return this->console_->get_height(); }
 
@@ -73,4 +69,8 @@ void RenderEngine::Print(ScreenPos pos, std::string str, TCOD_ColorRGB col) {
   if ((pos.x >= 0 && pos.x < width) && (pos.y >= 0 && pos.y < height)) {
     tcod::print(*console_, {pos.x, pos.y}, str, col, std::nullopt);
   }
+}
+
+void DrawRect(ScreenPos pos, int width, int height, char c, tcod::ColorRGB col) {
+  tcod::draw_rect(*this->console_, {pos.x, pos.y, width, height}, c, col, std::nullopt);
 }
