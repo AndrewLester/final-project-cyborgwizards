@@ -47,33 +47,35 @@ void Monster::ChangeDestination(LevelPos destination) {
   while (!this->path_.empty()) { // clear past
     this->path_.pop_front();
   }
+  this->paths_.clear();
 
   if (curr == dest) { // in same shape
     this->path_.push_back({this->position_.x, this->destination_.y, this->position_.level});
     this->path_.push_back(this->destination_);
   } else { // not in same room
-    // first go to the center of current room
-    LevelPos start_center = curr->GetCenterPosition();
-    if (this->position_ != start_center) {
-      this->path_.push_back({this->position_.x, start_center.y, start_center.level});
-      if (this->position_.x != start_center.x) this->path_.push_back(start_center);
-    }
-
-    std::cout << "Going to center";
+    // Find room-to-room shortest path
+    auto map_info = UI::Instance().GetMap()->GetRelations();
+    std::set<MapShape*> visited;
+    this->FindPath(map_info, visited, curr, dest);
+    std::sort(this->paths_.begin(), this->paths_.end(),
+              [](std::deque<LevelPos>& p1, std::deque<LevelPos>& p2){ return p1.size() < p2.size(); });
+    this->path_ = this->paths_.at(0);
+    std::cout << "Pathfind to room";
     for (LevelPos& pos : this->path_) {
       std::cout << "(" << pos.x << ", " << pos.y << "), ";
     }
     std::cout << std::endl;
 
-    // then get to the room
-    auto map_info = UI::Instance().GetMap()->GetRelations();
-    std::set<MapShape*> visited;
-    bool found = false;
-    this->FindPath(map_info, visited, curr, dest, found);
-    if (!found) {
-      throw std::runtime_error("Pathfind for Monster error!");
+    // Find path to start of room-to-room path
+    LevelPos start_pos = this->path_.front();
+    LevelPos corner = {this->position_.x, start_pos.y, start_pos.level};
+    auto points = curr->GetPositions();
+    if (std::find(points.begin(), points.end(), corner) == points.end()) {
+      corner = {start_pos.x, this->position_.y, start_pos.level};
     }
-    std::cout << "Pathfind to room";
+    this->path_.push_front(corner);
+
+    std::cout << "Going to center";
     for (LevelPos& pos : this->path_) {
       std::cout << "(" << pos.x << ", " << pos.y << "), ";
     }
@@ -96,9 +98,9 @@ void Monster::ChangeDestination(LevelPos destination) {
   }
 }
 
-void Monster::FindPath(const AdjacentList& map, std::set<MapShape*>& visited, MapShape* curr, MapShape* dest, bool& found) {
+void Monster::FindPath(const AdjacentList& map, std::set<MapShape*>& visited, MapShape* curr, MapShape* dest) {
   if (curr == dest) {
-    found = true;
+    this->paths_.push_back(this->path_);
     return;
   }
 
@@ -128,8 +130,7 @@ void Monster::FindPath(const AdjacentList& map, std::set<MapShape*>& visited, Ma
 
       this->path_.push_back(next_center);
 
-      this->FindPath(map, visited, shape, dest, found);
-      if (found) return;
+      this->FindPath(map, visited, shape, dest);
       if (corner_required) this->path_.pop_back();
       this->path_.pop_back();
       visited.erase(shape);

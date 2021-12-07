@@ -16,6 +16,7 @@ class Monster : public Entity {
   int chase_speed_ = 9;
   LevelPos destination_ = {-1, -1, -1};
   std::deque<LevelPos> path_;
+  std::vector<std::deque<LevelPos>> paths_;
 
   const int kRoamSound;
   const int kChaseSound;
@@ -23,7 +24,7 @@ class Monster : public Entity {
 
  private:
   int timer_ = 0;
-  void FindPath(const AdjacentList& map, std::set<MapShape*>& visited, MapShape* curr, MapShape* dest, bool& found);
+  void FindPath(const AdjacentList& map, std::set<MapShape*>& visited, MapShape* curr, MapShape* dest);
 
  public:
   void Update();
