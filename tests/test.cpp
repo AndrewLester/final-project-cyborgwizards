@@ -3,6 +3,7 @@
 /////////////////////// Library Includes ///////////////////////
 
 #include <iostream>
+#include <stdexcept>
 
 /////////////////////// Project Includes ///////////////////////
 
@@ -252,6 +253,32 @@ TEST_CASE("Map Generation", "[map-generation]") {
   }
 
   delete map;
+}
+
+TEST_CASE("Map", "[map]") {
+  Map* map = GetTestMap();
+
+  SECTION("Get spawn location") {
+    for (int i = 0; i < map->GetRooms().size(); i++) {
+      REQUIRE(map->GetRooms().at(i)->GetCenterPosition() == map->GetSpawnLocation(i));
+    }
+  }
+
+  SECTION("Get rooms in radius") {
+    SECTION("Invalid position") {
+      std::vector<LevelPos> bad_pos = {{-1, 5, 1}, {5, -1, 0}, {20000000, 0, 0}, {0, 200000, 0}};
+      for (LevelPos pos : bad_pos) {
+        REQUIRE_THROWS_AS(map->GetRoomsInRadius(pos, 5), std::invalid_argument);
+      }
+    }
+
+    SECTION("Invalid radius") {
+      std::vector<int> bad_rad = {-1, -222};
+      for (int radius : bad_rad) {
+        REQUIRE_THROWS_AS(map->GetRoomsInRadius({0, 0, 0}, radius), std::invalid_argument);
+      }
+    }
+  }
 }
 
 /////////////////////// Add section below ///////////////////////
