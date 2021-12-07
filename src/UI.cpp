@@ -26,7 +26,7 @@ void UI::Update() {
 void UI::RenderAll() {
   // draw the player in the middle of the screen, also map, monster, items and additional UI info as needed
 
-  if (player_->GetHp() < 0) {
+  if (player_->GetHp() <= 0) {
     this->SetState(GameState::Loss);
   }
 
