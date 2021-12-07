@@ -33,14 +33,16 @@ void UI::RenderAll() {
     int width = RenderEngine::Instance().GetWidth();
     int height = RenderEngine::Instance().GetHeight();
 
-    struct ScreenPos center1 = {width / 2, height / 2}; // if even/odd how to define center?
-    // struct LevelPos center2 = {width / 2, height / 2, 1};
+    struct ScreenPos center1 = {width / 2, height / 2};
     map_->Render(player_->GetPosition(), center1);
     player_->Draw(center1);
     // monster_->Draw(center1);
 
     struct ScreenPos bottom1 = {0, height - 3};
-    std::string str1 = "Floor: 1"; // TODO: add level display, how to get current floor #?
+    std::string str1 = "Floor: ";
+    if (player_ != nullptr) {
+      str1 = str1 + std::to_string(player_->GetPosition().level);
+    }
     RenderEngine::Instance().Print(bottom1, str1);
 
     struct ScreenPos bottom2 = {0, height - 2};
