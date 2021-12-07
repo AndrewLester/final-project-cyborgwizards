@@ -30,6 +30,10 @@ void UI::RenderAll() {
     this->SetState(GameState::Loss);
   }
 
+  // if (win condition) {
+  //   this->SetState(GameState::Win);
+  // }
+
   if (state_ == GameState::InProgress) {
     int width = RenderEngine::Instance().GetWidth();
     int height = RenderEngine::Instance().GetHeight();
