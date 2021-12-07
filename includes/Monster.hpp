@@ -26,7 +26,7 @@ class Monster : public Entity {
   void FindPath(const AdjacentList& map, std::set<MapRoom*>& visited, MapRoom* curr, MapRoom* dest, bool& found);
 
  public:
-  virtual void Update();
+  void Update();
   void ChangeDestination(LevelPos destination);
   virtual void OnNotify(Event* event) = 0;
 };

@@ -25,10 +25,11 @@ TCODMap* Map::GetMap() { return map_; }
 int Map::GetWidth() const { return width_; }
 int Map::GetHeight() const { return height_; }
 
-LevelPos Map::GetSpawnLocation() const {
+LevelPos Map::GetSpawnLocation(int idx) const {
   std::vector<MapRoom*> rooms = GetRooms();
+  int room_num = (idx < 0) ? rooms.size() + idx : idx;
   for (MapRoom* room : rooms) {
-    if (room->GetRoomNumber() == 0) {
+    if (room->GetRoomNumber() == room_num) {
       return room->GetCenterPosition();
     }
   }

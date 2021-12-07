@@ -2,19 +2,22 @@
 #include "MapGenerator.hpp"
 // maybe use the "Reading the content of the console" to test?
 
+#include "UnsightedMonster.hpp"
+
 UI::UI() {
   // How should each be initialized? 
   MapGenerator generator;
   std::cout << "Generating map...";
   std::cout.flush();
   this->map_ = generator.Generate(RenderEngine::Instance().GetWidth(), RenderEngine::Instance().GetHeight(), 1);
+  // this->map_ = generator.Generate(40, 40, 1); // TODO: CHANGE BACK
+
   std::cout << " Done." << std::endl;
 
-  player_ = new Player(map_->GetSpawnLocation());
+  player_ = new Player(map_->GetSpawnLocation(0));
   EventListener::Instance().RegisterListener(player_, "KeyboardEvent");
-  // struct LevelPos test = {0, 0, 0};
-  // player_ = new Player(test);
-  // monster_ = new Monster();
+  monster_ = new UnsightedMonster(map_->GetSpawnLocation(-1));
+  EventListener::Instance().RegisterListener(monster_, "SoundEvent");
 }
 
 UI::~UI() {
@@ -25,6 +28,7 @@ UI::~UI() {
 
 void UI::Update() {
   this->player_->Update();
+  this->monster_->Update();
 }
   
 void UI::RenderAll() {
@@ -39,11 +43,17 @@ void UI::RenderAll() {
     int width = RenderEngine::Instance().GetWidth();
     int height = RenderEngine::Instance().GetHeight();
 
-    struct ScreenPos center1 = {width / 2, height / 2}; // if even/odd how to define center?
-    // struct LevelPos center2 = {width / 2, height / 2, 1};
-    map_->Render(player_->GetPosition(), center1);
-    player_->Draw(center1);
-    // monster_->Draw(center1);
+    ScreenPos center = {width / 2, height / 2}; // if even/odd how to define center?
+    LevelPos player_pos = player_->GetPosition();
+    map_->Render(player_pos, center);
+    player_->Draw(center);
+
+    LevelPos monster_pos = monster_->GetPosition();
+    if (monster_pos.level == player_pos.level) {
+      LevelPos relative_pos = monster_pos - player_pos;
+      ScreenPos offset = {relative_pos.x, relative_pos.y};
+      monster_->Draw(center + offset);
+    }
 
     struct ScreenPos bottom1 = {0, height - 3};
     std::string str1 = "Floor: 1"; // TODO: add level display, how to get current floor #?

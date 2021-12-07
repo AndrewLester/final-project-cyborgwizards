@@ -47,7 +47,6 @@ void Player::OnNotify(Event* event) {
         }
         if (this->facing_ != prev_facing) {
           this->timer_ = 0;
-          std::cout << "Changed, timer: " << this->timer_ << std::endl;
         }
       } else if (key == 'f') { // pick up item
         Item* item = UI::Instance().GetMap()->GetItem(this->position_);

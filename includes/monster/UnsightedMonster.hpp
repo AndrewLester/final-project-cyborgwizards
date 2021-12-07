@@ -9,7 +9,8 @@ class UnsightedMonster : public Monster {
  public:
   UnsightedMonster(LevelPos pos);
 
-  void OnNotify(Event* event);
+  void Draw(ScreenPos top_left) override;
+  void OnNotify(Event* event) override;
 };
 
 #endif

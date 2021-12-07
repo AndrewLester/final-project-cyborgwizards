@@ -10,11 +10,13 @@ Monster::Monster(LevelPos pos, int roam_sound, int chase_sound):
 
 void Monster::Update() {
   if (timer_ == 0) {
-    timer_ = this->state_ == MonsterState::Chase ? chase_speed_ : roam_speed_;
+    if (this->path_.empty()) return;
 
+    timer_ = this->state_ == MonsterState::Chase ? chase_speed_ : roam_speed_;
     if (this->position_ == this->path_.front()) {
       this->path_.pop_front();
     }
+    if (this->path_.empty()) return; // last node on path
     LevelPos next_turn = this->path_.front();
     if (next_turn.x == this->position_.x) {
       this->position_.y += next_turn.y > this->position_.y ? 1 : -1;
@@ -56,6 +58,11 @@ void Monster::ChangeDestination(LevelPos destination) {
     this->path_.push_back({center.x, this->destination_.y, center.level});
     this->path_.push_back(this->destination_);
   }
+
+  // for (LevelPos& pos : this->path_) {
+  //   std::cout << "(" << pos.x << ", " << pos.y << "), ";
+  // }
+  // std::cout << std::endl;
 }
 
 void Monster::FindPath(const AdjacentList& map, std::set<MapRoom*>& visited, MapRoom* curr, MapRoom* dest, bool& found) {
