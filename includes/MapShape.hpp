@@ -15,6 +15,7 @@ class MapShape : public Entity {
   MapShape(LevelPos position, int width, int height);
 
  protected:
+ TCODMap* map_;
   bool reachable_ = false;
 
  public:
@@ -22,6 +23,7 @@ class MapShape : public Entity {
   virtual std::vector<LevelPos> GetPositions() = 0;
   bool IsReachable();
   bool ContainsLevelPos(LevelPos position);
+  void SetMap(TCODMap* map) {map_ = map;};
 };
 
 #endif
