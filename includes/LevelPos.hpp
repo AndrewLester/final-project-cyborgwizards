@@ -19,6 +19,7 @@ struct LevelPos {
 };
 
 bool operator==(const LevelPos& c1, const LevelPos& c2);
+bool operator!=(const LevelPos& c1, const LevelPos& c2);
 LevelPos operator-(const LevelPos& c1, const LevelPos& c2);
 
 #endif
