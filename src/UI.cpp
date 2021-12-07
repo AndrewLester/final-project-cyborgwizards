@@ -55,9 +55,9 @@ void UI::RenderAll() {
     if (monster_pos.level == player_pos.level) {
       LevelPos relative_pos = monster_pos - player_pos;
       ScreenPos offset = {relative_pos.x, relative_pos.y};
-      // if (map_->GetMap()->isInFov(monster_pos.x, monster_pos.y)) {
+      if (map_->GetMap()->isInFov(monster_pos.x, monster_pos.y)) {
         monster_->Draw(center + offset);
-      // }
+      }
     }
 
     struct ScreenPos bottom1 = {0, height - 3};
@@ -67,7 +67,7 @@ void UI::RenderAll() {
     // std::string str2 = "Monster Pos: " + monster_->GetCenterPosition().ToString();
     // RenderEngine::Instance().Print(bottom2, str2);
 
-    struct ScreenPos bottom2 = {, height - 2};
+    struct ScreenPos bottom2 = {0, height - 2};
     Inventory* inv = player_->GetInventory();
     std::string str2 = "Inventory:";
     if (inv != nullptr) {
