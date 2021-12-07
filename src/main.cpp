@@ -35,6 +35,7 @@ int main(int argc, char** argv) {
   }
 
   // Game loop.
+  // UI::Instance().GetMonster()->ChangeDestination(UI::Instance().GetMap()->GetRandomLocation());
   while (true) {
     // Rendering.
 
@@ -45,13 +46,14 @@ int main(int argc, char** argv) {
 
     // Handle input.
     SDL_Event event;
-    SDL_WaitEvent(nullptr);
+    // SDL_WaitEvent(nullptr);
     while (SDL_PollEvent(&event)) {
       switch (event.type) {
         case SDL_QUIT:
           std::exit(EXIT_SUCCESS);
           break;
         default:
+          // std::cout << event.key.keysym.sym << ' ' << event.key.keysym.mod << std::endl;
           EventListener::Instance().HandleInput(event);
       }
     }

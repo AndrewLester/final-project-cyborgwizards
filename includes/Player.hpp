@@ -10,8 +10,8 @@ enum class Facing { N, W, E, S };
 
 class Player : public Entity {
  private:
-  int walk_speed_ = 5;
-  int run_speed_ = 2;
+  int walk_speed_ = 15;
+  int run_speed_ = 7;
   int timer_ = 0;
   int hp_ = 100;
   Inventory* inventory_ = nullptr;

@@ -2,6 +2,7 @@
 #define LEVEL_POS_HPP
 
 #include <cmath>
+#include <string>
 #define sqr(x) ((x) * (x))
 
 struct LevelPos {
@@ -16,9 +17,12 @@ struct LevelPos {
   double Distance(const LevelPos& c) {
     return sqrt(sqr(c.x - this->x) + sqr(c.y - this->y) + sqr((c.level - this->level) * 5));
   }
+
+  std::string ToString();
 };
 
 bool operator==(const LevelPos& c1, const LevelPos& c2);
+bool operator!=(const LevelPos& c1, const LevelPos& c2);
 LevelPos operator-(const LevelPos& c1, const LevelPos& c2);
 
 #endif

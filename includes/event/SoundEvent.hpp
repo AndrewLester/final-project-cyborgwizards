@@ -13,7 +13,7 @@ enum Direction {
 
 class SoundEvent : public Event {
  public:
-  static const int kThreshold = 200;
+  static const int kThreshold = 100;
   static const int kLevelHeight = 10;
 
   LevelPos source;

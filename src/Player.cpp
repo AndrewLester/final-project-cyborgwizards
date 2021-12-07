@@ -30,7 +30,6 @@ void Player::OnNotify(Event* event) {
     } else {
       if (key == 'w' || key == 'a' || key == 's' || key == 'd') {  // start moving
         this->state_ = ke.shift ? PlayerState::Run : PlayerState::Walk;
-        Facing prev_facing = this->facing_;
         switch (key) {
           case 'w':
             this->facing_ = Facing::N;
@@ -45,10 +44,8 @@ void Player::OnNotify(Event* event) {
             this->facing_ = Facing::E;
             break;
         }
-        if (this->facing_ != prev_facing) {
-          this->timer_ = 0;
-          std::cout << "Changed, timer: " << this->timer_ << std::endl;
-        }
+      } else if (key == 1073742049) { // presses shift during running
+        this->state_ = PlayerState::Run;
       } else if (key == 'f') { // pick up item
         Item* item = UI::Instance().GetMap()->GetItem(this->position_);
         if (item != nullptr) {
