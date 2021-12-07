@@ -8,6 +8,7 @@
 
 #include "Entity.hpp"
 #include "UI.hpp"
+#include "Item.hpp"
 
 /////////////////////// EventListener ///////////////////////
 
@@ -148,8 +149,27 @@ TEST_CASE("RenderEngine & UI", "[render-engine_UI]") {
     REQUIRE(TCOD_console_get_char(console.get(), 6, 40-1) == '0');
     // player inventory display
     // put item in inventory here?
-    REQUIRE(TCOD_console_get_char(console.get(), 11, 40-2) == '1');
-    REQUIRE(TCOD_console_get_char(console.get(), 13, 40-2) == ' ');  // set to first letter of item name
+    Player* player_ = new Player({0, 0, 0});
+    Item* item({0, 0, 0}, "name"); // why no work
+    player_->GetInventory()->AddItem(item);
+    // code ripped from UI for ease of testing
+    struct ScreenPos bottom2 = {0, 40 - 2};
+    std::string str2 = "Inventory:";
+    if (player_ != nullptr) {
+      Inventory* inv = player_->GetInventory();
+      if (inv != nullptr) {
+        size_t size = inv->GetSize();
+        for (size_t i = 0; i < size; i++) {
+          Item* item = inv->GetItemAt(i);
+          int index = static_cast<int>(i);
+          str2 = str2 + " " + std::to_string(index+1) + " " + item->GetName();
+        }
+      }
+    }  
+    RenderEngine::Instance().Print(bottom2, str2);  // works with no items, does it work with items?
+    // REQUIRE(TCOD_console_get_char(console.get(), 11, 40-2) == '1');
+    // REQUIRE(TCOD_console_get_char(console.get(), 13, 40-2) == ' ');  // set to first letter of item name
+    delete player_;
     // floor indicator display
     REQUIRE(TCOD_console_get_char(console.get(), 7, 40-3) == '0');
   }
